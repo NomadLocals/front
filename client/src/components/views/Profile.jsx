@@ -1,10 +1,17 @@
 import { useSelector } from "react-redux";
 import NavBar from "./NavBar.jsx";
+import { getUserById } from "../../Redux trad/actions.js";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
   const userImg = user.image;
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getUserById(user.id));
+  }, []);
   return (
     <>
       <NavBar />

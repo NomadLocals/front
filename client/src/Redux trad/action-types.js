@@ -17,3 +17,4 @@ export const POST_EVENT = "POST_EVENT";
 export const CHECK_USER_BY_ID = "CHECK_USER_BY_ID";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const UNSUSCRIBE_EVENT = "UNSUSCRIBE_EVENT";
+export const EDIT_USER = "EDIT_USER";

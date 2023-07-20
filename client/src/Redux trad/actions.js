@@ -20,6 +20,7 @@ import {
   GET_USER_BY_ID,
   UNSUSCRIBE_EVENT,
   CHECK_USER_BY_ID,
+  EDIT_USER,
 } from "./action-types.js";
 
 // const URL = "http://localhost:3001";
@@ -298,6 +299,21 @@ export const fetchPlaceName = (latitude, longitude) => {
       });
     } catch (error) {
       console.error(error);
+    }
+  };
+};
+export const editUser = (userId, userData) => {
+  return async (dispatch) => {
+    console.log(userData);
+    try {
+      const endPoint = `${URL}/${USER}/${userId}`;
+      const { data } = await axios.put(endPoint, userData);
+      dispatch({
+        type: EDIT_USER,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
     }
   };
 };
