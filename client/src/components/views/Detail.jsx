@@ -1,0 +1,165 @@
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Navbar from "./NavBar.jsx";
+import Chat from "./Chat.jsx"; // Nuevo componente de chat
+import StarRating from "./StarRating.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getActivityDetail,
+  suscribeEvent,
+  unsuscribeEvent,
+} from "../../Redux trad/actions.js";
+
+const Detail = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  //Estados globales
+  const user = useSelector((state) => state.user);
+  const activityDetail = useSelector((state) => state.eventById);
+
+  const [showChat, setShowChat] = useState(false);
+  const [joinedUsers, setJoinedUsers] = useState([]);
+  const userId = user.id;
+  const userName = user.userName;
+  const userImage = user.image;
+
+  const {
+    name,
+    activityType,
+    image,
+    description,
+    eventDate,
+    duration,
+    minSizePeople,
+    minCost,
+    Users,
+    place,
+  } = activityDetail;
+
+  useEffect(() => {
+    dispatch(getActivityDetail(id));
+    setJoinedUsers(Users);
+    console.log(joinedUsers);
+  }, [id, joinedUsers]);
+
+  //handlers para sumarse o salir de la actividad
+  const handleJoinGroup = () => {
+    setShowChat(true);
+    try {
+      dispatch(suscribeEvent(id, userId));
+      setJoinedUsers([...joinedUsers, { userName, userImage }]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleLeaveGroup = () => {
+    setShowChat(false);
+    // Crear una copia del estado actual de joinedUsers
+    try {
+      dispatch(unsuscribeEvent(id, userId));
+      setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //para correcta renderizacion del chat->
+  useEffect(() => {
+    const joined = async () => {
+      try {
+        const isJoined = await Users.some((user) => user.id === userId);
+        setShowChat(isJoined);
+      } catch (error) {
+        // console.error(error);
+      }
+    };
+    joined();
+  }, [Users]);
+
+  //formateo de fecha:
+  let formattedDate = "";
+  let formattedTime = "";
+  if (activityDetail.eventDate) {
+    const parts = eventDate.split("T")[0].split("-");
+    const date = new Date(activityDetail.eventDate);
+    formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+  }
+
+  return (
+    <>
+      <Navbar />
+      <div className="bg-grey min-h-screen">
+      <div className="max-w-md mx-auto bg-grey shadow-md rounded-lg overflow-hidden py-8 font-quick rounded-lg shadow-xl">
+        <img src={image} alt={name} className="h-48 w-full object-cover rounded-lg" />
+        <div className="p-4">
+          <h2 className="text-2xl font-bold mb-2 text-center font-quick">{name}</h2>
+          <h2 className="text-center mb-2 font-semibold ">{activityType}</h2>
+          <div className="flex flex-wrap">
+            <div className="w-1/2">
+              <p>Fecha: <span className="font-semibold">{formattedDate}</span></p>
+              <p>Hora: <span className="font-semibold">{formattedTime}hs.</span></p>
+              <p>Duración: <span className="font-semibold">{duration}hs.</span></p>
+              
+            </div>
+            <div className="w-1/2 text-center">
+              <span>
+                {minCost === 0 ? <p>Cost: Free</p> : <p>Cost: ${minCost}</p>}
+              </span>
+              <p>Personas: <span className="font-semibold">{minSizePeople}</span></p>
+            </div>
+          </div>
+          <p className="mb-4">Localidad: <span className="font-semibold">{place}</span></p>
+          <p className="mb-4 text-sm text-center">Descripción: {description}</p>
+          {/* <StarRating /> */}
+
+          <h3 className="text-lg font-semibold mb-2 text-center">Miembros</h3>
+
+          <div className="flex flex-wrap">
+            {Users
+              ? Users?.map(({ userName, image, id }) => {
+                  return (
+                    <div
+                      key={id}
+                      className="flex flex-col items-center mb-4 mr-3 mt-2"
+                    >
+                      <div className="w-12 h-12 rounded-full overflow-hidden">
+                        <img
+                          src={image}
+                          alt="Imagen de miembro"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <p className="mt-2 text-center text-xs">{userName}</p>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
+          {showChat && <Chat />}
+          <div className="flex justify-center">
+            {!showChat ? (
+              <button
+                className="mt-2 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                onClick={handleJoinGroup}
+              >
+                Sumarse
+              </button>
+            ) : (
+              <button
+                className="mt-2 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                onClick={handleLeaveGroup}
+              >
+                Salir del grupo
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+      </div>
+    </>
+  );
+};
+
+export default Detail;
