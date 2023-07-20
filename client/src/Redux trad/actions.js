@@ -8,8 +8,12 @@ import {
   POST_USER,
   SAVE_USER_FORM,
   RESET_FILTER,
-  POST_REPORT_USER,
-  POST_REPORT_EVENT,
+  POST_REPORT_EVENT_SUCCESS,
+  POST_REPORT_EVENT_FAILURE,
+  POST_REPORT_USER_SUCCESS,
+  POST_REPORT_USER_FAILURE,
+  POST_REVIEW_USER,
+  POST_REVIEW_EVENT,
   SET_PLACE_NAME,
   GET_USER_ACTIVITIES,
   GET_EVENT_BY_ID,
@@ -117,16 +121,31 @@ export const resetFilters = () => {
 };
 
 //Reports
-export const postReportUser = (reportData) => {
+
+export const reviewEvent = (reviewE) => {
   return async (dispatch) => {
+    console.log( reviewE);
     try {
-      const endPoint = `${URL}/${REPORT_USER}`;
-
-      const response = await axios.post(endPoint, reportData);
-      const { data } = response;
-
+      const endPoint = `${URL}/${REVIEW_EVENT}`;
+      const { data } = await axios.post(endPoint, reviewE)
       dispatch({
-        type: POST_REPORT_USER,
+        type: POST_REVIEW_EVENT,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
+export const reviewUser = (review) => {
+  return async (dispatch) => {
+    console.log(review);
+    try {
+      const endPoint = `${URL}/${REVIEW_USER}`;
+
+      const { data } = await axios.post(endPoint, review);
+      dispatch({
+        type: POST_REVIEW_USER,
         payload: data,
       });
     } catch (error) {
@@ -135,21 +154,62 @@ export const postReportUser = (reportData) => {
   };
 };
 
-export const postReportEvent = (reportData) => {
+
+export const postReportEvent = (report) => {
   return async (dispatch) => {
     try {
-      const endPoint = `${URL}/${REPORT_EVENT}`;
+      const response = await axios.post(`${URL}/${REPORT_EVENT}`, report);
 
-      const response = await axios.post(endPoint, reportData);
-      const { data } = response;
+      if (!response || !response?.data) {
+        throw new Error("Failed to create Report");
+      }
+      
 
-      dispatch({
-        type: POST_REPORT_EVENT,
-        payload: data,
-      });
+      dispatch(postReportEventSuccess(response.data));
     } catch (error) {
-      alert(error.message);
+      dispatch(postReportEventFailure(error.message));
     }
+  };
+};
+
+
+export const postReportEventSuccess = (report) => {
+  return {
+    type: POST_REPORT_EVENT_SUCCESS,
+    payload: report,
+  };
+};
+
+export const postReportEventFailure = (error) => {
+  return {
+    type: POST_REPORT_EVENT_FAILURE,
+    payload: error,
+  };
+};
+
+
+export const postReportUser = (report) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${URL}/${REPORT_USER}`, report);
+      dispatch(postReportUserSuccess(response.data));
+    } catch (error) {
+      dispatch(postReportUserFailure(error.message));
+    }
+  };
+};
+
+export const postReportUserSuccess = (report) => {
+  return {
+    type: POST_REPORT_USER_SUCCESS,
+    payload: report,
+  };
+};
+
+export const postReportUserFailure = (error) => {
+  return {
+    type: POST_REPORT_USER_FAILURE,
+    payload: error,
   };
 };
 

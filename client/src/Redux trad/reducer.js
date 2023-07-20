@@ -6,8 +6,12 @@ import {
   POST_USER,
   SAVE_USER_FORM,
   RESET_FILTER,
-  POST_REPORT_USER,
-  POST_REPORT_EVENT,
+  POST_REPORT_EVENT_SUCCESS,
+  POST_REPORT_EVENT_FAILURE,
+  POST_REPORT_USER_SUCCESS,
+  POST_REPORT_USER_FAILURE,
+  POST_REVIEW_USER,
+  POST_REVIEW_EVENT,
   SET_PLACE_NAME,
   GET_USER_ACTIVITIES,
   GET_EVENT_BY_ID,
@@ -24,6 +28,8 @@ const initialState = {
   user: {},
   userReport: null,
   eventReport: null,
+  userReview: {},
+  reviewEvent: {},
   placeName: "",
   eventById: {},
   initSesion: "",
@@ -73,15 +79,42 @@ const rootReducer = (state = initialState, action) => {
       };
 
     //Report YAM
-    case POST_REPORT_USER:
+    case POST_REVIEW_USER:
       return {
         ...state,
-        userReport: action.payload,
+        userReview: action.payload,
+        error: null,
       };
-    case POST_REPORT_EVENT:
+      case POST_REVIEW_EVENT:
+        return {
+          ...state,
+          eventReview: action.payload,
+          error: null,
+        };
+    case POST_REPORT_EVENT_SUCCESS:
       return {
         ...state,
         eventReport: action.payload,
+        error: null,
+      };
+    case POST_REPORT_EVENT_FAILURE:
+      return {
+        ...state,
+        eventReport: null,
+        error: action.payload,
+      };
+   
+    case POST_REPORT_USER_SUCCESS:
+      return {
+        ...state,
+        userReport: action.payload,
+        error: null,
+      };
+    case POST_REPORT_USER_FAILURE:
+      return {
+        ...state,
+        userReport: null,
+        error: action.payload,
       };
     case SET_PLACE_NAME:
       return {
