@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-// const URL = "http://localhost:3001";
+
 const URL = "https://serverpfnomadlocals.onrender.com";
-const socket = io(URL); // Establecer conexión con el servidor de chat
+const socket = io(URL);
 
 const Chat = () => {
   const user = useSelector((state) => state.user);
@@ -15,7 +15,7 @@ const Chat = () => {
   });
 
   const userName = user.userName;
-  const chatContainerRef = useRef(null);
+  const chatContainerRef = useRef(null); // Referencia al div del chat
 
   useEffect(() => {
     socket.on("connect", () => setIsConnected(true));
@@ -24,9 +24,11 @@ const Chat = () => {
       setAllMessages((prevMessages) => [...prevMessages, data]);
     });
 
+    // Guardar el historial de mensajes en LocalStorage cada vez que cambie
     localStorage.setItem("chatHistory", JSON.stringify(allMessages));
 
-    scrollBottom()
+    // Desplazarse hacia abajo cuando se agrega un nuevo mensaje
+    scrollToBottom();
 
     return () => {
       socket.off("connect");
@@ -38,7 +40,7 @@ const Chat = () => {
 
   const handleSendMessage = () => {
     if (newMessage.trim() === "") {
-      return;
+      return; // Evitar enviar mensajes vacíos
     }
     socket.emit("chat message", {
       usuario: userName,
@@ -66,23 +68,23 @@ const Chat = () => {
   return (
     <div className="mt-4">
       <h4 className="text-lg font-semibold mb-2">Chat</h4>
-      <div 
+      <div
         ref={chatContainerRef}
         className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll"
-        >
-          {allMessages.map((message, index) => (
-            <div key={index} className="mb-2">
-              <span className="font-semibold">{message.usuario}: </span>
-              <span>{message.message}</span>
-            </div>
-          ))}
+      >
+        {allMessages.map((message, index) => (
+          <div key={index} className="mb-2">
+            <span className="font-semibold">{message.usuario}: </span>
+            <span>{message.message}</span>
+          </div>
+        ))}
       </div>
       <div className="flex mt-2 text-black">
         <input
           type="text"
           value={newMessage}
           onChange={handleMessageChange}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleKeyDown} // Agregamos el evento onKeyDown
           className="border border-gray-300 rounded-md px-2 py-1 flex-grow mr-2"
           placeholder="Escribe un mensaje..."
         />
