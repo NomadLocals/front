@@ -39,8 +39,14 @@ const ReportForm = () => {
 
     if (
       (reportType === "event" &&
-        (!reason || !description || !userNameUserReporter || !idEventReporte || !idUserReporter || !idUserReporte)) ||
-      (reportType === "user" && (!reason || !description || !idUserReporter || !idUserReporte))
+        (!reason ||
+          !description ||
+          !userNameUserReporter ||
+          !idEventReporte ||
+          !idUserReporter ||
+          !idUserReporte)) ||
+      (reportType === "user" &&
+        (!reason || !description || !idUserReporter || !idUserReporte))
     ) {
       setErrorMessage("Please fill in all fields.");
       setSuccessMessage("");
@@ -50,24 +56,44 @@ const ReportForm = () => {
     setErrorMessage("");
 
     if (reportType === "event") {
-      dispatch(postReportEvent({ type: reason, description, userNameUserReporter, idEventReporte }))
+      dispatch(
+        postReportEvent({
+          type: reason,
+          description,
+          userNameUserReporter,
+          idEventReporte,
+        })
+      )
         .then(() => {
           setSuccessMessage("Report submitted successfully.");
           resetForm();
         })
         .catch((error) => {
           setSuccessMessage("");
-          console.error("An error occurred while submitting the report:", error);
+          console.error(
+            "An error occurred while submitting the report:",
+            error
+          );
         });
     } else if (reportType === "user") {
-      dispatch(postReportUser({ type: reason, description, idUserReporter, idUserReporte }))
+      dispatch(
+        postReportUser({
+          type: reason,
+          description,
+          idUserReporter,
+          idUserReporte,
+        })
+      )
         .then(() => {
           setSuccessMessage("Report submitted successfully.");
           resetForm();
         })
         .catch((error) => {
           setSuccessMessage("");
-          console.error("An error occurred while submitting the report:", error);
+          console.error(
+            "An error occurred while submitting the report:",
+            error
+          );
         });
     }
   };
@@ -91,9 +117,7 @@ const ReportForm = () => {
         {successMessage && (
           <p className="text-green-500 mb-4">{successMessage}</p>
         )}
-        {errorMessage && (
-          <p className="text-red-500 mb-4">{errorMessage}</p>
-        )}
+        {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="reportType" className="block font-bold mb-1">
@@ -127,14 +151,18 @@ const ReportForm = () => {
                 {formData.reportType === "event" ? (
                   <>
                     <option value="Scam">Scam</option>
-                    <option value="Breach of Contract">Breach of Contract</option>
+                    <option value="Breach of Contract">
+                      Breach of Contract
+                    </option>
                     <option value="Violence">Violence</option>
                     <option value="Other">Other</option>
                   </>
                 ) : (
                   <>
                     <option value="Scam">Scam</option>
-                    <option value="Breach of Contract">Breach of Contract</option>
+                    <option value="Breach of Contract">
+                      Breach of Contract
+                    </option>
                     <option value="Violence">Violence</option>
                     <option value="Other">Other</option>
                   </>
@@ -156,7 +184,10 @@ const ReportForm = () => {
             ></textarea>
           </div>
           <div className="mb-4">
-            <label htmlFor="userNameUserReporter" className="block font-bold mb-1">
+            <label
+              htmlFor="userNameUserReporter"
+              className="block font-bold mb-1"
+            >
               Your Username:
             </label>
             <input
