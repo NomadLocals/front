@@ -15,12 +15,15 @@ import Chat from "./components/views/Chat.jsx";
 import About from "./components/views/About.jsx";
 import Settings from "./components/views/Settings.jsx";
 import Loading from "./components/views/Loading.jsx";
-
+import EventReview from "./components/views/ReviewEvents.jsx"
+import UserReview from "./components/views/ReviewUser";
 
 function App() {
   return (
     <div>
       <Routes>
+        <Route path="/reviewevent" element={<EventReview />} />
+        <Route path="/reviewuser" element={<UserReview />} />
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route
