@@ -9,6 +9,7 @@ import {
   getActivities,
   getUserActivities,
 } from "../../Redux trad/actions";
+import Imagenes from "../Images.jsx";
 
 export default function ActivityForm() {
   const location = useSelector((state) => state.eventLocation);
@@ -185,7 +186,7 @@ export default function ActivityForm() {
                 <option value="restaurates y cafes">restaurates y cafes</option>
                 <option value="otros">otros</option>
               </select>
-              <label className="uppercase text-sm font-bold opacity-70">
+              {/* <label className="uppercase text-sm font-bold opacity-70">
                 Imagen
               </label>
               <input
@@ -195,7 +196,7 @@ export default function ActivityForm() {
                 className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
                 value={activityData.image}
                 onChange={handleChange}
-              />
+              /> */}
 
               <label className="uppercase text-sm font-bold opacity-70">
                 Duración
@@ -235,6 +236,12 @@ export default function ActivityForm() {
                 max="99999"
                 className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
               />
+
+              <label className="uppercase text-sm font-bold opacity-70">
+                Imagen
+              </label>
+              <Imagenes />
+
               <label className="uppercase text-sm font-bold opacity-70">
                 Lugar
               </label>
