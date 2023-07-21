@@ -106,6 +106,7 @@ const Detail = () => {
             </h2>
             <h2 className="text-center mb-2 font-semibold ">{activityType}</h2>
             <div> <Link to={"/reviewevent"} > <button>Review</button> </Link> </div>
+            <div> <Link to={"/reviewevent"} > <button>Report</button> </Link> </div>
             <div className="flex flex-wrap">
               <div className="w-1/2">
                 <p>
