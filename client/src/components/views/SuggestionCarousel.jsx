@@ -9,6 +9,9 @@ const SuggestionCarousel = () => {
   const activities = useSelector((state) => state.activities);
   const user = useSelector((state) => state.user);
   const userLocation = user.geolocation;
+  useEffect(() => {
+    dispatch(getUserActivities(user.id));
+  }, [dispatch]);
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radio de la Tierra en kilómetros
