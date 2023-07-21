@@ -6,41 +6,42 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
 const SuggestionCarousel = () => {
-  const activities = useSelector((state) => state.activities);
-  // const user = useSelector((state) => state.user);
-  // const dispatch = useDispatch();
-  // const userLocation = user.geolocation;
-  // useEffect(() => {
-  //   dispatch(getUserActivities(user.id));
-  // }, [dispatch]);
+  let activities = [];
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const userLocation = user.geolocation;
+  useEffect(() => {
+    dispatch(getUserActivities(user.id));
+    activities = useSelector((state) => state.activities);
+  }, [dispatch]);
 
-//   function calcularDistancia(lat1, lon1, lat2, lon2) {
-//     let R = 6371; // Radio de la Tierra en kilómetros
-//     let dLat = (lat2 - lat1) * (Math.PI / 180);
-//     let dLon = (lon2 - lon1) * (Math.PI / 180);
-//     let a =
-//       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-//       Math.cos(lat1 * (Math.PI / 180)) *
-//         Math.cos(lat2 * (Math.PI / 180)) *
-//         Math.sin(dLon / 2) *
-//         Math.sin(dLon / 2);
-//     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-//     let distancia = R * c;
-//     return distancia;
-//   }
+  function calcularDistancia(lat1, lon1, lat2, lon2) {
+    let R = 6371; // Radio de la Tierra en kilómetros
+    let dLat = (lat2 - lat1) * (Math.PI / 180);
+    let dLon = (lon2 - lon1) * (Math.PI / 180);
+    let a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let distancia = R * c;
+    return distancia;
+  }
 
-//   // Coordenadas del userLocation
-//   let userLat = userLocation && userLocation.lat ? userLocation.lat : null;
-//   let userLon = userLocation && userLocation.lng ? userLocation.lng : null;
+  // Coordenadas del userLocation
+  let userLat = userLocation && userLocation.lat ? userLocation.lat : null;
+  let userLon = userLocation && userLocation.lng ? userLocation.lng : null;
 
-//   // Calcular la distancia entre el userLocation y cada ubicación en eventLocations
+  // Calcular la distancia entre el userLocation y cada ubicación en eventLocations
 
-// activities.forEach(function (act) {
-//         let eventLat = act.location.lat;
-//         let eventLon = act.location.lng;
-//         let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
-//         act.distancia = distancia;
-//        })
+activities.forEach(function (act) {
+        let eventLat = act.location.lat;
+        let eventLon = act.location.lng;
+        let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
+        act.distancia = distancia;
+       })
   //crear estado global alternativo para renderizar actividades totales.
   return (
     <div className="bg-grey grid grid-cols-1 sm:grid-cols-2 md:flex md:justify-center gap-4 ml-1 mr-1 mt-3 ">
@@ -59,9 +60,9 @@ const SuggestionCarousel = () => {
       >
         {activities.length > 0 ? (
           activities
-            // .sort(function (a, b) {
-            //   return a.distancia - b.distancia;
-            // })
+            .sort(function (a, b) {
+              return a.distancia - b.distancia;
+            })
             .map(
               ({
                 id,
