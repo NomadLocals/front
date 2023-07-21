@@ -64,7 +64,6 @@ const SuggestionCarousel = () => {
                 name,
                 eventDate,
                 image,
-                location,
                 minCost,
                 minSizePeople,
                 place,
@@ -76,7 +75,6 @@ const SuggestionCarousel = () => {
                     name={name}
                     eventDate={eventDate.split("T")[0]}
                     image={image}
-                    // location={location.latlng}
                     minCost={minCost}
                     minSizePeople={minSizePeople}
                     place={place}
