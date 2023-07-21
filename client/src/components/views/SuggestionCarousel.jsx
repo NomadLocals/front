@@ -8,6 +8,7 @@ import { useEffect } from "react";
 const SuggestionCarousel = () => {
   const activities = useSelector((state) => state.activities);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const userLocation = user.geolocation;
   useEffect(() => {
     dispatch(getUserActivities(user.id));
