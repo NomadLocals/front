@@ -19,6 +19,7 @@ import {
   VACIAR_USER,
   CHECK_USER_BY_ID,
   FETCH_PLACE_NAME,
+  GET_OTHERS,
 } from "./action-types.js";
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
   placeName: "",
   eventById: {},
   initSesion: "",
+  others: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -85,12 +87,12 @@ const rootReducer = (state = initialState, action) => {
         userReview: action.payload,
         error: null,
       };
-      case POST_REVIEW_EVENT:
-        return {
-          ...state,
-          eventReview: action.payload,
-          error: null,
-        };
+    case POST_REVIEW_EVENT:
+      return {
+        ...state,
+        eventReview: action.payload,
+        error: null,
+      };
     case POST_REPORT_EVENT_SUCCESS:
       return {
         ...state,
@@ -103,7 +105,7 @@ const rootReducer = (state = initialState, action) => {
         eventReport: null,
         error: action.payload,
       };
-   
+
     case POST_REPORT_USER_SUCCESS:
       return {
         ...state,
@@ -153,6 +155,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         eventById: action.payload,
+      };
+    case GET_OTHERS:
+      return {
+        ...state,
+        others: action.payload,
       };
 
     default:
