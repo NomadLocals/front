@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const SuggestionCarousel = () => {
   const activities = useSelector((state) => state.activities);
@@ -25,17 +26,20 @@ const SuggestionCarousel = () => {
   }
 
   // Coordenadas del userLocation
-  let userLat = userLocation ? userLocation.lat : "";
-  let userLon = userLocation ? userLocation.lng : "";
+  let userLat = userLocation && userLocation.lat ? userLocation.lat : null;
+  let userLon = userLocation && userLocation.lng ? userLocation.lng : null;
 
   // Calcular la distancia entre el userLocation y cada ubicación en eventLocations
-  activities.forEach(function (act) {
-    let eventLat = act.location.lat;
-    let eventLon = act.location.lng;
-    console.log(eventLat, eventLon);
-    let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
-    act.distancia = distancia;
-  });
+  useEffect(() => {
+    if (userLat !== null && userLon !== null) {
+      activities.forEach(function (act) {
+        let eventLat = act.location.lat;
+        let eventLon = act.location.lng;
+        let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
+        act.distancia = distancia;
+      });
+    }
+  }, [userLat, userLon, activities]);
   //crear estado global alternativo para renderizar actividades totales.
   return (
     <div className="bg-grey grid grid-cols-1 sm:grid-cols-2 md:flex md:justify-center gap-4 ml-1 mr-1 mt-3 ">
