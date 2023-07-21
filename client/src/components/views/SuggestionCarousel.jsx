@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
 const SuggestionCarousel = () => {
-  let activities = [];
+  let activities
   const user = useSelector((state) => state.user);
   const userLocation = user.geolocation;
   useEffect(() => {
