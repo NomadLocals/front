@@ -9,7 +9,8 @@ import {
   postEvent,
   getActivities,
   getUserActivities,
-} from "../../Redux trad/actions";
+  deleteImage,
+} from "../../Redux trad/actions.js";
 import Images from "../Images.jsx";
 
 export default function ActivityForm() {
@@ -17,8 +18,10 @@ export default function ActivityForm() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const place = useSelector((state) => state.placeName);
+  const image = useSelector((state) => state.activityImage);
   const userId = user.id;
   const dispatch = useDispatch();
+  console.log(image);
 
   const [activityData, setActivityData] = useState({
     userId: userId,
@@ -34,7 +37,20 @@ export default function ActivityForm() {
     activityType: "",
     image: "",
   });
+  console.log(activityData);
+
   const [errors, setErrors] = useState("");
+
+  useEffect(() => {
+    dispatch(deleteImage());
+  }, []);
+
+  useEffect(() => {
+    setActivityData({
+      ...activityData,
+      image: image,
+    });
+  }, [image]);
 
   useEffect(() => {
     setActivityData((prevActivityData) => ({
@@ -88,6 +104,10 @@ export default function ActivityForm() {
       setErrors("Se requiere duracion de la actividad");
       isValid = false;
     }
+    if (activityData.image === "") {
+      setErrors("Se requiere imagen");
+      isValid = false;
+    }
 
     if (isValid) {
       try {
@@ -105,7 +125,7 @@ export default function ActivityForm() {
           minSizePeople: "0",
           active: true,
           activityType: "",
-          image: "",
+          image: image,
         });
         setErrors("");
         dispatch(getActivities());
@@ -117,7 +137,12 @@ export default function ActivityForm() {
     }
   };
   //este codigo es para que traiga la zona horaria local
-  const currentDate = new Date().toLocaleString('es-ES', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, hour12: false }).slice(0, 16);
+  const currentDate = new Date()
+    .toLocaleString("es-ES", {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      hour12: false,
+    })
+    .slice(0, 16);
 
   return (
     <>
@@ -241,7 +266,11 @@ export default function ActivityForm() {
               <label className="uppercase text-sm font-bold opacity-70">
                 Imagen
               </label>
-              <Images setImage={(url) => setActivityData({ ...activityData, image: url })} />
+              <Images
+                setImage={(url) =>
+                  setActivityData({ ...activityData, image: url })
+                }
+              />
 
               <label className="uppercase text-sm font-bold opacity-70">
                 Lugar

@@ -2,11 +2,14 @@ import React, { useState } from "react";
 /* eslint no-unused-vars: "off" */
 import Dropzone from "react-dropzone";
 import { Container } from "reactstrap";
-import { FcAddImage } from 'react-icons/fc';
-import axios from "axios";
+import { FcAddImage } from "react-icons/fc";
+import { postImage, deleteImage } from "../Redux trad/actions.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const Images = (props) => {
-  const [image, setImage] = useState(null);
+  const image = useSelector((state) => state.activityImage);
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState("");
 
   const handleDrop = (files) => {
@@ -18,27 +21,25 @@ const Images = (props) => {
     formData.append("api_key", "413321231948876");
     formData.append("timestamp", (Date.now() / 1000) | 0);
     setLoading("true");
-    
-    axios
-      .post("https://api.cloudinary.com/v1_1/dwit2djhy/image/upload", formData, {
-        headers: { "X-Requested-With": "XMLHttpRequest" },
-      })
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-        const fileURL = data.secure_url;
-        console.log(image);
-        setImage(fileURL); 
-        setLoading("false");
-      })
-      .catch((error) => {
-        console.error("Error uploading image: ", error);
-        setLoading("false");
-      });
+    dispatch(postImage(formData));
+    setLoading("false");
+
+    // .then((response) => {
+    //     const data = response.data;
+    //     console.log(data);
+    //     const fileURL = data.secure_url;
+    //     console.log(image);
+    //     setImage(fileURL);
+
+    //   })
+    // .catch((error) => {
+    //   console.error("Error uploading image: ", error);
+    //   setLoading("false");
+    // });
   };
 
   function handleDeleteImage() {
-    setImage(null);
+    dispatch(deleteImage());
   }
 
   function imagePreview() {
@@ -49,16 +50,27 @@ const Images = (props) => {
       return (
         <div>
           {image ? (
-            <div style={{ textAlign: "center", display: "flex", alignItems: "center", flexDirection: "column" }}>
+            <div
+              style={{
+                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
               <img
                 alt="imagen"
                 style={{ width: "100%", height: "auto", maxWidth: "300px" }}
                 src={image}
               />
-              <button className="delete-button" onClick={handleDeleteImage}>Eliminar</button>
+              <button className="delete-button" onClick={handleDeleteImage}>
+                Eliminar
+              </button>
             </div>
           ) : (
-            <h3 style={{ textAlign: "center" }}>No hay imágenes seleccionadas</h3>
+            <h3 style={{ textAlign: "center" }}>
+              No hay imágenes seleccionadas
+            </h3>
           )}
         </div>
       );
@@ -69,17 +81,17 @@ const Images = (props) => {
     <div>
       <Container>
         <h1 className="text-center">Sube la portada de tu evento aquí</h1>
-        <Dropzone
-          className="dropzone"
-          onDrop={handleDrop}
-          maxFiles={1}
-        >
+        <Dropzone className="dropzone" onDrop={handleDrop} maxFiles={1}>
           {({ getRootProps, getInputProps }) => (
             <section>
               <div {...getRootProps({ className: "dropzone" })}>
                 <input {...getInputProps()} />
-                <span className="icon-container"><FcAddImage /></span>
-                <p className="text-center">Arrastra tu imagen aquí o haz clic para seleccionar</p>
+                <span className="icon-container">
+                  <FcAddImage />
+                </span>
+                <p className="text-center">
+                  Arrastra tu imagen aquí o haz clic para seleccionar
+                </p>
               </div>
             </section>
           )}

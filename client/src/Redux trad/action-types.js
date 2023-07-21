@@ -23,3 +23,5 @@ export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const UNSUSCRIBE_EVENT = "UNSUSCRIBE_EVENT";
 export const EDIT_USER = "EDIT_USER";
 export const GET_OTHERS = "GET_OTHERS";
+export const POST_IMAGES = "POST_IMAGES";
+export const DELETE_IMAGE = "DELETE_IMAGE";
