@@ -40,7 +40,7 @@ activities.forEach(function (act) {
         let eventLon = act.location.lng;
         let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
         act.distancia = distancia;
-       }
+       })
   //crear estado global alternativo para renderizar actividades totales.
   return (
     <div className="bg-grey grid grid-cols-1 sm:grid-cols-2 md:flex md:justify-center gap-4 ml-1 mr-1 mt-3 ">
