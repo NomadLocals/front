@@ -175,6 +175,7 @@ export const getUserActivities = (id) => {
     }
   };
 };
+
 export const getActivityDetail = (id) => {
   return async (dispatch) => {
     try {
@@ -246,6 +247,7 @@ export const suscribeEvent = (id, userId) => {
     }
   };
 };
+
 export const unsuscribeEvent = (id, userId) => {
   return async (dispatch) => {
     try {
