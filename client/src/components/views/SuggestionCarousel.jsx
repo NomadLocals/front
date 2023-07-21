@@ -58,16 +58,12 @@ const SuggestionCarousel = () => {
       >
         {activities.length > 0 ? (
           activities
-            .sort(function (a, b) {
-              return a.distancia - b.distancia;
-            })
             .map(
               ({
                 id,
                 name,
                 eventDate,
                 image,
-                location,
                 minCost,
                 minSizePeople,
                 place,
@@ -79,7 +75,6 @@ const SuggestionCarousel = () => {
                     name={name}
                     eventDate={eventDate.split("T")[0]}
                     image={image}
-                    // location={location.latlng}
                     minCost={minCost}
                     minSizePeople={minSizePeople}
                     place={place}
