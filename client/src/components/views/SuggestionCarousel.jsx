@@ -1,5 +1,5 @@
 import Activity from "./Activity.jsx";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
@@ -8,12 +8,10 @@ import { useEffect } from "react";
 const SuggestionCarousel = () => {
   let activities = [];
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   const userLocation = user.geolocation;
   useEffect(() => {
-    dispatch(getUserActivities(user.id));
     activities = useSelector((state) => state.activities);
-  }, [dispatch]);
+  }, []);
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radio de la Tierra en kilómetros
