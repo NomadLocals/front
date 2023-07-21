@@ -22,8 +22,9 @@ import About from "./components/views/About.jsx";
 import Settings from "./components/views/Settings.jsx";
 import Loading from "./components/views/Loading.jsx";
 import EventReview from "./components/views/ReviewEvents.jsx";
-import UserReview from "./components/views/ReviewUser";
-import OthersDetail from "./components/views/OthersDetail";
+import UserReview from "./components/views/ReviewUser.jsx";
+import OthersDetail from "./components/views/OthersDetail.jsx";
+import Report from "./components/views/Report.jsx"
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/reviewevent" element={<EventReview />} />
         <Route path="/reviewuser" element={<UserReview />} />
+        <Route path="/report" element={<Report />} />
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route
