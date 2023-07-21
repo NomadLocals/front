@@ -1,40 +1,107 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { io } from "socket.io-client";
-const URL = "http://localhost:3001";
-// const URL = "https://serverpfnomadlocals.onrender.com";
-const socket = io(URL); // Establecer conexión con el servidor de chat
 
-const Chat = () => {
+// const URL = "https://serverpfnomadlocals.onrender.com";
+
+const Chat = ({socket}) => {
   const user = useSelector((state) => state.user);
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [allMessages, setAllMessages] = useState([]);
 
+  const insultos = [
+    "puto",
+    "pUt0",
+    "PUTO",
+    "PUT0",
+    "hijodeperra",
+    "perra",
+    "culia",
+    "hijodeputa",
+    "puta",
+    "negro",
+    "mierda",
+    "trola",
+    "put@",
+    "gay",
+    "g@ay",
+    "bobo",
+    "boba",
+    "idiota",
+    "tonto",
+    "tonta",
+    "tont@",
+    "hueca",
+    "hueco",
+    "macaco",
+    "nashe",
+    "concha",
+    "pito",
+    "fuck",
+    "fucking",
+    "brasuca",
+    "culiado",
+    "huecudo",
+    "pijudo",
+    "bugs",
+    "bag",
+    "trolo",
+    "pingo",
+    "orto",
+    "poronga",
+    "culiao",
+    "culiau",
+    "negros",
+    "estupido",
+    "estupidos",
+    "pelotudito",
+    "cachondo",
+    "cachonda",
+    "mogolico",
+    "mogolica",
+    "porongo",
+    "reconcha",
+    "pija",
+    "laconcha",
+  ];
   const userName = user.userName;
 
   useEffect(() => {
     socket.on("connect", () => setIsConnected(true));
 
-    socket.on("chat message", (data) => {
-      setAllMessages((allMessages) => [...allMessages, data]);
+    socket.on("chatmensaje", (data) => {
+      
+      const palabras = data.message.split(" ").map((palabra) =>
+      insultos.includes(palabra.toLowerCase()) ? "****" : palabra
+    );
+        const mensajeFiltrado = { ...mensaje, message: palabras.join(" ") };
+      
+      setAllMessages((allMessages) => [...allMessages, mensajeFiltrado]);
     });
+    
 
     return () => {
       socket.off("connect");
-      socket.off("chat message");
+      socket.off("chatmensaje");
     };
-  }, [socket]);
+  }, [socket, insultos]);
 
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
   const handleSendMessage = () => {
+    const palabras = newMessage.split(" ").map((palabra) =>
+    insultos.includes(palabra.toLowerCase()) ? "****" : palabra
+  );
+  const mensajeFiltrado = palabras.join(" ");
+
     socket.emit("chat message", {
       usuario: userName,
-      message: newMessage,
+      message: mensajeFiltrado,
     });
     setNewMessage("");
   };
+
+
 
   return (
     <div className="mt-4">

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "./NavBar.jsx";
 import Chat from "./Chat.jsx"; // Nuevo componente de chat
@@ -152,14 +152,17 @@ const Detail = () => {
                       <div
                         key={id}
                         className="flex flex-col items-center mb-4 mr-3 mt-2"
-                      >
+                        >
+                        < Link to={`/others/${id}`} >
                         <div className="w-12 h-12 rounded-full overflow-hidden">
+
                           <img
                             src={image}
                             alt="Imagen de miembro"
                             className="h-full w-full object-cover"
-                          />
+                            />
                         </div>
+                            </Link>
                         <p className="mt-2 text-center text-xs">{userName}</p>
                       </div>
                     );
