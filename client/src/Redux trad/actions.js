@@ -25,6 +25,7 @@ import {
   UNSUSCRIBE_EVENT,
   CHECK_USER_BY_ID,
   EDIT_USER,
+  GET_OTHERS,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001";
@@ -124,10 +125,10 @@ export const resetFilters = () => {
 
 export const reviewEvent = (reviewE) => {
   return async (dispatch) => {
-    console.log( reviewE);
+    console.log(reviewE);
     try {
       const endPoint = `${URL}/${REVIEW_EVENT}`;
-      const { data } = await axios.post(endPoint, reviewE)
+      const { data } = await axios.post(endPoint, reviewE);
       dispatch({
         type: POST_REVIEW_EVENT,
         payload: data,
@@ -135,8 +136,8 @@ export const reviewEvent = (reviewE) => {
     } catch (error) {
       alert(error.message);
     }
-  }
-}
+  };
+};
 export const reviewUser = (review) => {
   return async (dispatch) => {
     console.log(review);
@@ -154,7 +155,6 @@ export const reviewUser = (review) => {
   };
 };
 
-
 export const postReportEvent = (report) => {
   return async (dispatch) => {
     try {
@@ -163,7 +163,6 @@ export const postReportEvent = (report) => {
       if (!response || !response?.data) {
         throw new Error("Failed to create Report");
       }
-      
 
       dispatch(postReportEventSuccess(response.data));
     } catch (error) {
@@ -171,7 +170,6 @@ export const postReportEvent = (report) => {
     }
   };
 };
-
 
 export const postReportEventSuccess = (report) => {
   return {
@@ -186,7 +184,6 @@ export const postReportEventFailure = (error) => {
     payload: error,
   };
 };
-
 
 export const postReportUser = (report) => {
   return async (dispatch) => {
@@ -374,6 +371,22 @@ export const editUser = (userId, userData) => {
       });
     } catch (error) {
       alert(error.message);
+    }
+  };
+};
+
+export const getOthersById = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/${USER}/${id}`);
+      if (data) {
+        return dispatch({
+          type: GET_OTHERS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
     }
   };
 };
