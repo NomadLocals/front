@@ -1,7 +1,8 @@
 import MapSelect from "./Map";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+/* eslint no-unused-vars: "off" */
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,6 +10,7 @@ import {
   getActivities,
   getUserActivities,
 } from "../../Redux trad/actions";
+import Images from "../Images.jsx";
 
 export default function ActivityForm() {
   const location = useSelector((state) => state.eventLocation);
@@ -185,7 +187,7 @@ export default function ActivityForm() {
                 <option value="restaurates y cafes">restaurates y cafes</option>
                 <option value="otros">otros</option>
               </select>
-              <label className="uppercase text-sm font-bold opacity-70">
+              {/* <label className="uppercase text-sm font-bold opacity-70">
                 Imagen
               </label>
               <input
@@ -195,7 +197,7 @@ export default function ActivityForm() {
                 className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
                 value={activityData.image}
                 onChange={handleChange}
-              />
+              /> */}
 
               <label className="uppercase text-sm font-bold opacity-70">
                 Duración
@@ -235,6 +237,12 @@ export default function ActivityForm() {
                 max="99999"
                 className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
               />
+
+              <label className="uppercase text-sm font-bold opacity-70">
+                Imagen
+              </label>
+              <Images setImage={(url) => setActivityData({ ...activityData, image: url })} />
+
               <label className="uppercase text-sm font-bold opacity-70">
                 Lugar
               </label>

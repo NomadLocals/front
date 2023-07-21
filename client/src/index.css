@@ -2,3 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Estilos para centrar el icono */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .dropzone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .dropzone p {
+    margin-bottom: 20px;
+  }
+  
+  .dropzone span {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+  
+  .delete-button {
+    background-color: #ff0000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
