@@ -29,6 +29,7 @@ import {
 } from "./action-types.js";
 
 const URL = "http://localhost:3001";
+// const URL = import.meta.env.SERVER_URL;
 // const URL = "https://serverpfnomadlocals.onrender.com";
 
 const USER = "users";
