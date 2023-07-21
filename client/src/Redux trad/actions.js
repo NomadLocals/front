@@ -22,8 +22,8 @@ import {
   CHECK_USER_BY_ID,
 } from "./action-types.js";
 
-// const URL = "http://localhost:3001";
-const URL = "https://serverpfnomadlocals.onrender.com";
+const URL = "http://localhost:3001";
+// const URL = "https://serverpfnomadlocals.onrender.com";
 
 const USER = "users";
 const EVENT = "events";
@@ -99,6 +99,7 @@ export const postUser = (userData) => {
     try {
       const endPoint = `${URL}/${USER}`;
       const { data } = await axios.post(endPoint, userData);
+      await axios.post(`${URL}/send-mail`, userData)
       dispatch({
         type: POST_USER,
         payload: data,
