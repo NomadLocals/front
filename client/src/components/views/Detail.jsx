@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "./NavBar.jsx";
 import Chat from "./Chat.jsx"; // Nuevo componente de chat
@@ -105,6 +105,8 @@ const Detail = () => {
               {name}
             </h2>
             <h2 className="text-center mb-2 font-semibold ">{activityType}</h2>
+            <div> <Link to={"/reviewevent"} > <button>Review</button> </Link> </div>
+            <div> <Link to={"/report"} > <button>Report</button> </Link> </div>
             <div className="flex flex-wrap">
               <div className="w-1/2">
                 <p>
@@ -138,7 +140,8 @@ const Detail = () => {
 
             <h3 className="text-lg font-semibold mb-2 text-center">Miembros</h3>
 
-            <div className="flex flex-wrap">
+            
+              <div className="flex flex-wrap">
               {Users
                 ? Users?.map(({ userName, image, id }) => {
                     return (
@@ -146,6 +149,7 @@ const Detail = () => {
                         key={id}
                         className="flex flex-col items-center mb-4 mr-3 mt-2"
                       >
+                        < Link to={`/others/${id}`} >
                         <div className="w-12 h-12 rounded-full overflow-hidden">
                           <img
                             src={image}
@@ -153,12 +157,14 @@ const Detail = () => {
                             className="h-full w-full object-cover"
                           />
                         </div>
+                        </Link>
                         <p className="mt-2 text-center text-xs">{userName}</p>
                       </div>
                     );
                   })
                 : null}
             </div>
+            
             {showChat && <Chat />}
             <div className="flex justify-center">
               {!showChat ? (
