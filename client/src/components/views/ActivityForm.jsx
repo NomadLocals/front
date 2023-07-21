@@ -21,7 +21,6 @@ export default function ActivityForm() {
   const image = useSelector((state) => state.activityImage);
   const userId = user.id;
   const dispatch = useDispatch();
-  console.log(image);
 
   const [activityData, setActivityData] = useState({
     userId: userId,
@@ -37,7 +36,6 @@ export default function ActivityForm() {
     activityType: "",
     image: "",
   });
-  console.log(activityData);
 
   const [errors, setErrors] = useState("");
 
