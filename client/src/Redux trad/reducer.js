@@ -20,6 +20,8 @@ import {
   CHECK_USER_BY_ID,
   FETCH_PLACE_NAME,
   GET_OTHERS,
+  POST_IMAGES,
+  DELETE_IMAGE,
 } from "./action-types.js";
 
 const initialState = {
@@ -35,6 +37,7 @@ const initialState = {
   eventById: {},
   initSesion: "",
   others: {},
+  activityImage: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -160,6 +163,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         others: action.payload,
+      };
+    case POST_IMAGES:
+      return {
+        ...state,
+        activityImage: action.payload,
+      };
+    case DELETE_IMAGE:
+      return {
+        ...state,
+        activityImage: "",
       };
 
     default:
