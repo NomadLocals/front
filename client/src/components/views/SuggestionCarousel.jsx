@@ -3,15 +3,13 @@ import { useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+
 
 const SuggestionCarousel = () => {
-  let activities
+  let activities = useSelector((state) => state.activities);
   const user = useSelector((state) => state.user);
   const userLocation = user.geolocation;
-  useEffect(() => {
-    activities = useSelector((state) => state.activities);
-  }, []);
+  console.log(user);
   console.log(activities);
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
