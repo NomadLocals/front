@@ -71,7 +71,7 @@ const OthersDetail = () => {
               Bio:
             </h3>
             <p className="text-gray-600 mt-2" style={{ color: "#000000" }}>
-              {bio}
+              {bio}|
             </p>
           </div>
         </div>

@@ -18,6 +18,7 @@ import Detail from "./components/views/Detail.jsx";
 import FilterActivities from "./components/views/Filter.jsx";
 import Landing from "./components/views/Landing.jsx";
 import Chat from "./components/views/Chat.jsx";
+import ChatPersonal from "./components/views/ChatPersonal.jsx";
 import About from "./components/views/About.jsx";
 import Settings from "./components/views/Settings.jsx";
 import Loading from "./components/views/Loading.jsx";
@@ -47,6 +48,7 @@ function App() {
         <Route path="/activity-form" element={<ActivityForm />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/others/:id" element={<OthersDetail />} />
+        {/* <Route path="/others/:id/chatPersonal" element={<ChatPersonal />} /> */}
         <Route path="/activities/detail/:id/chat" element={<Chat />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings />} />
