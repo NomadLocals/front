@@ -11,6 +11,7 @@ const SuggestionCarousel = () => {
   const userLocation = user.geolocation;
   console.log(user);
   console.log(activities);
+  console.log(userLocation);
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radio de la Tierra en kilómetros
