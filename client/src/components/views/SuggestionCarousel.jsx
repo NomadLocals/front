@@ -12,6 +12,7 @@ const SuggestionCarousel = () => {
   useEffect(() => {
     activities = useSelector((state) => state.activities);
   }, []);
+  console.log(activities);
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radio de la Tierra en kilómetros
