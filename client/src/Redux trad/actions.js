@@ -29,12 +29,12 @@ import {
   POST_IMAGES,
   DELETE_IMAGE,
 } from "./action-types.js";
-const URL = import.meta.env.SERVER_URL;
+// const URL = import.meta.env.SERVER_URL;
 
 // // const URL = "http://localhost:3001";
 // // const URL = "https://serverpfnomadlocals.onrender.com";
 // //servidor de deploy:
-// const URL = "https://serverpredeploy.onrender.com";
+const URL = "https://serverpredeploy.onrender.com";
 
 const USER = "users";
 const EVENT = "events";
