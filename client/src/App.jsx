@@ -24,6 +24,7 @@ import Loading from "./components/views/Loading.jsx";
 import EventReview from "./components/views/ReviewEvents.jsx";
 import UserReview from "./components/views/ReviewUser";
 import OthersDetail from "./components/views/OthersDetail";
+import LayoutAdmin from "./components/views/LayoutAdmin";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
         <Route path="/activities/detail/:id/chat" element={<Chat />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/admin" element={<LayoutAdmin />} />
       </Routes>
     </div>
   );

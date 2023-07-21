@@ -105,7 +105,7 @@ export const postUser = (userData) => {
     try {
       const endPoint = `${URL}/${USER}`;
       const { data } = await axios.post(endPoint, userData);
-      await axios.post(`${URL}/send-mail`, userData)
+      await axios.post(`${URL}/send-mail`, userData);
       dispatch({
         type: POST_USER,
         payload: data,
