@@ -58,9 +58,6 @@ const SuggestionCarousel = () => {
       >
         {activities.length > 0 ? (
           activities
-            .sort(function (a, b) {
-              return a.distancia - b.distancia;
-            })
             .map(
               ({
                 id,
