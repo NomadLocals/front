@@ -1,7 +1,8 @@
 import MapSelect from "./Map";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+/* eslint no-unused-vars: "off" */
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,7 +10,7 @@ import {
   getActivities,
   getUserActivities,
 } from "../../Redux trad/actions";
-import Imagenes from "../Images.jsx";
+import Images from "../Images.jsx";
 
 export default function ActivityForm() {
   const location = useSelector((state) => state.eventLocation);
@@ -240,7 +241,7 @@ export default function ActivityForm() {
               <label className="uppercase text-sm font-bold opacity-70">
                 Imagen
               </label>
-              <Imagenes />
+              <Images setImage={(url) => setActivityData({ ...activityData, image: url })} />
 
               <label className="uppercase text-sm font-bold opacity-70">
                 Lugar
