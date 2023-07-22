@@ -1,17 +1,25 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { postReportUser, postReportEvent } from "../../Redux trad/actions";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { postReportUser, postReportEvent } from "../../Redux trad/actions.js";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ReportForm = () => {
   const dispatch = useDispatch();
+  const {id} = useParams()
+  const user = useSelector(state=> state.user);
+  const navigate = useNavigate();
+  const event = useSelector(state=> state.eventById);
+  const eventUser = event.userId
+  const userName = user.userName
+  const userId = user.id
   const [formData, setFormData] = useState({
     reportType: "",
     reason: "",
     description: "",
-    userNameUserReporter: "",
-    idEventReporte: "",
-    idUserReporter: "",
-    idUserReporte: "",
+    userNameUserReporter: userName,
+    idEventReporte: id,
+    idUserReporter: userId,
+    idUserReporte: eventUser,
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -26,7 +34,7 @@ const ReportForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    
     const {
       reportType,
       reason,
@@ -36,11 +44,12 @@ const ReportForm = () => {
       idUserReporter,
       idUserReporte,
     } = formData;
-
+    console.log(formData)
     if (
       (reportType === "event" &&
         (!reason ||
           !description ||
+          !userName ||
           !userNameUserReporter ||
           !idEventReporte ||
           !idUserReporter ||
@@ -103,10 +112,10 @@ const ReportForm = () => {
       reportType: "",
       reason: "",
       description: "",
-      userNameUserReporter: "",
-      idEventReporte: "",
-      idUserReporter: "",
-      idUserReporte: "",
+      userNameUserReporter: userName,
+      idEventReporte: id,
+    idUserReporter: userId,
+      idUserReporte: eventUser,
     });
   };
 
@@ -183,68 +192,20 @@ const ReportForm = () => {
               rows="4"
             ></textarea>
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="userNameUserReporter"
-              className="block font-bold mb-1"
-            >
-              Your Username:
-            </label>
-            <input
-              type="text"
-              id="userNameUserReporter"
-              name="userNameUserReporter"
-              value={formData.userNameUserReporter}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          {formData.reportType === "event" && (
-            <div className="mb-4">
-              <label htmlFor="idEventReporte" className="block font-bold mb-1">
-                Event ID:
-              </label>
-              <input
-                type="text"
-                id="idEventReporte"
-                name="idEventReporte"
-                value={formData.idEventReporte}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-          )}
-          <div className="mb-4">
-            <label htmlFor="idUserReporter" className="block font-bold mb-1">
-              Your User ID:
-            </label>
-            <input
-              type="text"
-              id="idUserReporter"
-              name="idUserReporter"
-              value={formData.idUserReporter}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="idUserReporte" className="block font-bold mb-1">
-              User ID:
-            </label>
-            <input
-              type="text"
-              id="idUserReporte"
-              name="idUserReporte"
-              value={formData.idUserReporte}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
           <button
             type="submit"
             className="w-full xl:w-auto bg-blue text-black py-2 px-8 rounded-xl text-xl"
           >
             Submit
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              navigate("/home")
+            }}
+            className="px-6 py-2 rounded-lg bg-blue text-black font-semibold hover:bg-gray-400"
+          >
+            Cancelar
           </button>
         </form>
       </div>

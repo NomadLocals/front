@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { reviewEvent } from "../../Redux trad/actions";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { reviewEvent } from "../../Redux trad/actions.js";
+import { useDispatch, useSelector } from "react-redux";
 import { FaStar } from "react-icons/fa";
+import { useNavigate, useParams} from "react-router-dom";
 
 const EventReview = () => {
+  const navigate = useNavigate()
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [type, setType] = useState("");
@@ -11,6 +13,9 @@ const EventReview = () => {
   const [userNameUserReview, setUserNameUserReview] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
+  const user = useSelector(state=> state.user);
+  const userName = user.userName
+  const {id} = useParams();
   const dispatch = useDispatch();
 
   const handleRatingChange = (value) => {
@@ -21,13 +26,12 @@ const EventReview = () => {
     setComment(event.target.value);
   };
 
-  const handleidEventReviewChange = (event) => {
-    setIdEventReview(event.target.value);
-  };
-
-  const handleUserNameUserReviewChange = (event) => {
-    setUserNameUserReview(event.target.value);
-  };
+ useEffect(()=>{
+  setIdEventReview(id);
+  setUserNameUserReview(userName);
+ },[])
+    
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -60,8 +64,12 @@ const EventReview = () => {
 
     setRating(0);
     setComment("");
-    setIdEventReview("");
-    setUserNameUserReview("");
+    setIdEventReview(id);
+    setUserNameUserReview(userName);
+  };
+
+  const handleGoBack = () => {
+    history.goBack(); // Retrocede a la página anterior
   };
 
   return (
@@ -127,30 +135,6 @@ const EventReview = () => {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">
-            ID del usuario que hace la reseña:
-          </label>
-          <input
-            type="text"
-            value={userNameUserReview}
-            onChange={handleUserNameUserReviewChange}
-            className="block w-min px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">
-            ID Evento a hacer reseña:
-          </label>
-          <input
-            type="text"
-            value={idEventReview}
-            onChange={handleidEventReviewChange}
-            className="block w-min px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
         <div className="flex justify">
           <button
             type="submit"
@@ -163,10 +147,11 @@ const EventReview = () => {
             onClick={() => {
               setRating(0);
               setComment("");
-              setIdEventReview("");
-              setUserNameUserReview("");
+              setIdEventReview(id);
+              setUserNameUserReview(userName);
               setIsSuccess(false);
               setIsError(false);
+              navigate("/home")
             }}
             className="px-6 py-2 rounded-lg bg-blue text-black font-semibold hover:bg-gray-400"
           >
