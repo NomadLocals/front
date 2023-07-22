@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import MapSelect from "./Map.jsx";
 import { postUser } from "../../Redux trad/actions.js";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy } from "react";
 
 export default function CreateAccountPlace() {
+  const MapLazy = lazy(()=> import("./Map.jsx"))
   const user = useSelector((state) => state.user);
   const [userData, setUserData] = useState(user);
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export default function CreateAccountPlace() {
             method="POST"
           >
             <div className="max-w-md max-h-md mx-auto">
-              <MapSelect />
+              <MapLazy />
             </div>
             <div className="mt-6 flex items-center justify-end gap-x-6">
               <button
