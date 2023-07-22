@@ -14,7 +14,6 @@ export default function CreateAccountPlace() {
   const place = useSelector((state) => state.placeName);
 
   useEffect(() => {
-    console.log(userData)
     if (user) {
       setUserData((prevData) => ({
         ...prevData,
@@ -22,15 +21,13 @@ export default function CreateAccountPlace() {
         geolocation: location,
       }));
     }
-  }, [user]);
+  }, [user, place, location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       dispatch(postUser(userData));
       navigate("/home");
-      console.log(userData)
     } catch (error) {
       console.log(error);
     }

@@ -41,6 +41,7 @@ const MapSelect = () => {
   };
 
   const handleMarkerDragEnd = (e) => {
+    
     const marker = e.target;
     const location = marker.getLatLng();
     setCurrentLocation(location);
