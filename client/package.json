@@ -34,7 +34,8 @@
     "redux-thunk": "^2.4.2",
     "socket.io": "^4.7.1",
     "socket.io-client": "^4.7.1",
-    "star-rating": "^0.0.1"
+    "star-rating": "^0.0.1",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

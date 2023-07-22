@@ -9,7 +9,6 @@ import NavBar from "../../views/NavBar.jsx";
 import s from "./AllUsers.module.css";
 // import Remove from "../../../Iconos/Remove.jsx";
 // import Edit from "../../../Iconos/Edit.jsx";
-// import { isAdmin } from "../../../redux/actions/actionIsAdmin";
 
 // import swal from "sweetalert";
 
