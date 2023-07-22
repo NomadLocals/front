@@ -151,10 +151,7 @@ const rootReducer = (state = initialState, action) => {
     case VACIAR_USER:
       return {
         ...state,
-        user: action.payload,
-        eventById: action.payload,
         initSesion: action.payload,
-        filter: action.payload,
       };
     case GET_EVENT_BY_ID:
       return {

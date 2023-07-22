@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
 import { getUserById } from "../../Redux trad/actions.js";
@@ -70,9 +71,11 @@ const Profile = () => {
             </p>
           </div>
           <div className="mt-5 text-center">
+            <Link to="/settings">
             <button className="text-blue-500 hover:text-blue-700 bg-blue p-2 rounded-lg">
               🔧
             </button>
+            </Link>
           </div>
         </div>
       </div>
