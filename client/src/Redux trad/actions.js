@@ -271,8 +271,7 @@ export const checkUserById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
-
-      let saved = false;
+      let saved = "";
       if (data) {
         saved = true;
       }
@@ -282,6 +281,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
+      console.log(error)
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,
@@ -322,10 +322,10 @@ export const unsuscribeEvent = (id, userId) => {
   };
 };
 
-export const setSingOut = () => {
+export const setSingOut = (userVacio) => {
   return {
     type: VACIAR_USER,
-    payload: true,
+    payload: userVacio,
   };
 };
 

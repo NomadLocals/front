@@ -57,10 +57,10 @@ export default function NavBar() {
     }
   };
 
-  
+  const userVacio = "";
   const { signOut } = useClerk();
   const handleSignOut = () => {
-    dispatch(setSingOut());
+    dispatch(setSingOut(userVacio));
     signOut();
     navigate("/");
   };

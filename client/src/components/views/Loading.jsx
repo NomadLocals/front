@@ -19,12 +19,13 @@ const Loading = () => {
   }, [user]);
 
   useEffect(() => {
+    console.log(id)
     const checkUser = async () => {
       if (id) {
-        dispatch(checkUserById(id));
+        dispatch(checkUserById(id))
+        dispatch(getUserById(id))
       }
     };
-  
     checkUser();
   }, [id, dispatch]);
   
