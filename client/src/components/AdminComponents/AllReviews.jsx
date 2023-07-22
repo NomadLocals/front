@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import NavBar from "../../views/NavBar.jsx";
+import NavBar from "../views/NavBar.jsx";
 // import { getAllReviews } from "../../../redux/actions/actionAdmin";
 import { Link } from "react-router-dom";
 // import profile from "../../../assets/images/avatar2.png";
-import s from "./AllReviews.module.css";
 
 function AllReviews() {
   const dispatch = useDispatch();

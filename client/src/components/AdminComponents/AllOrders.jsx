@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import NavBar from "../../views/NavBar.jsx";
+import NavBar from "../views/NavBar.jsx";
 // import { getAllOrders } from "../../../redux/actions/actionAdmin";
 // import book from "../../../assets/images/book.svg";
-import s from "./AllOrders.module.css";
 
 function AllOrders() {
   const dispatch = useDispatch();

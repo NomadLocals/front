@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import NavBar from "../../views/NavBar.jsx";
-import Footer from "../../views/Footer.jsx";
+import NavBar from "../views/NavBar.jsx";
+import Footer from "../views/Footer.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-// import RoleTest from './RoleTest'
-import s from "./AdminHome.module.css";
 
 function AdminHome() {
   const dispatch = useDispatch();

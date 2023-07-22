@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  getAllUsers,
-  deleteUser,
-  editUser,
-} from "../../../Redux trad/actions.js";
+import { getAllUsers, deleteUser, editUser } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import NavBar from "../../views/NavBar.jsx";
+import NavBar from "../views/NavBar.jsx";
 
 // import { cleanData} from "../../../redux/actions/actionBooks";
 // import profile from "../../../assets/images/avatar2.png";
 // import Pagination from "../../CommonComponents/Pagination/Pagination";
-import Remove from "../../../iconos/Remove.jsx";
-import Edit from "../../../iconos/Edit.jsx";
+import Remove from "../../iconos/Remove.jsx";
+import Edit from "../../iconos/Edit.jsx";
 
 import swal from "sweetalert";
 

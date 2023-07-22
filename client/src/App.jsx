@@ -22,16 +22,14 @@ import About from "./components/views/About.jsx";
 import Settings from "./components/views/Settings.jsx";
 import Loading from "./components/views/Loading.jsx";
 import EventReview from "./components/views/ReviewEvents.jsx";
-import LayoutAdmin from "./components/views/LayoutAdmin.jsx";
 import UserReview from "./components/views/ReviewUser.jsx";
 import OthersDetail from "./components/views/OthersDetail.jsx";
 import Report from "./components/views/Report.jsx";
 //Componentes administrador:
-import AllUsers from "./components/AdminComponents/AllUsers/AllUsers.jsx";
-import AdminHome from "./components/AdminComponents/AdminHome/AdminHome";
-import AllReviews from "./components/AdminComponents/AllReviews/AllReviews";
-import AllOrders from "./components/AdminComponents/AllOrders/AllOrders";
-import VerificationAdmin from "./components/AdminComponents/VerificationAdmin/VerificationAdmin";
+import AllUsers from "./components/AdminComponents/AllUsers.jsx";
+import AdminHome from "./components/AdminComponents/AdminHome.jsx";
+import AllReviews from "./components/AdminComponents/AllReviews.jsx";
+import AllOrders from "./components/AdminComponents/AllOrders.jsx";
 
 function App() {
   return (
