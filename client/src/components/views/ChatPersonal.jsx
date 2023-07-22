@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import  io  from "socket.io-client";
 
-const ChatPersonal = (userId ) => {
+const socket = io('http://localhost:3001');
+
+
+const ChatPersonal = ({receiverId}) => {
+  
   const user = useSelector((state) => state.user);
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
 
   const currentUserId = user.userId;
-  const chatId = `${currentUserId}-${userId}`;
+  const chatId = `${currentUserId}-${receiverId}`;
   const eventName = `chat personal ${chatId}`;
 
   useEffect(() => {
@@ -38,7 +43,7 @@ const ChatPersonal = (userId ) => {
   return (
     <div className="mt-4">
       <h4 className="text-lg font-semibold mb-2">
-        Chat personal con {userId}
+        Chat personal con {receiverId}
       </h4>
       <div className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll">
         {chatMessages.map((message, index) => (

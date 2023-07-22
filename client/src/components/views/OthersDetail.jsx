@@ -7,7 +7,9 @@ import { useParams } from "react-router-dom";
 
 const OthersDetail = () => {
   const { id } = useParams();
+  console.log(id)
 
+  const receiverId = {id}
   const others = useSelector((state) => state.others);
 
   const { userName, image, bio } = others;
@@ -75,7 +77,7 @@ const OthersDetail = () => {
               {bio}|
             </p>
           </div>
-          <ChatPersonal/>
+          <ChatPersonal receiverId={receiverId}/>
         </div>
       </div>
     </>
