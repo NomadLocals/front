@@ -29,6 +29,7 @@ import {
   POST_IMAGES,
   DELETE_IMAGE,
   GET_USERS,
+  DELETE_USERS,
 } from "./action-types.js";
 
 // const URL = "http://localhost:3001";
@@ -282,7 +283,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,
@@ -369,7 +370,8 @@ export const editUser = (userId, userData) => {
     try {
       const endPoint = `${URL}/${USER}/${userId}`;
       const { data } = await axios.put(endPoint, userData);
-      dispatch({
+      console.log(data);
+      return dispatch({
         type: EDIT_USER,
         payload: data,
       });
@@ -433,6 +435,23 @@ export const getAllUsers = () => {
           payload: data,
         });
       }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+
+export const deleteUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`${URL}/${USER}/${id}`);
+
+      if (data) {
+        alert("Usuario Borrado");
+      }
+      return dispatch({
+        type: DELETE_USERS,
+      });
     } catch (error) {
       alert(error);
     }

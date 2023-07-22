@@ -20,7 +20,9 @@ function AllReviews() {
 
       <div className={s.container}>
         <Link to="/Admin">
-          <button className={s.btnAtras}>Atrás</button>
+          <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+            Atrás
+          </button>
         </Link>
         <div className={s.flex}>
           <table className={s.listado}>

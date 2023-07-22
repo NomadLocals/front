@@ -31,13 +31,13 @@ function AdminHome() {
           <h1>Bienvenido Administrador</h1>
           {/* //Opciones */}
           <div className="mt-3 flex flex-col md:flex-row justify-between pt-2 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey">
-            <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+            <button className="text-white mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               <Link to="/admin/users">TODOS LOS USUARIOS</Link>
             </button>
-            <button className="mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+            <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               <Link to="/admin/allOrders">TODOS LAS ÓRDENES DE COMPRA</Link>
             </button>
-            <button className="mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+            <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               <Link to="/admin/allReviews">TODOS LAS OPINIONES</Link>
             </button>
           </div>
