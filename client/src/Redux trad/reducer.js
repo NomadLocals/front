@@ -22,6 +22,7 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
+  GET_USERS,
 } from "./action-types.js";
 
 const initialState = {
@@ -38,6 +39,7 @@ const initialState = {
   initSesion: "",
   others: {},
   activityImage: "",
+  allUsers: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -174,7 +176,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         activityImage: "",
       };
-
+    case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
     default:
       return state;
   }

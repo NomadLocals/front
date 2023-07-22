@@ -22,6 +22,8 @@ const Home = () => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
+  console.log(user);
+  const isAdmin = !user.admin;
 
   return (
     <div>
@@ -35,6 +37,13 @@ const Home = () => {
           📆 {formattedDate}
         </span>
       </section>
+      {isAdmin ? (
+        <button className="p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+          <Link to="/admin">Admin Panel</Link>
+        </button>
+      ) : (
+        ""
+      )}
       <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-2xl bg-grey">
         Tus Actividades:
       </h1>

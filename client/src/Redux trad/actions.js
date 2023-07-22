@@ -28,6 +28,7 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
+  GET_USERS,
 } from "./action-types.js";
 // const URL = import.meta.env.SERVER_URL;
 
@@ -424,5 +425,21 @@ export const postImage = (formData) => {
 export const deleteImage = () => {
   return {
     type: DELETE_IMAGE,
+  };
+};
+
+export const getAllUsers = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/${USER}`);
+      if (data) {
+        return dispatch({
+          type: GET_USERS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 };
