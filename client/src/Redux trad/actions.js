@@ -30,6 +30,7 @@ import {
   DELETE_IMAGE,
   GET_USERS,
   DELETE_USERS,
+  DELETE_EVENTS,
 } from "./action-types.js";
 
 // const URL = "http://localhost:3001";
@@ -446,11 +447,22 @@ export const deleteUser = (id) => {
     try {
       const { data } = await axios.delete(`${URL}/${USER}/${id}`);
 
-      if (data) {
-        alert("Usuario Borrado");
-      }
       return dispatch({
         type: DELETE_USERS,
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+export const deleteEvent = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`${URL}/${EVENT}/${id}`);
+
+      return dispatch({
+        type: DELETE_EVENTS,
+        payload: id,
       });
     } catch (error) {
       alert(error);

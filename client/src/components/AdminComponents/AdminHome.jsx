@@ -32,7 +32,7 @@ function AdminHome() {
               <Link to="/admin/users">TODOS LOS USUARIOS</Link>
             </button>
             <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-              <Link to="/admin/allOrders">TODOS LAS ÓRDENES DE COMPRA</Link>
+              <Link to="/admin/allOrders">TODOS LOS EVENTOS</Link>
             </button>
             <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               <Link to="/admin/allReviews">TODOS LAS OPINIONES</Link>

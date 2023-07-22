@@ -23,6 +23,7 @@ import {
   POST_IMAGES,
   DELETE_IMAGE,
   GET_USERS,
+  DELETE_EVENTS,
 } from "./action-types.js";
 
 const initialState = {
@@ -180,6 +181,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allUsers: action.payload,
+      };
+    case DELETE_EVENTS:
+      return {
+        ...state,
+        events: state.activities.filter((event) => event.id !== action.payload),
       };
     default:
       return state;
