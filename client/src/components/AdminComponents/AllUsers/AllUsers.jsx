@@ -86,7 +86,7 @@ function AllUsers() {
                   return (
                     <tr key={i} className={s.containerInfo}>
                       <td className={s.id}>{u.id}</td>
-                      <td className={s.name}>{u.name}</td>
+                      <td className={s.name}>{u.userName}</td>
                       <td>
                         <img
                           className="image-e"
@@ -122,11 +122,7 @@ function AllUsers() {
           </div>
           <Pagination />
         </div>
-      ) : (
-        <div>
-          <h2>Cargando...</h2>
-        </div>
-      )}
+      ) : null}
     </div>
   );
 }
