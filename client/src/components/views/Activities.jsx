@@ -30,8 +30,8 @@ const Activities = () => {
   }
 
   // Coordenadas del userLocation
-  let userLat = userLocation.lat;
-  let userLon = userLocation.lng;
+  let userLat = userLocation.lat ? userLocation.lat : ""
+  let userLon = userLocation.lng ? userLocation.lng : ""
 
   // Calcular la distancia entre el userLocation y cada ubicación en eventLocations
   activities.forEach(function (act) {
