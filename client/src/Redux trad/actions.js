@@ -272,7 +272,7 @@ export const checkUserById = (id) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
 
-      let saved = "";
+      let saved = false;
       if (data) {
         saved = true;
       }
@@ -322,10 +322,10 @@ export const unsuscribeEvent = (id, userId) => {
   };
 };
 
-export const setSingOut = (userVacio) => {
+export const setSingOut = () => {
   return {
     type: VACIAR_USER,
-    payload: userVacio,
+    payload: true,
   };
 };
 
