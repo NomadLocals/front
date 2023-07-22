@@ -18,9 +18,10 @@ const MapSelect = () => {
         (position) => {
           const { latitude, longitude } = position.coords;
           setCurrentLocation({ lat: latitude, lng: longitude });
-          dispatch(setEventLocation({ lat: latitude, lng: longitude }));
           setHasLocation(true);
           dispatch(fetchPlaceName(latitude, longitude));
+          dispatch(setPlaceName(currentPlace));
+          dispatch(setEventLocation(currentLocation))
         },
         (error) => {
           console.error(error);
@@ -31,13 +32,6 @@ const MapSelect = () => {
     }
   }, []);
 
-  useEffect(() => {
-    dispatch(setPlaceName(currentPlace));
-    dispatch(setEventLocation(currentLocation))
-  }, [currentLocation, currentPlace, dispatch]);
-
- 
-
   const handleMapClick = (e) => {
     const location = e.latlng;
     console.log(location.LatLng)
@@ -47,6 +41,7 @@ const MapSelect = () => {
   };
 
   const handleMarkerDragEnd = (e) => {
+    
     const marker = e.target;
     const location = marker.getLatLng();
     setCurrentLocation(location);

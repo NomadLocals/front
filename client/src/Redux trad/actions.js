@@ -27,14 +27,12 @@ import {
   EDIT_USER,
   GET_OTHERS,
   POST_IMAGES,
-  DELETE_IMAGE,
+  DELETE_IMAGE
 } from "./action-types.js";
-// const URL = import.meta.env.SERVER_URL;
 
-// // const URL = "http://localhost:3001";
-// // const URL = "https://serverpfnomadlocals.onrender.com";
-// //servidor de deploy:
-const URL = "https://serverpredeploy.onrender.com";
+// const URL = "http://localhost:3001";
+// const URL = "https://serverpfnomadlocals.onrender.com";
+const URL = "https://serverpredeploy.onrender.com"
 
 const USER = "users";
 const EVENT = "events";
@@ -110,7 +108,6 @@ export const postUser = (userData) => {
     try {
       const endPoint = `${URL}/${USER}`;
       const { data } = await axios.post(endPoint, userData);
-      await axios.post(`${URL}/send-mail`, userData);
       dispatch({
         type: POST_USER,
         payload: data,
@@ -238,7 +235,6 @@ export const getUserActivities = (id) => {
     }
   };
 };
-
 export const getActivityDetail = (id) => {
   return async (dispatch) => {
     try {
@@ -310,7 +306,6 @@ export const suscribeEvent = (id, userId) => {
     }
   };
 };
-
 export const unsuscribeEvent = (id, userId) => {
   return async (dispatch) => {
     try {
