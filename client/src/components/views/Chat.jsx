@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-// const URL = "http://localhost:3001";
+const URL = "http://localhost:3001";
 // const URL = "https://serverpfnomadlocals.onrender.com";
-const URL = "https://serverpredeploy.onrender.com"
+// const URL = "https://serverpredeploy.onrender.com"
 const socket = io(URL); // Establecer conexión con el servidor de chat
 
 const Chat = () => {
