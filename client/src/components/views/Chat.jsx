@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import  io  from "socket.io-client";
 
 // const URL = "https://serverpfnomadlocals.onrender.com";
+const socket = io('http://localhost:3001')
 
-const Chat = ({socket}) => {
+
+const Chat = () => {
   const user = useSelector((state) => state.user);
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
@@ -69,12 +72,12 @@ const Chat = ({socket}) => {
   useEffect(() => {
     socket.on("connect", () => setIsConnected(true));
 
-    socket.on("chatmensaje", (data) => {
+    socket.on("chatEventMessage", (data) => {
       
       const palabras = data.message.split(" ").map((palabra) =>
       insultos.includes(palabra.toLowerCase()) ? "****" : palabra
     );
-        const mensajeFiltrado = { ...mensaje, message: palabras.join(" ") };
+        const mensajeFiltrado = { ...data, message: palabras.join(" ") };
       
       setAllMessages((allMessages) => [...allMessages, mensajeFiltrado]);
     });
@@ -82,7 +85,7 @@ const Chat = ({socket}) => {
 
     return () => {
       socket.off("connect");
-      socket.off("chatmensaje");
+      socket.off("chatEventMessage");
     };
   }, [socket, insultos]);
 
@@ -94,7 +97,7 @@ const Chat = ({socket}) => {
   );
   const mensajeFiltrado = palabras.join(" ");
 
-    socket.emit("chat message", {
+    socket.emit("chatEventMessage", {
       usuario: userName,
       message: mensajeFiltrado,
     });

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const ChatPersonal = ({ socket, userId }) => {
+const ChatPersonal = (userId ) => {
   const user = useSelector((state) => state.user);
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
