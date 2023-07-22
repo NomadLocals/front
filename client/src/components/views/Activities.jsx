@@ -30,17 +30,20 @@ const Activities = () => {
   }
 
   // Coordenadas del userLocation
-  let userLat = userLocation.lat ? userLocation.lat : ""
-  let userLon = userLocation.lng ? userLocation.lng : ""
+  let userLat = userLocation && userLocation.lat ? userLocation.lat : null;
+  let userLon = userLocation && userLocation.lng ? userLocation.lng : null;
 
   // Calcular la distancia entre el userLocation y cada ubicación en eventLocations
-  activities.forEach(function (act) {
-    let eventLat = act.location.lat;
-    let eventLon = act.location.lng;
-    console.log(eventLat, eventLon);
-    let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
-    act.distancia = distancia;
-  });
+  useEffect(() => {
+    if (userLat !== null && userLon !== null) {
+      activities.forEach(function (act) {
+        let eventLat = act.location.lat;
+        let eventLon = act.location.lng;
+        let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
+        act.distancia = distancia;
+      });
+    }
+  }, [userLat, userLon, activities]);
 
   const handlePages = () => {
     setTotalCards(renderedCards + 3);

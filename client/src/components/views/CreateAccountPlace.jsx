@@ -13,6 +13,7 @@ export default function CreateAccountPlace() {
   const place = useSelector((state) => state.placeName);
 
   useEffect(() => {
+    console.log(userData)
     if (user) {
       setUserData((prevData) => ({
         ...prevData,

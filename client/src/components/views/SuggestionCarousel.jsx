@@ -1,13 +1,17 @@
 import Activity from "./Activity.jsx";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
 
+
 const SuggestionCarousel = () => {
-  const activities = useSelector((state) => state.activities);
+  let activities = useSelector((state) => state.activities);
   const user = useSelector((state) => state.user);
   const userLocation = user.geolocation;
+  console.log(user);
+  console.log(activities);
+  console.log(userLocation);
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radio de la Tierra en kilómetros
@@ -25,17 +29,17 @@ const SuggestionCarousel = () => {
   }
 
   // Coordenadas del userLocation
-  let userLat = userLocation ? userLocation.lat : "";
-  let userLon = userLocation ? userLocation.lng : "";
+  let userLat = userLocation && userLocation.lat ? userLocation.lat : null;
+  let userLon = userLocation && userLocation.lng ? userLocation.lng : null;
 
   // Calcular la distancia entre el userLocation y cada ubicación en eventLocations
-  activities.forEach(function (act) {
-    let eventLat = act.location.lat;
-    let eventLon = act.location.lng;
-    console.log(eventLat, eventLon);
-    let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
-    act.distancia = distancia;
-  });
+
+activities.forEach(function (act) {
+        let eventLat = act.location.lat;
+        let eventLon = act.location.lng;
+        let distancia = calcularDistancia(userLat, userLon, eventLat, eventLon);
+        act.distancia = distancia;
+       })
   //crear estado global alternativo para renderizar actividades totales.
   return (
     <div className="bg-grey grid grid-cols-1 sm:grid-cols-2 md:flex md:justify-center gap-4 ml-1 mr-1 mt-3 ">
@@ -63,7 +67,6 @@ const SuggestionCarousel = () => {
                 name,
                 eventDate,
                 image,
-                location,
                 minCost,
                 minSizePeople,
                 place,
@@ -75,7 +78,6 @@ const SuggestionCarousel = () => {
                     name={name}
                     eventDate={eventDate.split("T")[0]}
                     image={image}
-                    // location={location.latlng}
                     minCost={minCost}
                     minSizePeople={minSizePeople}
                     place={place}
