@@ -30,9 +30,9 @@ import {
   DELETE_IMAGE
 } from "./action-types.js";
 
-// const URL = "http://localhost:3001";
+const URL = "http://localhost:3001";
 // const URL = "https://serverpfnomadlocals.onrender.com";
-const URL = "https://serverpredeploy.onrender.com"
+// const URL = "https://serverpredeploy.onrender.com"
 
 const USER = "users";
 const EVENT = "events";
@@ -158,10 +158,11 @@ export const reviewUser = (review) => {
   };
 };
 
-export const postReportEvent = (report) => {
+export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${URL}/${REPORT_EVENT}`, report);
+      console.log(formData)
+      const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
       if (!response || !response?.data) {
         throw new Error("Failed to create Report");
