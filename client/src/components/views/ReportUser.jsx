@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postReportEvent } from "../../Redux trad/actions.js";
+import { postReportUser } from "../../Redux trad/actions.js";
 import { useNavigate, useParams } from "react-router-dom";
 
-const ReportForm = () => {
+const ReportUser = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const userName = user.userName;
+  const userId = user.id;
   const [formData, setFormData] = useState({
     type: "",
     description: "",
-    userNameUserReporter: userName,
-    idEventReporte: id,
+    idUserReporter: userId,
+    idUserReporte: id,
   });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -38,7 +38,7 @@ const ReportForm = () => {
       isValid = false;
     }
     if (isValid) {
-      dispatch(postReportEvent(formData))
+      dispatch(postReportUser(formData))
         .then(() => {
           resetForm();
           setErrorMessage("");
@@ -46,10 +46,7 @@ const ReportForm = () => {
           console.log("creado correctamente");
         })
         .catch((error) => {
-          console.error(
-            "An error occurred while submitting the report:",
-            error
-          );
+          console.error("Ocurrió un error al enviar el informe:", error);
         });
     }
   };
@@ -58,15 +55,15 @@ const ReportForm = () => {
     setFormData({
       type: "",
       description: "",
-      userNameUserReporter: userName,
-      idEventReporte: id,
+      idUserReporter: userId,
+      idUserReporte: id,
     });
   };
 
   return (
     <div className="bg-F1EFE7 min-h-screen py-8">
       <div className="max-w-md mx-auto bg-white p-6 shadow-md">
-        <h2 className="text-2xl mb-4">Formulario de Reporte de Evento</h2>
+        <h2 className="text-2xl mb-4">Formulario de Reporte de Usuario</h2>
         {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -113,7 +110,7 @@ const ReportForm = () => {
             type="submit"
             className="w-full xl:w-auto bg-blue text-black py-2 px-8 rounded-xl text-xl"
           >
-            Submit
+            Enviar
           </button>
           <button
             type="button"
@@ -130,4 +127,4 @@ const ReportForm = () => {
   );
 };
 
-export default ReportForm;
+export default ReportUser;
