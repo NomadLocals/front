@@ -105,8 +105,7 @@ const Detail = () => {
               {name}
             </h2>
             <h2 className="text-center mb-2 font-semibold ">{activityType}</h2>
-            <div> <Link to={"/reviewevent"} > <button>Review</button> </Link> </div>
-            <div> <Link to={"/report"} > <button>Report</button> </Link> </div>
+           
             <div className="flex flex-wrap">
               <div className="w-1/2">
                 <p>
@@ -182,6 +181,10 @@ const Detail = () => {
                   Salir de la actividad
                 </button>
               )}
+            </div>
+            <div className="flex flex-row mt-5 justify-center">
+            <div> <Link to={"/reviewevent/" + id} > <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">Review</button> </Link> </div>
+            <div> <Link to={"/report/" + id} > <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">Report</button> </Link> </div>
             </div>
           </div>
         </div>

@@ -158,10 +158,11 @@ export const reviewUser = (review) => {
   };
 };
 
-export const postReportEvent = (report) => {
+export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${URL}/${REPORT_EVENT}`, report);
+      console.log(formData)
+      const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
       if (!response || !response?.data) {
         throw new Error("Failed to create Report");
@@ -271,7 +272,6 @@ export const checkUserById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
-
       let saved = "";
       if (data) {
         saved = true;
@@ -282,6 +282,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
+      console.log(error)
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,
