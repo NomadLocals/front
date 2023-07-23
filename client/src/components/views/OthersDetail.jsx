@@ -75,8 +75,10 @@ const OthersDetail = () => {
             </p>
           </div>
 
-          <div> <Link to={"/reviewevent/" + id} > <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">Review</button> </Link> </div>
-          <div> <Link to={"/report/" + id} > <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">Report</button> </Link> </div>
+          <div className="flex flex-row mt-5 justify-center">
+          <div> <Link to={"/reviewuser/" + id} > <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">Review</button> </Link> </div>
+          <div> <Link to={"/reportuser/" + id} > <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">Report</button> </Link> </div>
+          </div>
         </div>
       </div>
     </>

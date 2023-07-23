@@ -128,30 +128,6 @@ const UserReview = ({ user }) => {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">
-            ID Usuario a hacer reseña:
-          </label>
-          <input
-            type="text"
-            value={userNameUserReview}
-            onChange={handleUserNameUserReviewChange}
-            className="block w-min px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">
-            ID del usuario que hace la reseña:
-          </label>
-          <input
-            type="text"
-            value={userId}
-            onChange={handleUserIdChange}
-            className="block w-min px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
-            required
-          />
-        </div>
         <div className="flex justify">
           <button
             type="submit"

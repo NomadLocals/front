@@ -66,6 +66,7 @@ const EventReview = () => {
     setComment("");
     setIdEventReview(id);
     setUserNameUserReview(userName);
+    navigate("/home")
   };
 
   return (
