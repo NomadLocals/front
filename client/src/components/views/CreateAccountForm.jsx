@@ -79,7 +79,7 @@ const CreateAccountForm = () => {
   };
 
   return (
-    <div className="bg-grey min-h-screen">
+    <div className="bg-yellow min-h-screen">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -113,7 +113,7 @@ const CreateAccountForm = () => {
                   autoComplete="userName"
                   value={input.userName}
                   onChange={handleUserName}
-                  className="bg-grey block w-full rounded-md border-black py-1.5 text-black shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="bg-yellow block w-full rounded-md border-black py-1.5 text-black font-spartan text-xl shadow-sm ring-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
               </div>
             </div>
@@ -133,7 +133,7 @@ const CreateAccountForm = () => {
                   name="age"
                   type="number"
                   value={input.age}
-                  className="bg-grey block w-full rounded-md border-black py-1.5 text-black shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="bg-yellow block w-full rounded-md py-1.5 text-black font-spartan text-xl shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
               </div>
             </div>
@@ -204,7 +204,7 @@ const CreateAccountForm = () => {
             <div className="block text-sm font-medium leading-6 text-black">
               <button
                 onClick={handleSubmit}
-                className="bg-blue block w-full rounded-md border-black py-1.5 text-white bg-black shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="bg-yellow w-full rounded-md border-black py-1.5 text-black text-xl font-spartan shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               >
                 Ir a mi locación
               </button>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import MapSelect from "./Map.jsx";
 import { postUser } from "../../Redux trad/actions.js";
@@ -34,7 +35,7 @@ export default function CreateAccountPlace() {
   };
 
   return (
-    <div className="bg-grey min-h-screen">
+    <div className="bg-blue min-h-screen">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src="1.png" alt="Your Company" />
@@ -53,15 +54,17 @@ export default function CreateAccountPlace() {
               <MapSelect />
             </div>
             <div className="mt-6 flex items-center justify-end gap-x-6">
+              <Link to="/create-account1">
               <button
                 type="button"
-                className=" bg-blue text-sm font-semibold leading-6 text-white bg-f1efef rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className=" bg-black text-sm font-semibold leading-6 text-yellow rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               >
                 Cancelar
               </button>
+              </Link>
               <button
                 type="submit"
-                className="bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="bg-black text-sm font-semibold leading-6 text-yellow rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               >
                 Entrar
               </button>
