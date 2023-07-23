@@ -63,7 +63,7 @@ const ReportUser = () => {
   return (
     <div className="bg-F1EFE7 min-h-screen py-8">
       <div className="max-w-md mx-auto bg-white p-6 shadow-md">
-        <h2 className="text-2xl mb-4">Formulario de Reporte</h2>
+        <h2 className="text-2xl mb-4">Formulario de Reporte de Usuario</h2>
         {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -77,7 +77,7 @@ const ReportUser = () => {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded"
             >
-              <option value="">Escoge un Motivo </option>
+              <option value="">Selecciona un Motivo</option>
               <option value="Scam">
                 Comportamiento fraudulento o engañoso
               </option>
