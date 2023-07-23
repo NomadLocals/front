@@ -26,14 +26,16 @@ import LayoutAdmin from "./components/views/LayoutAdmin.jsx";
 import UserReview from "./components/views/ReviewUser.jsx";
 import OthersDetail from "./components/views/OthersDetail.jsx";
 import Report from "./components/views/Report.jsx";
+import ReportUser from "./components/views/ReportUser.jsx";
 
 function App() {
   return (
     <div>
       <Routes>
         <Route path="/reviewevent/:id" element={<EventReview />} />
-        <Route path="/reviewuser" element={<UserReview />} />
+        <Route path="/reviewuser/:id" element={<UserReview />} />
         <Route path="/report/:id" element={<Report />} />
+        <Route path="/reportuser/:id" element={<ReportUser/>} />
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route

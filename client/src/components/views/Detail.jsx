@@ -121,7 +121,7 @@ const Detail = () => {
               </div>
               <div className="w-1/2 text-center">
                 <span>
-                  {minCost === 0 ? <p>Cost: Free</p> : <p>Cost: ${minCost}</p>}
+                  {minCost === 0 ? <p>Coste: Free</p> : <p>Coste: ${minCost}</p>}
                 </span>
                 <p>
                   Personas:{" "}
