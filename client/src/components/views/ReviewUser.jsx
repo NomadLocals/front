@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { reviewUser } from "../../Redux trad/actions";
-import { FaStar } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
-const UserReview = ({ user }) => {
-  const [rating, setRating] = useState(0);
+
+const UserReview = () => {
   const [comment, setComment] = useState("");
   const [type, setType] = useState("");
   const [userId, setUserId] = useState("");
@@ -12,30 +12,25 @@ const UserReview = ({ user }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
+  const {id} = useParams();
+  const user = useSelector(state=> state.user);
+  const userName = user.userName
+  
 
-  const handleRatingChange = (value) => {
-    setRating(value);
-  };
+
+  useEffect(()=>{
+    setUserId(id)
+    setUserNameUserReview(userName)
+  },[])
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
-  };
-
-  const handleUserIdChange = (event) => {
-    setUserId(event.target.value);
-  };
-
-  const handleUserNameUserReviewChange = (event) => {
-    setUserNameUserReview(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (
-      !rating ||
-      rating < 1 ||
-      rating > 5 ||
       !comment ||
       !userId ||
       !userNameUserReview
@@ -48,20 +43,17 @@ const UserReview = ({ user }) => {
     const review = {
       type,
       description: comment,
-      score: rating,
       UserNameUserReview: userNameUserReview,
-      userId: userId,
+      idUserReview: userId,
     };
 
     dispatch(reviewUser(review));
-
+    console.log(review)
     setIsSuccess(true);
     setIsError(false);
-
-    setRating(0);
     setComment("");
-    setUserId("");
-    setUserNameUserReview("");
+    setUserId(id);
+    setUserNameUserReview(userId);
   };
 
   return (
@@ -79,24 +71,6 @@ const UserReview = ({ user }) => {
         </div>
       )}
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">Calificación:</label>
-          <div className="flex items-center">
-            {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                key={value}
-                type="button"
-                name="rating"
-                onClick={() => handleRatingChange(value)}
-                className={`w-6 h-6 mr-1 ${
-                  value <= rating ? "text-yellow" : "text-black"
-                }`}
-              >
-                <FaStar />
-              </button>
-            ))}
-          </div>
-        </div>
         <div className="mb-4">
           <label className="block font-semibold mb-2">Tipo de revisión:</label>
           <select
@@ -138,7 +112,6 @@ const UserReview = ({ user }) => {
           <button
             type="button"
             onClick={() => {
-              setRating(0);
               setComment("");
               setUserId("");
               setUserNameUserReview("");
