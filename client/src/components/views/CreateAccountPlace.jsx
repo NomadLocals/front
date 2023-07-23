@@ -4,6 +4,7 @@ import MapSelect from "./Map.jsx";
 import { postUser } from "../../Redux trad/actions.js";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { AiOutlineRollback } from "react-icons/ai";
 
 export default function CreateAccountPlace() {
 
@@ -57,16 +58,16 @@ export default function CreateAccountPlace() {
               <Link to="/create-account1">
               <button
                 type="button"
-                className=" bg-black text-sm font-semibold leading-6 text-yellow rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className=" bg-blue text-xl font-spartan leading-6 text-grey rounded-md py-2 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               >
-                Cancelar
+                <AiOutlineRollback />
               </button>
               </Link>
               <button
                 type="submit"
-                className="bg-black text-sm font-semibold leading-6 text-yellow rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="location-button"
               >
-                Entrar
+                ¡Estoy aquí!
               </button>
             </div>
           </form>

@@ -265,7 +265,7 @@ const CreateAccountForm = () => {
                 <p className="text-red-500 text-sm">{errors.interests}</p>
               )}
             </div>
-            <div className="block text-sm font-medium leading-6 text-black">
+            <div className="block text-sm font-spartan leading-6 text-black">
               <button onClick={handleSubmit} className="paimon">
                 Ir a mi locación
               </button>
