@@ -16,7 +16,7 @@ const Events = () => {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <div className="flex flex-col gap-2">
           <img
-            src="playapicnic.jpg"
+            src="https://res.cloudinary.com/dwit2djhy/image/upload/v1689951926/Nomadlocals/Landing/playapicnic_qw3mzm.jpg"
             className="w-full h-[600px] object-cover rounded-3xl"
           />
           <p className="text-gray-500 text-white">Evento - Julio 11, 2023</p>
@@ -28,7 +28,7 @@ const Events = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex flex-col gap-4">
             <img
-              src="karaoke.jpg"
+              src="https://res.cloudinary.com/dwit2djhy/image/upload/v1689951925/Nomadlocals/Landing/karaoke_dx58j4.jpg"
               className="w-full h-56 object-cover rounded-3xl"
             />
             <p className="text-gray-500 text-white">Evento - Junio 20, 2023</p>
@@ -39,7 +39,7 @@ const Events = () => {
           </div>
           <div className="flex flex-col gap-4">
             <img
-              src="fiesta.jpg"
+              src="https://res.cloudinary.com/dwit2djhy/image/upload/v1689951923/Nomadlocals/Landing/fiesta_q456ot.jpg"
               className="w-full h-56 object-cover rounded-3xl"
             />
             <p className="text-gray-500 text-white">Evento - Octubre 31, 2023</p>
@@ -50,7 +50,7 @@ const Events = () => {
           </div>
           <div className="flex flex-col gap-4">
             <img
-              src="futsal.jpg"
+              src="https://res.cloudinary.com/dwit2djhy/image/upload/v1689951925/Nomadlocals/Landing/futsal_dysduk.jpg"
               className="w-full h-56 object-cover rounded-3xl"
             />
             <p className="text-gray-500 text-white">Evento - Julio 12, 2023</p>
@@ -61,7 +61,7 @@ const Events = () => {
           </div>
           <div className="flex flex-col gap-4">
             <img
-              src="cometa.jpg"
+              src="https://res.cloudinary.com/dwit2djhy/image/upload/v1689951923/Nomadlocals/Landing/cometa_zky60h.jpg"
               className="w-full h-56 object-cover rounded-3xl"
             />
             <p className="text-gray-500 text-white">Evento - Agosto 18, 2023</p>

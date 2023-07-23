@@ -1,7 +1,13 @@
 import "./App.css";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { SignIn, SignedIn, SignedOut, UserButton,SignUp } from "@clerk/clerk-react";
+import {
+  SignIn,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  SignUp,
+} from "@clerk/clerk-react";
 // Importar componentes:
 import Home from "./components/views/Home.jsx";
 import CreateAccountForm from "./components/views/CreateAccountForm.jsx";
@@ -15,12 +21,19 @@ import Chat from "./components/views/Chat.jsx";
 import About from "./components/views/About.jsx";
 import Settings from "./components/views/Settings.jsx";
 import Loading from "./components/views/Loading.jsx";
-
+import EventReview from "./components/views/ReviewEvents.jsx";
+import LayoutAdmin from "./components/views/LayoutAdmin.jsx";
+import UserReview from "./components/views/ReviewUser.jsx";
+import OthersDetail from "./components/views/OthersDetail.jsx";
+import Report from "./components/views/Report.jsx";
 
 function App() {
   return (
     <div>
       <Routes>
+        <Route path="/reviewevent/:id" element={<EventReview />} />
+        <Route path="/reviewuser" element={<UserReview />} />
+        <Route path="/report/:id" element={<Report />} />
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route
@@ -36,9 +49,11 @@ function App() {
         <Route path="/activities" element={<FilterActivities />} />
         <Route path="/activity-form" element={<ActivityForm />} />
         <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/others/:id" element={<OthersDetail />} />
         <Route path="/activities/detail/:id/chat" element={<Chat />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/admin" element={<LayoutAdmin />} />
       </Routes>
     </div>
   );

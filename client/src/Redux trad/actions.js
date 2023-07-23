@@ -8,8 +8,12 @@ import {
   POST_USER,
   SAVE_USER_FORM,
   RESET_FILTER,
-  POST_REPORT_USER,
-  POST_REPORT_EVENT,
+  POST_REPORT_EVENT_SUCCESS,
+  POST_REPORT_EVENT_FAILURE,
+  POST_REPORT_USER_SUCCESS,
+  POST_REPORT_USER_FAILURE,
+  POST_REVIEW_USER,
+  POST_REVIEW_EVENT,
   SET_PLACE_NAME,
   GET_USER_ACTIVITIES,
   GET_EVENT_BY_ID,
@@ -20,10 +24,15 @@ import {
   GET_USER_BY_ID,
   UNSUSCRIBE_EVENT,
   CHECK_USER_BY_ID,
+  EDIT_USER,
+  GET_OTHERS,
+  POST_IMAGES,
+  DELETE_IMAGE
 } from "./action-types.js";
 
 // const URL = "http://localhost:3001";
-const URL = "https://serverpfnomadlocals.onrender.com";
+// const URL = "https://serverpfnomadlocals.onrender.com";
+const URL = "https://serverpredeploy.onrender.com"
 
 const USER = "users";
 const EVENT = "events";
@@ -116,16 +125,31 @@ export const resetFilters = () => {
 };
 
 //Reports
-export const postReportUser = (reportData) => {
+
+export const reviewEvent = (reviewE) => {
   return async (dispatch) => {
+    console.log(reviewE);
     try {
-      const endPoint = `${URL}/${REPORT_USER}`;
-
-      const response = await axios.post(endPoint, reportData);
-      const { data } = response;
-
+      const endPoint = `${URL}/${REVIEW_EVENT}`;
+      const { data } = await axios.post(endPoint, reviewE);
       dispatch({
-        type: POST_REPORT_USER,
+        type: POST_REVIEW_EVENT,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+export const reviewUser = (review) => {
+  return async (dispatch) => {
+    console.log(review);
+    try {
+      const endPoint = `${URL}/${REVIEW_USER}`;
+
+      const { data } = await axios.post(endPoint, review);
+      dispatch({
+        type: POST_REVIEW_USER,
         payload: data,
       });
     } catch (error) {
@@ -134,21 +158,59 @@ export const postReportUser = (reportData) => {
   };
 };
 
-export const postReportEvent = (reportData) => {
+export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      const endPoint = `${URL}/${REPORT_EVENT}`;
+      console.log(formData)
+      const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
-      const response = await axios.post(endPoint, reportData);
-      const { data } = response;
+      if (!response || !response?.data) {
+        throw new Error("Failed to create Report");
+      }
 
-      dispatch({
-        type: POST_REPORT_EVENT,
-        payload: data,
-      });
+      dispatch(postReportEventSuccess(response.data));
     } catch (error) {
-      alert(error.message);
+      dispatch(postReportEventFailure(error.message));
     }
+  };
+};
+
+export const postReportEventSuccess = (report) => {
+  return {
+    type: POST_REPORT_EVENT_SUCCESS,
+    payload: report,
+  };
+};
+
+export const postReportEventFailure = (error) => {
+  return {
+    type: POST_REPORT_EVENT_FAILURE,
+    payload: error,
+  };
+};
+
+export const postReportUser = (report) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${URL}/${REPORT_USER}`, report);
+      dispatch(postReportUserSuccess(response.data));
+    } catch (error) {
+      dispatch(postReportUserFailure(error.message));
+    }
+  };
+};
+
+export const postReportUserSuccess = (report) => {
+  return {
+    type: POST_REPORT_USER_SUCCESS,
+    payload: report,
+  };
+};
+
+export const postReportUserFailure = (error) => {
+  return {
+    type: POST_REPORT_USER_FAILURE,
+    payload: error,
   };
 };
 
@@ -210,7 +272,6 @@ export const checkUserById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
-
       let saved = "";
       if (data) {
         saved = true;
@@ -221,6 +282,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
+      console.log(error)
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,
@@ -299,5 +361,64 @@ export const fetchPlaceName = (latitude, longitude) => {
     } catch (error) {
       console.error(error);
     }
+  };
+};
+export const editUser = (userId, userData) => {
+  return async (dispatch) => {
+    console.log(userData);
+    try {
+      const endPoint = `${URL}/${USER}/${userId}`;
+      const { data } = await axios.put(endPoint, userData);
+      dispatch({
+        type: EDIT_USER,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getOthersById = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/${USER}/${id}`);
+      if (data) {
+        return dispatch({
+          type: GET_OTHERS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+
+export const postImage = (formData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "https://api.cloudinary.com/v1_1/dwit2djhy/image/upload",
+        formData,
+        {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        }
+      );
+      const fileURL = data.secure_url;
+
+      return dispatch({
+        type: POST_IMAGES,
+        payload: fileURL,
+      });
+    } catch (error) {
+      console.error("Error uploading image: ", error);
+    }
+  };
+};
+
+export const deleteImage = () => {
+  return {
+    type: DELETE_IMAGE,
   };
 };

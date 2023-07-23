@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function CreateAccountPlace() {
+
   const user = useSelector((state) => state.user);
   const [userData, setUserData] = useState(user);
   const navigate = useNavigate();
@@ -20,15 +21,13 @@ export default function CreateAccountPlace() {
         geolocation: location,
       }));
     }
-  }, [user]);
+  }, [user, place, location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       dispatch(postUser(userData));
       navigate("/home");
-      console.log(userData)
     } catch (error) {
       console.log(error);
     }

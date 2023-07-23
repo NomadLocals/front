@@ -1,18 +1,22 @@
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
-import { getUserById } from "../../Redux trad/actions.js";
+import { getOthersById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const Profile = () => {
-  const user = useSelector((state) => state.user);
-  const { userName, image, bio } = user;
+const OthersDetail = () => {
+  const { id } = useParams();
+
+  const others = useSelector((state) => state.others);
+
+  const { userName, image, bio } = others;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserById(user.id));
+    dispatch(getOthersById(id));
   }, []);
+
   return (
     <>
       <NavBar />
@@ -70,17 +74,10 @@ const Profile = () => {
               {bio}
             </p>
           </div>
-          <div className="mt-5 text-center">
-            <Link to="/settings">
-            <button className="text-blue-500 hover:text-blue-700 bg-blue p-2 rounded-lg">
-              🔧
-            </button>
-            </Link>
-          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default Profile;
+export default OthersDetail;
