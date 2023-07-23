@@ -22,8 +22,8 @@ import {
   CHECK_USER_BY_ID,
 } from "./action-types.js";
 
-const URL = "http://localhost:3001";
-// const URL = "https://serverpfnomadlocals.onrender.com";
+//const URL = "http://localhost:3001";
+const URL = "https://serverpfnomadlocals.onrender.com";
 
 const USER = "users";
 const EVENT = "events";
