@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { reviewEvent } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { FaStar } from "react-icons/fa";
@@ -66,10 +66,6 @@ const EventReview = () => {
     setComment("");
     setIdEventReview(id);
     setUserNameUserReview(userName);
-  };
-
-  const handleGoBack = () => {
-    history.goBack(); // Retrocede a la página anterior
   };
 
   return (
