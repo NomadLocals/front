@@ -10,15 +10,15 @@
     height: 100%;
   }
   
-  .dropzone {
+  /* .dropzone {
     border: 2px dashed #ccc;
     padding: 20px;
     text-align: center;
-  }
+  } */
   
-  .dropzone p {
-    margin-bottom: 20px;
-  }
+  /* .dropzone p {
+    margin-bottom: 20px
+  } */
   
   .dropzone span {
     font-size: 48px;
