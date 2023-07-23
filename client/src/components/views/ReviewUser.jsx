@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { reviewUser } from "../../Redux trad/actions";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const UserReview = () => {
@@ -9,12 +9,12 @@ const UserReview = () => {
   const [type, setType] = useState("");
   const [userId, setUserId] = useState("");
   const [userNameUserReview, setUserNameUserReview] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const {id} = useParams();
   const user = useSelector(state=> state.user);
-  const userName = user.userName
+  const userName = user.userName;
+  const navigate = useNavigate();
   
 
 
@@ -33,10 +33,10 @@ const UserReview = () => {
     if (
       !comment ||
       !userId ||
-      !userNameUserReview
+      !userNameUserReview ||
+      comment.length > 200
     ) {
       setIsError(true);
-      setIsSuccess(false);
       return;
     }
 
@@ -48,12 +48,12 @@ const UserReview = () => {
     };
 
     dispatch(reviewUser(review));
-    console.log(review)
-    setIsSuccess(true);
-    setIsError(false);
+    console.log(review);
+    setIsError("");
     setComment("");
     setUserId(id);
     setUserNameUserReview(userId);
+    navigate("/home");
   };
 
   return (
@@ -61,15 +61,7 @@ const UserReview = () => {
       <h2 className="text-2xl font-semibold mb-4">
         Hacer una reseña al usuario
       </h2>
-      {isSuccess && (
-        <div className="text-green-600 mb-2">¡Reseña enviada con éxito!</div>
-      )}
-      {isError && (
-        <div className="text-red-600 mb-2">
-          Error al enviar la reseña. Por favor, proporcione toda la información
-          requerida.
-        </div>
-      )}
+        <div className="text-blue-600 bg-yellow mb-2"> {isError} </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block font-semibold mb-2">Tipo de revisión:</label>
@@ -99,7 +91,6 @@ const UserReview = () => {
             onChange={handleCommentChange}
             rows="4"
             cols="50"
-            required
           />
         </div>
         <div className="flex justify">
@@ -113,10 +104,9 @@ const UserReview = () => {
             type="button"
             onClick={() => {
               setComment("");
-              setUserId("");
-              setUserNameUserReview("");
-              setIsSuccess(false);
-              setIsError(false);
+              setUserId(userId);
+              setUserNameUserReview(userName);
+              setIsError("");
             }}
             className="px-6 py-2 rounded-lg bg-blue text-black font-semibold hover:bg-gray-400"
           >

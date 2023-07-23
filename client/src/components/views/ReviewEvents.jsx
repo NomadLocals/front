@@ -11,8 +11,7 @@ const EventReview = () => {
   const [type, setType] = useState("");
   const [idEventReview, setIdEventReview] = useState("");
   const [userNameUserReview, setUserNameUserReview] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState("");
   const user = useSelector(state=> state.user);
   const userName = user.userName
   const {id} = useParams();
@@ -41,11 +40,12 @@ const EventReview = () => {
       rating < 1 ||
       rating > 5 ||
       !comment ||
+      comment.length > 200 ||
       !idEventReview ||
       !userNameUserReview
     ) {
-      setIsError(true);
-      setIsSuccess(false);
+      setIsError("Completa los campos correctamente");
+      
       return;
     }
 
@@ -58,10 +58,7 @@ const EventReview = () => {
     };
 
     dispatch(reviewEvent(review));
-
-    setIsSuccess(true);
-    setIsError(false);
-
+    setIsError("");
     setRating(0);
     setComment("");
     setIdEventReview(id);
@@ -70,19 +67,12 @@ const EventReview = () => {
   };
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-2xl font-semibold mb-4">
-        Hacer una reseña de evento
+    <div className="bg-grey min-h-screen lg:min-w-52 flex justify-center font-quick">
+      <div className="mt-10 shadow-2xl rounded-lg overflow-hidden flex flex-col justify-center items-center p-5">
+      <h2 className="text-2xl font-semibold mb-4 text-center font-spartan">
+        Hacer una reseña de evento:
       </h2>
-      {isSuccess && (
-        <div className="text-green-600 mb-2">¡Reseña enviada con éxito!</div>
-      )}
-      {isError && (
-        <div className="text-red-600 mb-2">
-          Error al enviar la reseña. Por favor, proporcione toda la información
-          requerida.
-        </div>
-      )}
+        <div className="text-blue-600 bg-yellow mb-3"> {isError} </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block font-semibold mb-2">Calificación:</label>
@@ -128,14 +118,13 @@ const EventReview = () => {
             value={comment}
             onChange={handleCommentChange}
             rows="4"
-            cols="50"
-            required
+            cols="30"
           />
         </div>
         <div className="flex justify">
           <button
             type="submit"
-            className="px-6 py-2 rounded-lg bg-blue text-black font-semibold hover:bg-indigo-700"
+            className="px-6 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-indigo-700"
           >
             Enviar reseña
           </button>
@@ -146,16 +135,16 @@ const EventReview = () => {
               setComment("");
               setIdEventReview(id);
               setUserNameUserReview(userName);
-              setIsSuccess(false);
-              setIsError(false);
+              setIsError("");
               navigate("/home")
             }}
-            className="px-6 py-2 rounded-lg bg-blue text-black font-semibold hover:bg-gray-400"
+            className="px-6 mx-3 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
           >
             Cancelar
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 };

@@ -33,8 +33,8 @@ const ReportForm = () => {
       setErrorMessage("Elige el motivo de reporte");
       isValid = false;
     }
-    if (formData.description.trim() === "") {
-      setErrorMessage("Escribe una descripción");
+    if (formData.description.trim() === "" || formData.description.length > 200) {
+      setErrorMessage("Escribe una descripción de no mas de 200 caracteres");
       isValid = false;
     }
     if (isValid) {
