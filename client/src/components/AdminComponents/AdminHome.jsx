@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import NavBar from "../views/NavBar.jsx";
 import Footer from "../views/Footer.jsx";
+import EventsChart from "./Graphics/EventsChart.jsx";
+import UsersChart from "./Graphics/UsersChart.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,9 +13,6 @@ function AdminHome() {
   const user = useSelector((state) => state.user);
   const adminState = !user.admin;
 
-  // const adminState = true
-  // const adminState = false
-
   useEffect(() => {
     if (!adminState) {
       navigate("/home");
@@ -21,7 +20,7 @@ function AdminHome() {
   }, [adminState]);
 
   return adminState ? (
-    <div>
+    <div className="">
       <NavBar />
       <div className="flex justify-between pt-2 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey">
         <div className="flex-column">
@@ -38,9 +37,20 @@ function AdminHome() {
               <Link to="/admin/allReviews">TODOS LAS OPINIONES</Link>
             </button>
           </div>
+
           {/* Graficos: */}
           <div>
-            <h1>Meter los graficos aca</h1>
+            <div>
+              <h1>Graficos</h1>
+            </div>
+            <div>
+              <h1>Events Chart</h1>
+              <EventsChart />
+            </div>
+            <div>
+              <h1>User Chart</h1>
+              <UsersChart />
+            </div>
           </div>
         </div>
       </div>

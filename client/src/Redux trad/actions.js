@@ -265,7 +265,7 @@ export const getUserById = (id) => {
         });
       }
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 };
@@ -455,6 +455,7 @@ export const deleteUser = (id) => {
     }
   };
 };
+
 export const deleteEvent = (id) => {
   return async (dispatch) => {
     try {
