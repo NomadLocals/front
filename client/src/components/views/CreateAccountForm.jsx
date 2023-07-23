@@ -204,7 +204,7 @@ const CreateAccountForm = () => {
             <div className="block text-sm font-medium leading-6 text-black">
               <button
                 onClick={handleSubmit}
-                className="bg-yellow w-full rounded-md border-black py-1.5 text-black text-xl font-spartan shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="paimon"
               >
                 Ir a mi locación
               </button>

@@ -32,3 +32,35 @@
     padding: 10px 20px;
     cursor: pointer;
   }
+
+  .paimon {
+    height: 34px;
+    width: 80%;
+    margin-left: 10%;
+    border-radius: 4px;
+    padding: 1em;
+    background-color: #FFDE59;
+    color: black;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    animation: location 2s infinite;
+
+  }
+
+  @keyframes location {
+    10% {
+      transform: scale(1.05) rotate(5deg);
+    }
+    20% {
+      transform: scale(1.05) rotate(-5deg);
+    }
+    30% {
+      transform: scale(1.05) rotate(5deg);
+    }
+    40% {
+      transform: none;
+    }
+  }
