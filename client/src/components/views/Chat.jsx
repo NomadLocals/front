@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import  io  from "socket.io-client";
-
+import {useParams} from 'react-router-dom'
 // const URL = "https://serverpfnomadlocals.onrender.com";
 const socket = io('http://localhost:3001')
 
@@ -68,41 +68,46 @@ const Chat = () => {
     "laconcha",
   ];
   const userName = user.userName;
+  const {id} = useParams()
+
+  const handleMessageChange = (event) => setNewMessage(event.target.value);
+
+  const handleSendMessage = () => {
+    const palabras = newMessage.split(" ").map((palabra) =>
+      insultos.includes(palabra.toLowerCase()) ? "****" : palabra
+    );
+    const mensajeFiltrado = palabras.join(" ");
+    socket.emit("chatEventMessage", {
+      eventId: id,
+      senderId: user.id,
+      message: newMessage, // Usar el contenido del nuevo mensaje aquí
+    });
+    setNewMessage("");
+  };
 
   useEffect(() => {
     socket.on("connect", () => setIsConnected(true));
-
+    
     socket.on("chatEventMessage", (data) => {
-      
-      const palabras = data.message.split(" ").map((palabra) =>
-      insultos.includes(palabra.toLowerCase()) ? "****" : palabra
-    );
-        const mensajeFiltrado = { ...data, message: palabras.join(" ") };
-      
-      setAllMessages((allMessages) => [...allMessages, mensajeFiltrado]);
+      setAllMessages((prevMessages) => [...prevMessages, data]);
     });
+    // socket.on("chatEventMessage", (data) => {
+      
+      //   const palabras = data.message.split(" ").map((palabra) =>
+    //   insultos.includes(palabra.toLowerCase()) ? "****" : palabra
+    // );
+    //     const mensajeFiltrado = { ...data, message: palabras.join(" ") };
+      
+    //   setAllMessages((allMessages) => [...allMessages, mensajeFiltrado]);
+    // });
     
 
     return () => {
       socket.off("connect");
       socket.off("chatEventMessage");
     };
-  }, [socket, insultos]);
+  }, [socket]);
 
-  const handleMessageChange = (event) => setNewMessage(event.target.value);
-
-  const handleSendMessage = () => {
-    const palabras = newMessage.split(" ").map((palabra) =>
-    insultos.includes(palabra.toLowerCase()) ? "****" : palabra
-  );
-  const mensajeFiltrado = palabras.join(" ");
-
-    socket.emit("chatEventMessage", {
-      usuario: userName,
-      message: mensajeFiltrado,
-    });
-    setNewMessage("");
-  };
 
 
 

@@ -11,44 +11,45 @@ const ChatPersonal = ({receiverId}) => {
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
-
-  const currentUserId = user.userId;
-  const chatId = `${currentUserId}-${receiverId}`;
-  const eventName = `chat personal ${chatId}`;
-
-  useEffect(() => {
-    socket.on("connect", () => setIsConnected(true));
-
-    socket.on(eventName, (message) => {
-      setChatMessages((chatMessages) => [...chatMessages, message]);
-    });
-
-    return () => {
-      socket.off("connect");
-      socket.off(eventName);
-    };
-  }, [eventName, socket]);
-
+  
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
   const handleSendMessage = () => {
-    socket.emit(eventName, {
-      userId: currentUserId,
+    socket.emit("chatPersonalMessage", {
+      senderId: socket.id,
+      senderUsername: user.username,
+      receiverId: receiverId,
       message: newMessage,
     });
     setNewMessage("");
 };
-// console.log(handleSendMessage());
 
+  useEffect(() => {
+    socket.on("connectPersonal", () => setIsConnected(true));
+    socket.emit("joinPersonalChat", receiverId);
+    
+    console.log(message)
+    socket.on("chatPersonalMessage", (message) => {
+      setChatMessages([...chatMessages, message]);
+    });
+    
+    return () => {
+      socket.off("connectPersonal");
+      socket.off("chatPersonalMessage");
+    };
+  }, [socket, receiverId]);
+  
+  
+  
   return (
     <div className="mt-4">
       <h4 className="text-lg font-semibold mb-2">
-        Chat personal con {receiverId}
+        Chat personal con {user.username}
       </h4>
       <div className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll">
         {chatMessages.map((message, index) => (
           <div key={index} className="mb-2">
-            <span className="font-semibold">{message.userId}: </span>
+            <span className="font-semibold">{message.senderUsername}: </span>
             <span>{message.message}</span>
           </div>
         ))}
