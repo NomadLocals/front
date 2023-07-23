@@ -31,9 +31,9 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/reviewevent" element={<EventReview />} />
+        <Route path="/reviewevent/:id" element={<EventReview />} />
         <Route path="/reviewuser" element={<UserReview />} />
-        <Route path="/report" element={<Report />} />
+        <Route path="/report/:id" element={<Report />} />
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route

@@ -10,7 +10,6 @@ const Loading = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  //
   const [id, setId] = useState("");
 
   useEffect(() => {
@@ -20,25 +19,27 @@ const Loading = () => {
   }, [user]);
 
   useEffect(() => {
+    console.log(id)
     const checkUser = async () => {
       if (id) {
-        dispatch(checkUserById(id));
-        if (initSesion !== "") {
-          console.log(initSesion);
-          if (initSesion === true) {
-            console.log("navigate home");
-            dispatch(getUserById(id));
-            navigate("/home");
-          } else {
-            console.log("navigate form");
-            navigate("/create-account1");
-          }
-        }
+        dispatch(checkUserById(id))
+        dispatch(getUserById(id))
       }
     };
-
     checkUser();
-  }, [id, initSesion]);
+  }, [id, dispatch]);
+  
+  useEffect(() => {
+    if (initSesion !== "") {
+      if (initSesion === true) {
+        console.log("navigate home");
+        navigate("/home");
+      } else {
+        console.log("navigate form");
+        navigate("/create-account1");
+      }
+    }
+  }, [initSesion, navigate]);
 
   return (
     <div

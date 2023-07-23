@@ -27,14 +27,12 @@ import {
   EDIT_USER,
   GET_OTHERS,
   POST_IMAGES,
-  DELETE_IMAGE,
+  DELETE_IMAGE
 } from "./action-types.js";
-const URL = import.meta.env.SERVER_URL;
 
-// // const URL = "http://localhost:3001";
-// // const URL = "https://serverpfnomadlocals.onrender.com";
-// //servidor de deploy:
-// const URL = "https://serverpredeploy.onrender.com";
+// const URL = "http://localhost:3001";
+// const URL = "https://serverpfnomadlocals.onrender.com";
+const URL = "https://serverpredeploy.onrender.com"
 
 const USER = "users";
 const EVENT = "events";
@@ -110,7 +108,6 @@ export const postUser = (userData) => {
     try {
       const endPoint = `${URL}/${USER}`;
       const { data } = await axios.post(endPoint, userData);
-      await axios.post(`${URL}/send-mail`, userData);
       dispatch({
         type: POST_USER,
         payload: data,
@@ -161,10 +158,11 @@ export const reviewUser = (review) => {
   };
 };
 
-export const postReportEvent = (report) => {
+export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${URL}/${REPORT_EVENT}`, report);
+      console.log(formData)
+      const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
       if (!response || !response?.data) {
         throw new Error("Failed to create Report");
@@ -238,7 +236,6 @@ export const getUserActivities = (id) => {
     }
   };
 };
-
 export const getActivityDetail = (id) => {
   return async (dispatch) => {
     try {
@@ -275,7 +272,6 @@ export const checkUserById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
-
       let saved = "";
       if (data) {
         saved = true;
@@ -286,6 +282,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
+      console.log(error)
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,
@@ -310,7 +307,6 @@ export const suscribeEvent = (id, userId) => {
     }
   };
 };
-
 export const unsuscribeEvent = (id, userId) => {
   return async (dispatch) => {
     try {
