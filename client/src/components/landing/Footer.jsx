@@ -4,7 +4,7 @@ import { RiInstagramLine, RiFacebookLine, RiTwitterLine } from "react-icons/ri";
 
 const Footer = () => {
   return (
-    <footer className="bg-blue p-4 md:p-8 xl:p-12"> {/* Reducir el padding */}
+    <footer className="bg-blue p-2 md:p-8 xl:p-12"> {/* Reducir el padding */}
       <div
         id="footer"
         className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-grey-500 pb-4" /* Reducir el padding */
@@ -16,7 +16,7 @@ const Footer = () => {
             href="#"
             title="Logo"
           >
-            <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png" alt="Logo" className="h-6" /> {/* Reducir el tamaño del logotipo */}
+            {/* <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png" alt="Logo" className="h-6" /> */}
           </a>
         </div>
         {/* Social media */}
@@ -47,14 +47,8 @@ const Footer = () => {
           </a>
         </nav>
       </div>
-      <div className="mt-4"> {/* Reducir el margen superior */}
-        <nav className="mt-2 flex flex-col md:flex-row items-center justify-between gap-4">
-          <a
-            href="#"
-            className="text-gray-300 mt-2 hover:text-black transition-colors text-sm" /* Reducir el tamaño de fuente */
-          >
-            About Us
-          </a>
+      <div className="mt-1"> {/* Reducir el margen superior */}
+        <nav className="-mt-1 flex flex-col md:flex-row items-center justify-between gap-4">
           <a
             href="#"
             className="text-gray-300 mt-2 hover:text-black transition-color text-sm" /* Reducir el tamaño de fuente */
