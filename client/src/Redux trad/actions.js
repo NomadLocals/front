@@ -165,10 +165,11 @@ export const reviewUser = (review) => {
   };
 };
 
-export const postReportEvent = (report) => {
+export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${URL}/${REPORT_EVENT}`, report);
+      console.log(formData)
+      const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
       if (!response || !response?.data) {
         throw new Error("Failed to create Report");

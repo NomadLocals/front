@@ -25,6 +25,7 @@ import EventReview from "./components/views/ReviewEvents.jsx";
 import UserReview from "./components/views/ReviewUser.jsx";
 import OthersDetail from "./components/views/OthersDetail.jsx";
 import Report from "./components/views/Report.jsx";
+import ReportUser from "./components/views/ReportUser.jsx";
 //Componentes administrador:
 import AllUsers from "./components/AdminComponents/AllUsers.jsx";
 import AdminHome from "./components/AdminComponents/AdminHome.jsx";
@@ -39,9 +40,10 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/reviewevent" element={<EventReview />} />
-        <Route path="/reviewuser" element={<UserReview />} />
-        <Route path="/report" element={<Report />} />
+        <Route path="/reviewevent/:id" element={<EventReview />} />
+        <Route path="/reviewuser/:id" element={<UserReview />} />
+        <Route path="/report/:id" element={<Report />} />
+        <Route path="/reportuser/:id" element={<ReportUser />} />
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route

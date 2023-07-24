@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postReportEvent } from "../../Redux trad/actions.js";
+import { postReportUser } from "../../Redux trad/actions.js";
 import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavBar.jsx";
 
-const ReportForm = () => {
+const ReportUser = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const userName = user.userName;
+  const userId = user.id;
   const [formData, setFormData] = useState({
     type: "",
     description: "",
-    userNameUserReporter: userName,
-    idEventReporte: id,
+    idUserReporter: userId,
+    idUserReporte: id,
   });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -34,12 +34,15 @@ const ReportForm = () => {
       setErrorMessage("Elige el motivo de reporte");
       isValid = false;
     }
-    if (formData.description.trim() === "" || formData.description.length > 200) {
-      setErrorMessage("Escribe una descripción de no mas de 200 caracteres");
+    if (
+      formData.description.trim() === "" ||
+      formData.description.length > 200
+    ) {
+      setErrorMessage("Escribe una descripción de no más de 200 caracteres");
       isValid = false;
     }
     if (isValid) {
-      dispatch(postReportEvent(formData))
+      dispatch(postReportUser(formData))
         .then(() => {
           resetForm();
           setErrorMessage("");
@@ -47,10 +50,7 @@ const ReportForm = () => {
           console.log("creado correctamente");
         })
         .catch((error) => {
-          console.error(
-            "An error occurred while submitting the report:",
-            error
-          );
+          console.error("Ocurrió un error al enviar el informe:", error);
         });
     }
   };
@@ -59,18 +59,18 @@ const ReportForm = () => {
     setFormData({
       type: "",
       description: "",
-      userNameUserReporter: userName,
-      idEventReporte: id,
+      idUserReporter: userId,
+      idUserReporte: id,
     });
   };
 
   return (
     <>
-      < NavBar />
+      <NavBar />
       <div className="bg-grey min-h-screen lg:min-w-52 flex justify-center font-quick">
         <div className="mt-10 lg:w-8/12 shadow-2xl rounded-lg overflow-hidden flex flex-col justify-center items-center p-5">
-          <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">Formulario de Reporte de Evento</h2>
-          {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
+          <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">Formulario de Reporte de Usuario</h2>
+          {errorMessage && <p className="text-blue bg-yellow mb-3">{errorMessage}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="type" className="block font-bold mb-1">
@@ -117,7 +117,7 @@ const ReportForm = () => {
               type="submit"
               className="px-6 mx-2 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
             >
-              Submit
+              Enviar
             </button>
             <button
               type="button"
@@ -135,4 +135,4 @@ const ReportForm = () => {
   );
 };
 
-export default ReportForm;
+export default ReportUser;

@@ -20,7 +20,7 @@ import {
 } from "../../Redux trad/actions.js";
 
 const navigation = [
-  { icon: BiSolidCalendarEvent, name: "Mis Actividades", to: "/home" }, // Cambio del icono y texto
+  { icon: BiSolidCalendarEvent, name: "Explorar Actividades", to: "/activities" }, // Cambio del icono y texto
   { icon: MdOutlineCreate, name: "Crear Actividad", to: "/activity-form" }, // Cambio del icono y texto
   { icon: FaUserFriends, name: "Sobre Nosotros", to: "/about" }, // Cambio del icono y texto
 ];
@@ -64,20 +64,20 @@ export default function NavBar() {
     signOut();
     navigate("/");
   };
-
+  
   return (
     <Disclosure as="nav" className="bg-blue font-quick relative">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              <Link to="/home" className="flex items-center">
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 lg:text-xl">
+            <div className="relative flex h-16 items-center justify-around">
+            <Link to="/home" className="absolute md:relative">
                 <img src="2.png" alt="icon" className="h-8 w-8 mr-2" />
               </Link>
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="ml-8 inline-flex items-center justify-center rounded-md p-2 text-grey hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
+                <Disclosure.Button className="ml-2 inline-flex items-center justify-center rounded-md p-2 text-grey hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className=""></span>
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                   ) : (
@@ -92,7 +92,7 @@ export default function NavBar() {
                       <Link
                         key={item.name}
                         to={item.to}
-                        className="text-grey font-spartan uppercase"
+                        className="text-grey font-spartan"
                       >
                         {item.name}
                       </Link>
@@ -100,6 +100,7 @@ export default function NavBar() {
                   </div>
                 </div>
               </div>
+              
               <div className="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6 sm:pr-0 text-blue">
                 <button
                   onClick={() => setShowSearchBar(!showSearchBar)}
@@ -119,7 +120,7 @@ export default function NavBar() {
                     <input
                       type="text"
                       id="search"
-                      className="absolute right-0 z-10 w-48 origin-top-right rounded-md bg-white py-1 px-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none font-spartan"
+                      className="absolute right-0 z-10 w-40 md:w-48 lg:w-56 origin-top-right rounded-md bg-white py-1 px-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none font-spartan"
                       placeholder="Buscar actividad"
                       onChange={(event) => {
                         setName(event.target.value);
@@ -173,7 +174,7 @@ export default function NavBar() {
                             to={`/profile/${userId}`}
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-grey"
+                              "block px-4 py-2 text-sm text-grey lg:text-xl"
                             )}
                           >
                             Perfil
@@ -186,7 +187,7 @@ export default function NavBar() {
                             href="/settings"
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-grey"
+                              "block px-4 py-2 text-sm text-grey lg:text-xl"
                             )}
                           >
                             Configuración
@@ -199,7 +200,7 @@ export default function NavBar() {
                             onClick={() => handleSignOut()}
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-grey"
+                              "block px-4 py-2 text-sm text-grey lg:text-xl"
                             )}
                           >
                             Cerrar Sesión

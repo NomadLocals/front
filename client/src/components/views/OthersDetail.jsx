@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
 import { getOthersById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const OthersDetail = () => {
   const { id } = useParams();
@@ -73,6 +73,11 @@ const OthersDetail = () => {
             <p className="text-gray-600 mt-2" style={{ color: "#000000" }}>
               {bio}
             </p>
+          </div>
+
+          <div className="flex flex-row mt-5 justify-center">
+          <div> <Link to={"/reviewuser/" + id} > <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">Review</button> </Link> </div>
+          <div> <Link to={"/reportuser/" + id} > <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">Report</button> </Link> </div>
           </div>
         </div>
       </div>
