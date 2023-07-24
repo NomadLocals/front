@@ -351,7 +351,7 @@ export const getHistorialMessages = (id) => {
       const {data} = await axios.get(`${URL}/events/${id}/chat/event`)
   
       return dispatch({
-        type: START_CHAT_PERSONAL,
+        type: GET_HISTORIAL_CHAT_EVENTS,
         payload: data,
       })        
     } catch (error) {
@@ -359,6 +359,22 @@ export const getHistorialMessages = (id) => {
     }
   }
 }
+ 
+//! falta usar...dani
+// export const getPersonalMessages = (id) => {
+//   return async (dispatch) => {
+//     try {
+//       const {data} = await axios.get(`${URL}/events/${id}/chat/event`)
+  
+//       return dispatch({
+//         type: START_CHAT_PERSONAL,
+//         payload: data,
+//       })        
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   }
+// }
 
 export const clearChatHistory = () => {
   return dispatch ( {

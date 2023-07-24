@@ -38,6 +38,7 @@ const initialState = {
   initSesion: "",
   others: {},
   historialChat : [],
+  startChat: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -164,7 +165,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         others: action.payload,
       };
-    case START_CHAT_PERSONAL:
+    case GET_HISTORIAL_CHAT_EVENTS:
       return {
         ...state,
         historialChat: action.payload
