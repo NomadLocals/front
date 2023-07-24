@@ -6,8 +6,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const Recomend = () => {
   return (
-    <div className="bg-black p-8 flex flex-col items-center justify-center gap-8 mt-20 xl:mt-0">
-      <h1 className="text-2xl font-medium text-black text-center">
+    <div className="bg-grey p-8 flex flex-col items-center justify-center gap-8 mt-20 xl:mt-0">
+      <h1 className="text-2xl font-spartan text-black text-center">
         ¡Eventos para todos los gustos!
       </h1>
       <Carousel
