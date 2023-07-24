@@ -22,10 +22,11 @@ const Home = () => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
-  console.log(user);
 
   //Invertir la logica para que funcione bien!
   const isAdmin = user.admin;
+
+  console.log(isAdmin);
 
   return (
     <div className="bg-grey">

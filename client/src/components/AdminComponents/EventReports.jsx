@@ -32,7 +32,7 @@ function EventReports() {
       {adminState ? (
         <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
           <Link to="/admin/allEvents">
-            <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+            <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               Atrás
             </button>
           </Link>

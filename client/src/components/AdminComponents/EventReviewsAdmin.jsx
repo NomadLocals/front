@@ -13,11 +13,21 @@ function EventReviewsAdmin() {
   const location = useLocation();
   const reviewsUser = location.state ? location.state.reviews : null;
   const user = location.state ? location.state.user : null;
-  console.log(location.state);
+  console.log(reviewsUser);
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
 
   const navigate = useNavigate();
+
+  const average = (events) => {
+    let scores = [];
+    for (let i = 0; i < events.length; i++) {
+      scores.push(events[i].score);
+    }
+    const suma = scores.reduce((total, num) => total + num, 0);
+    return suma / scores.length;
+  };
+  console.log(average(reviewsUser));
 
   useEffect(() => {
     if (!adminState) {
@@ -25,35 +35,32 @@ function EventReviewsAdmin() {
     }
   }, [adminState]);
 
-  const handleDelete = async (id) => {
-    if (
-      window.confirm(
-        "¿Estás seguro que quieres eliminar este evento? Si lo eliminas, no podrás deshacer esta acción."
-      ) === true
-    ) {
-      dispatch(deleteEvent(id));
-      swal("Evento eliminado correctamente.");
-    }
-  };
-
   return (
     <div>
       <NavBar />
 
       {adminState ? (
         <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
-          <Link to="/admin/allEvents">
-            <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-              Atrás
-            </button>
-          </Link>
+          <div className="flex justify-between items-center">
+            <Link to="/admin/allEvents">
+              <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md text-white font-bold">
+                Atrás
+              </button>
+            </Link>
+            <div className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+              <h3 className="text-white font-bold text-xl">Score Promedio</h3>
+              <h3 className="text-white text-3xl text-center">
+                {average(reviewsUser)}
+              </h3>
+            </div>
+          </div>
           <div>
             <table className="mt-3 w-full table-auto border-collapse">
               <thead className="bg-blue text-white">
                 <tr>
                   <th className="bg-blue-500  p-2">FECHA</th>
-                  <th className="bg-blue-500  p-2">TIPO DE REPORTE</th>
-                  <th className="bg-blue-500  p-2">EVENTO REPORTADO</th>
+                  <th className="bg-blue-500  p-2">TIPO DE REVIEW</th>
+                  <th className="bg-blue-500  p-2">EVENTO</th>
 
                   <th className="bg-blue-500  p-2">DETALLE</th>
                 </tr>

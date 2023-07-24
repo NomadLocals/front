@@ -28,18 +28,14 @@ function EventsReviews() {
       navigate("/home");
     }
   }, [adminState]);
-
-  const handleDelete = async (id) => {
-    if (
-      window.confirm(
-        "¿Estás seguro que quieres eliminar este evento? Si lo eliminas, no podrás deshacer esta acción."
-      ) === true
-    ) {
-      dispatch(deleteEvent(id));
-      swal("Evento eliminado correctamente.");
+  const handleViewDetail = (id, deleted) => {
+    if (!deleted) {
+      console.log(id);
+      navigate(`/home/detail/${id}`);
+    } else {
+      swal("El evento ya se encuentra eliminado");
     }
   };
-
   return (
     <div>
       <NavBar />
@@ -47,7 +43,7 @@ function EventsReviews() {
       {adminState ? (
         <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
           <Link to="/admin">
-            <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+            <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               Atrás
             </button>
           </Link>
@@ -56,13 +52,11 @@ function EventsReviews() {
               <thead className="bg-blue text-white">
                 <tr>
                   <th className="bg-blue-500  p-2">FECHA</th>
-                  <th className="bg-blue-500  p-2">TIPO DE REPORTE</th>
-                  <th className="bg-blue-500  p-2">EVENTO REPORTADO</th>
+                  <th className="bg-blue-500  p-2">TIPO DE REVIEW</th>
+                  <th className="bg-blue-500  p-2">NOMBRE DEL EVENTO </th>
 
                   <th className="bg-blue-500  p-2">DETALLE</th>
-                  <th className="bg-blue-500  p-2" colSpan="2">
-                    OPCIONES
-                  </th>
+                  <th className="bg-blue-500  p-2">VER EVENTO</th>
                 </tr>
               </thead>
               <tbody>
@@ -74,8 +68,8 @@ function EventsReviews() {
                         <td className="p-2">{u.createdAt.split("T")[0]}</td>
                         <td className="p-2">{u.type}</td>
                         <td className="p-2">
-                          {u.reportEvent?.name
-                            ? u.reportEvent.name
+                          {u.reviewEvent?.name
+                            ? u.reviewEvent.name
                             : "Eliminado"}
                         </td>
 
@@ -84,17 +78,17 @@ function EventsReviews() {
                         </td>
 
                         <td>
-                          <button className="text-blue-500 hover:text-blue-700 focus:outline-none">
-                            <Link to={`/home/detail/${u.reportEvent?.id}`}>
-                              <View />
-                            </Link>{" "}
-                          </button>
-
                           <button
-                            onClick={(e) => handleDelete(u.reportEvent.id)}
-                            className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
+                            title="Ver evento"
+                            className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                            onClick={() =>
+                              handleViewDetail(
+                                u.reviewEvent ? u.reviewEvent?.id : "",
+                                u.reviewEvent ? u.reviewEvent?.deletedAt : true
+                              )
+                            }
                           >
-                            <Remove />
+                            <View />
                           </button>
                         </td>
                       </tr>
