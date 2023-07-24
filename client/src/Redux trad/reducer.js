@@ -22,7 +22,7 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
-  START_CHAT_PERSONAL,
+  GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY
 } from "./action-types.js";
 

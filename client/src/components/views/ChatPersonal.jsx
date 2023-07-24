@@ -6,14 +6,23 @@ const socket = io('http://localhost:3001');
 
 
 const ChatPersonal = () => {
-  
+
+  //* importacion de estados... 
+
   const others = useSelector((state) => state.others);
   const user = useSelector((state) => state.user);
   const startChat = useSelector((state) => state.startChat);
-  const [isConnected, setIsConnected] = useState(false);
-  const [newMessage, setNewMessage] = useState("");
-  const [chatMessages, setChatMessages] = useState([]);
-  const [chatStarted, setChatStarted] = useState(false); // Estado para controlar si el chat se ha iniciado
+  const historialChatPersonal = useSelector((state) => state.historialChatPersonal);
+
+  //* Estados locales para funcionalidad de Chat...
+
+  const [isConnected, setIsConnected] = useState(false); //? para conexion
+  const [newMessage, setNewMessage] = useState("") //? Para cada mensaje que se envie..
+  const [chatMessages, setChatMessages] = useState(historialChatPersonal) //? para historial..
+
+  
+  
+
   const dispatch = useDispatch()
 
   const handleMessageChange = (event) => setNewMessage(event.target.value);
@@ -22,23 +31,26 @@ const ChatPersonal = () => {
     console.log(newMessage)
     socket.emit("chatPersonalMessage", {
       senderId: user.id,
-      senderUsername: user.username,
       receiverId: others.id,
+      senderUsername: user.username,
       message: newMessage,
     });
     setNewMessage("");
   };
 
 
-  console.log(others)
-  //   dispatch(startChatPersonal(data))
-  //   setChatStarted(true); // Actualizamos el estado para mostrar el chat una vez iniciado
-  // };
+  // console.log(others)
 
   useEffect(() => {
     socket.on("startPersonalChat",
       setIsConnected (true),
-      setChatStarted(true));
+      );
+
+    socket.on('getPersonalMessage', (data) => {
+      // console.log(data)
+      setChatMessages((prevMessages) => [...prevMessages, data])
+    })
+    
     socket.emit("joinPersonalChat", others.id);
 
     socket.on("chatPersonalMessage", (message) => {
