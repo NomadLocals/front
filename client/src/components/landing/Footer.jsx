@@ -16,7 +16,7 @@ const Footer = () => {
             href="#"
             title="Logo"
           >
-            <img src="4.png" alt="Logo" className="h-10" /> {/* Reducir el tamaño del logotipo */}
+            <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png" alt="Logo" className="h-6" /> {/* Reducir el tamaño del logotipo */}
           </a>
         </div>
         {/* Social media */}

@@ -1,7 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BiSolidCalendarEvent } from "react-icons/bi"; 
-import { MdOutlineCreate } from "react-icons/md";
+import { Disclosure, Menu, Transition } from "@headlessui/react"; 
+import { MdOutlineCreate, MdTravelExplore } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
 import {
   Bars3Icon,
@@ -20,7 +19,7 @@ import {
 } from "../../Redux trad/actions.js";
 
 const navigation = [
-  { icon: BiSolidCalendarEvent, name: "Explorar Actividades", to: "/activities" }, // Cambio del icono y texto
+  { icon: MdTravelExplore, name: "Explorar Actividades", to: "/activities" }, // Cambio del icono y texto
   { icon: MdOutlineCreate, name: "Crear Actividad", to: "/activity-form" }, // Cambio del icono y texto
   { icon: FaUserFriends, name: "Sobre Nosotros", to: "/about" }, // Cambio del icono y texto
 ];
@@ -72,7 +71,7 @@ export default function NavBar() {
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 lg:text-xl">
             <div className="relative flex h-16 items-center justify-around">
             <Link to="/home" className="absolute md:relative">
-                <img src="2.png" alt="icon" className="h-8 w-8 mr-2" />
+                <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/2_kbqwgr.png" alt="icon" className="h-8 w-8 mr-2" />
               </Link>
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
