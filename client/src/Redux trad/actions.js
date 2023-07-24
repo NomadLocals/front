@@ -33,6 +33,8 @@ import {
   DELETE_EVENTS,
   ADMIN_GET_REPORTS,
   ADMIN_GET_REPORTS_USERS,
+  ADMIN_GET_REVIEWS_EVENTS,
+  ADMIN_GET_REVIEWS_USERS,
 } from "./action-types.js";
 
 // const URL = "http://localhost:3001";
@@ -497,6 +499,38 @@ export const getUsersReportsAdmin = (id) => {
       if (data) {
         return dispatch({
           type: ADMIN_GET_REPORTS_USERS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+export const getEventsReviewsAdmin = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/reviewevent`);
+      console.log(data);
+      if (data) {
+        return dispatch({
+          type: ADMIN_GET_REVIEWS_EVENTS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+export const getUsersReviewsAdmin = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/reviewuser`);
+      console.log(data);
+      if (data) {
+        return dispatch({
+          type: ADMIN_GET_REVIEWS_USERS,
           payload: data,
         });
       }

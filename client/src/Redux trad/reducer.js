@@ -26,6 +26,8 @@ import {
   DELETE_EVENTS,
   ADMIN_GET_REPORTS,
   ADMIN_GET_REPORTS_USERS,
+  ADMIN_GET_REVIEWS_EVENTS,
+  ADMIN_GET_REVIEWS_USERS,
 } from "./action-types.js";
 
 const initialState = {
@@ -45,6 +47,8 @@ const initialState = {
   allUsers: [],
   allEventsReports: [],
   allUsersReports: [],
+  allEventsReviews: [],
+  allUsersReviews: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -200,6 +204,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allUsersReports: action.payload,
+      };
+    case ADMIN_GET_REVIEWS_EVENTS:
+      return {
+        ...state,
+        allEventsReviews: action.payload,
+      };
+    case ADMIN_GET_REVIEWS_USERS:
+      return {
+        ...state,
+        allUsersReviews: action.payload,
       };
     default:
       return state;

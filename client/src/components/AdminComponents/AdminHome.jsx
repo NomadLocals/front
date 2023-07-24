@@ -39,6 +39,12 @@ function AdminHome() {
             <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               <Link to="/admin/usersReports">REPORTES DE USUARIOS</Link>
             </button>
+            <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+              <Link to="/admin/usersReviews">REVIEWS DE USUARIOS</Link>
+            </button>
+            <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+              <Link to="/admin/eventsReviews">REVIEWS DE EVENTOS</Link>
+            </button>
           </div>
 
           {/* Graficos: */}
