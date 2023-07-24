@@ -30,7 +30,8 @@ import AllUsers from "./components/AdminComponents/AllUsers.jsx";
 import AdminHome from "./components/AdminComponents/AdminHome.jsx";
 import EventsReports from "./components/AdminComponents/EventsReports.jsx";
 import AllEvents from "./components/AdminComponents/AllEvents.jsx";
-import UsersReports from "./components/AdminComponents/UsersReports";
+import UsersReports from "./components/AdminComponents/UsersReports.jsx";
+import UserReports from "./components/AdminComponents/UserReports.jsx";
 
 function App() {
   return (
@@ -60,10 +61,12 @@ function App() {
         <Route path="/settings" element={<Settings />} />
 
         <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/users" element={<AllUsers />} />
         <Route path="/admin/allOrders" element={<AllEvents />} />
         <Route path="/admin/eventsReports" element={<EventsReports />} />
         <Route path="/admin/usersReports" element={<UsersReports />} />
+        <Route path="/admin/users" element={<AllUsers />} />
+
+        <Route path="/admin/users/:id" element={<UserReports />} />
       </Routes>
     </div>
   );

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getAllUsers, deleteUser, editUser } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
 import Remove from "../../iconos/Remove.jsx";
 import Edit from "../../iconos/Edit.jsx";
+import View from "../../iconos/View.jsx";
 
 import swal from "sweetalert";
 
@@ -13,7 +14,7 @@ function AllUsers() {
   const allUsers = useSelector((state) => state.allUsers);
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
-
+  const navigate = useNavigate();
   console.log(allUsers);
 
   useEffect(() => {
@@ -71,6 +72,9 @@ function AllUsers() {
       }
     }
   };
+  const handleViewReports = (id, reports) => {
+    navigate(`/admin/users/${id}`, { state: { reports: reports } });
+  };
 
   return (
     <div>
@@ -89,11 +93,17 @@ function AllUsers() {
                 <tr>
                   <th className="bg-blue-500  p-2">EMAIL</th>
                   <th className="bg-blue-500  p-2">IMAGEN</th>
-                  <th className="bg-blue-500  p-2">REPORTES</th>
-                  <th className="bg-blue-500  p-2">BLOQUEADO</th>
-                  <th className="bg-blue-500  p-2">ADMINISTRADOR</th>
                   <th className="bg-blue-500  p-2" colSpan="2">
-                    OPCIONES
+                    REPORTES
+                  </th>
+                  <th className="bg-blue-500  p-2" colSpan="2">
+                    REVIEWS
+                  </th>
+                  <th className="bg-blue-500  p-2" colSpan="2">
+                    BLOQUEADO
+                  </th>
+                  <th className="bg-blue-500  p-2" colSpan="2">
+                    ADMINISTRADOR
                   </th>
                 </tr>
               </thead>
@@ -115,13 +125,38 @@ function AllUsers() {
                             alt="No disponible"
                           />
                         </td>
-                        <td className="p-2">{u.reviewUser.length}</td>
-                        {/* falta hacer el blocked en el modelo */}
+
+                        <td className="p-2">{u.reportUser.length}</td>
+                        <td
+                          className={`p-2 ${
+                            u.reportUser.length ? "cursor-pointer" : ""
+                          }`}
+                          title="Ver reportes del usuario"
+                          onClick={() => handleViewReports(u.id, u.reportUser)}
+                        >
+                          {u.reportUser.length ? <View /> : ""}
+                        </td>
+
+                        <td className="p-2 ">{u.reviewUser.length}</td>
+                        <td
+                          className="p-2 cursor-pointer"
+                          title="Ver reviews del usuario"
+                        >
+                          {u.reviewUser.length ? <View /> : ""}
+                        </td>
+
                         <td className="p-2">
                           {u.deletedAt === null ? "NO" : "SI"}
                         </td>
+                        <td>
+                          <button
+                            onClick={(e) => handleDelete(e, u.id, u.email)}
+                            className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
+                          >
+                            <Remove />
+                          </button>
+                        </td>
                         <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
-
                         <td>
                           <button
                             onClick={(e) =>
@@ -130,13 +165,6 @@ function AllUsers() {
                             className="text-blue-500 hover:text-blue-700 focus:outline-none"
                           >
                             <Edit />
-                          </button>
-
-                          <button
-                            onClick={(e) => handleDelete(e, u.id, u.email)}
-                            className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
-                          >
-                            <Remove />
                           </button>
                         </td>
                       </tr>
