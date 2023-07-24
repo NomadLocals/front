@@ -11,7 +11,6 @@ import {
   getHistorialMessages,
   clearChatHistory,
 } from "../../Redux trad/actions.js";
-import { START_CHAT_PERSONAL } from "../../Redux trad/action-types.js";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ const Detail = () => {
   //Estados globales
   const user = useSelector((state) => state.user);
   const activityDetail = useSelector((state) => state.eventById);
-
   const [showUsers, setShowUsers] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [joinedUsers, setJoinedUsers] = useState([{}]);
@@ -49,8 +47,8 @@ const Detail = () => {
 
   //handlers para sumarse o salir de la actividad
   const handleJoinGroup = () => {
-    setShowUsers(true);
     setShowChat(true);
+    setShowUsers(true);
     try {
       dispatch(suscribeEvent(id, userId));
       setJoinedUsers([...joinedUsers, { userName, userImage }]);

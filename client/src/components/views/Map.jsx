@@ -6,22 +6,24 @@ import { setEventLocation, setPlaceName, fetchPlaceName } from "../../Redux trad
 
 const MapSelect = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
-  const currentPlace = useSelector(state => state.placeName)
   const zoom = 12;
   const dispatch = useDispatch();
   const markerRef = useRef(null);
   const [hasLocation, setHasLocation] = useState(false);
+
+  const currentPlace = useSelector(state => state.placeName);
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
+          const location = { lat: latitude, lng: longitude };
+          setCurrentLocation(location);
           setHasLocation(true);
           dispatch(fetchPlaceName(latitude, longitude));
           dispatch(setPlaceName(currentPlace));
-          dispatch(setEventLocation(currentLocation))
+          dispatch(setEventLocation(location));
         },
         (error) => {
           console.error(error);
@@ -32,20 +34,29 @@ const MapSelect = () => {
     }
   }, []);
 
+  // Subscribe to changes in currentLocation and currentPlace from the Redux store
+  useEffect(() => {
+    if (currentLocation) {
+      dispatch(setEventLocation(currentLocation));
+    }
+  }, [currentLocation, dispatch]);
+
+  useEffect(() => {
+    if (currentPlace) {
+      dispatch(setPlaceName(currentPlace));
+    }
+  }, [currentPlace, dispatch]);
+
   const handleMapClick = (e) => {
     const location = e.latlng;
-    console.log(location.LatLng)
     setCurrentLocation(location);
-    dispatch(setEventLocation(location));
     dispatch(fetchPlaceName(location.lat, location.lng));
   };
 
   const handleMarkerDragEnd = (e) => {
-    
     const marker = e.target;
     const location = marker.getLatLng();
     setCurrentLocation(location);
-    dispatch(setEventLocation(location));
     dispatch(fetchPlaceName(location.lat, location.lng));
   };
 
