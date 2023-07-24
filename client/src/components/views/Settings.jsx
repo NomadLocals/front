@@ -12,7 +12,9 @@ const Settings = () => {
   //Estados globales
   const user = useSelector((state) => state.user);
   const userId = user.id;
-  const [inputs, setInputs] = useState({ userName: "", bio: "" });
+  const userName = user.userName;
+  const bio = user.bio
+  const [inputs, setInputs] = useState({ userName: userName, bio: bio });
 
   const handleOnChange = (event) => {
     setInputs({
@@ -28,7 +30,7 @@ const Settings = () => {
     //DESPACHAR ACCION CON OBJETO DE ACTIVIDAD A POSTEAR
     dispatch(editUser(userId, inputs));
     //REINICIO estado local:
-    setInputs({ userName: "", bio: "" });
+    setInputs({userName: userName, bio: bio})
     navigate(`/profile/${userId}`);
   };
   return (

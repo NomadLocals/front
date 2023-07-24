@@ -52,6 +52,8 @@ function App() {
         <Route path="/activities" element={<FilterActivities />} />
         <Route path="/activity-form" element={<ActivityForm />} />
         <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile/:id/detail/:id" element={<Detail />} />
+        <Route path="/others/:id/detail/:id" element={<Detail />} />
         <Route path="/others/:id" element={<OthersDetail />} />
         {/* <Route path="/chat/Personal" element={<ChatPersonal />} /> */}
         <Route path="/activities/detail/:id/chat" element={<Chat />} />
