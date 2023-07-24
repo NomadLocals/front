@@ -8,9 +8,10 @@ const socket = io('http://localhost:3001')
 
 const Chat = () => {
   const user = useSelector((state) => state.user);
+  const historialChat = useSelector((state) => state.historialChat)
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
-  const [allMessages, setAllMessages] = useState([]);
+  const [allMessages, setAllMessages] = useState(historialChat);
 
   const insultos = [
     "puto",
@@ -70,17 +71,15 @@ const Chat = () => {
   const userName = user.userName;
   const {id} = useParams()
 
+  console.log(historialChat)
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
   const handleSendMessage = () => {
-    const palabras = newMessage.split(" ").map((palabra) =>
-      insultos.includes(palabra.toLowerCase()) ? "****" : palabra
-    );
-    const mensajeFiltrado = palabras.join(" ");
     socket.emit("chatEventMessage", {
       eventId: id,
       senderId: user.id,
-      message: newMessage, // Usar el contenido del nuevo mensaje aquí
+      message: newMessage,
+      userName: userName 
     });
     setNewMessage("");
   };
@@ -88,7 +87,13 @@ const Chat = () => {
   useEffect(() => {
     socket.on("connect", () => setIsConnected(true));
     
+    socket.on('getMessagesEvent', (data) => {
+      // console.log(data)
+      setAllMessages((prevMessages) => [...prevMessages, data])
+    })
+
     socket.on("chatEventMessage", (data) => {
+      console.log(data)
       setAllMessages((prevMessages) => [...prevMessages, data]);
     });
     // socket.on("chatEventMessage", (data) => {
@@ -109,7 +114,7 @@ const Chat = () => {
   }, [socket]);
 
 
-
+  console.log(allMessages)
 
   return (
     <div className="mt-4">
@@ -117,7 +122,7 @@ const Chat = () => {
       <div className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll">
         {allMessages.map((message, index) => (
           <div key={index} className="mb-2">
-            <span className="font-semibold">{message.usuario}: </span>
+            <span className="font-semibold">{message.userName}: </span>
             <span>{message.message}</span>
           </div>
         ))}

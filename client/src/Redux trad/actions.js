@@ -26,6 +26,8 @@ import {
   CHECK_USER_BY_ID,
   EDIT_USER,
   GET_OTHERS,
+  START_CHAT_PERSONAL,
+  CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001";
@@ -342,6 +344,30 @@ export const postEvent = (activityData) => {
   };
 };
 
+// dani
+export const getHistorialMessages = (id) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get(`${URL}/events/${id}/chat/event`)
+  
+      return dispatch({
+        type: START_CHAT_PERSONAL,
+        payload: data,
+      })        
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
+
+export const clearChatHistory = () => {
+  return dispatch ( {
+    type: CLEAN_CHAT_HISTORY,
+    payload: ""
+  })
+}
+// //dani
+
 export const fetchPlaceName = (latitude, longitude) => {
   return async (dispatch) => {
     try {
@@ -391,3 +417,5 @@ export const getOthersById = (id) => {
     }
   };
 };
+
+

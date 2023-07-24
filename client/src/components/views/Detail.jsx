@@ -8,7 +8,10 @@ import {
   getActivityDetail,
   suscribeEvent,
   unsuscribeEvent,
+  getHistorialMessages,
+  clearChatHistory
 } from "../../Redux trad/actions.js";
+import { START_CHAT_PERSONAL } from "../../Redux trad/action-types.js";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -62,6 +65,7 @@ const Detail = () => {
     try {
       dispatch(unsuscribeEvent(id, userId));
       setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
+      dispatch(clearChatHistory())
     } catch (error) {
       console.log(error);
     }
@@ -69,6 +73,7 @@ const Detail = () => {
 
   //para correcta renderizacion del chat->
   useEffect(() => {
+    dispatch(getHistorialMessages(id))
     const joined = async () => {
       try {
         const isJoined = await Users.some((user) => user.id === userId);

@@ -20,6 +20,8 @@ import {
   CHECK_USER_BY_ID,
   FETCH_PLACE_NAME,
   GET_OTHERS,
+  START_CHAT_PERSONAL,
+  CLEAN_CHAT_HISTORY
 } from "./action-types.js";
 
 const initialState = {
@@ -35,6 +37,7 @@ const initialState = {
   eventById: {},
   initSesion: "",
   others: {},
+  historialChat : [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -161,7 +164,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         others: action.payload,
       };
-
+    case START_CHAT_PERSONAL:
+      return {
+        ...state,
+        historialChat: action.payload
+      };
+      case CLEAN_CHAT_HISTORY:
+      return {
+        ...state,
+        historialChat: action.payload
+      };
     default:
       return state;
   }

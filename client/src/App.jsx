@@ -48,7 +48,7 @@ function App() {
         <Route path="/activity-form" element={<ActivityForm />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/others/:id" element={<OthersDetail />} />
-        <Route path="/others/:id/chatPersonal" element={<ChatPersonal />} />
+        <Route path="/chat/Personal" element={<ChatPersonal />} />
         <Route path="/activities/detail/:id/chat" element={<Chat />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings />} />
