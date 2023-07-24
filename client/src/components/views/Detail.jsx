@@ -113,6 +113,7 @@ const Detail = () => {
               {name}
             </h2>
             <h2 className="text-center mb-2 font-semibold ">{activityType}</h2>
+           
             <div className="flex flex-wrap">
               <div className="w-1/2">
                 <p>
@@ -157,7 +158,7 @@ const Detail = () => {
                       <div
                         key={id}
                         className="flex flex-col items-center mb-4 mr-3 mt-2"
-                        >
+                      >
                         < Link to={`/others/${id}`} >
                         <div className="w-12 h-12 rounded-full overflow-hidden">
 
@@ -167,7 +168,7 @@ const Detail = () => {
                             className="h-full w-full object-cover"
                             />
                         </div>
-                            </Link>
+                        </Link>
                         <p className="mt-2 text-center text-xs">{userName}</p>
                       </div>
                     );
@@ -184,16 +185,20 @@ const Detail = () => {
                   className="mt-2 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   onClick={handleJoinGroup}
                 >
-                  Sumarse
+                  Entrar a la actividad
                 </button>
               ) : (
                 <button
                   className="mt-2 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   onClick={handleLeaveGroup}
                 >
-                  Salir del grupo
+                  Salir de la actividad
                 </button>
               )}
+            </div>
+            <div className="flex flex-row mt-5 justify-center">
+            <div> <Link to={"/reviewevent/" + id} > <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">Review</button> </Link> </div>
+            <div> <Link to={"/report/" + id} > <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">Report</button> </Link> </div>
             </div>
           </div>
         </div>
