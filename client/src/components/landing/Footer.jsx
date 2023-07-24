@@ -4,21 +4,21 @@ import { RiInstagramLine, RiFacebookLine, RiTwitterLine } from "react-icons/ri";
 
 const Footer = () => {
   return (
-    <footer className="bg-blue p-2 md:p-8 xl:p-12"> {/* Reducir el padding */}
+    <footer className="bg-grey p-2 md:p-8 xl:p-12"> {/* Reducir el padding */}
       <div
         id="footer"
         className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-grey-500 pb-4" /* Reducir el padding */
       >
         {/* Logo */}
-        <div className="w-1/6">
+        {/* <div className="w-1/6">
           <a
             className="text-1xl font-bold relative p-1 bg-blue"
             href="#"
             title="Logo"
           >
-            {/* <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png" alt="Logo" className="h-6" /> */}
+            <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png" alt="Logo" className="h-6" />
           </a>
-        </div>
+        </div> */}
         {/* Social media */}
         <nav className="flex items-center gap-4">
           <a

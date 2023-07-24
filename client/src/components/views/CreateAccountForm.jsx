@@ -131,7 +131,7 @@ const CreateAccountForm = () => {
   };
 
   return (
-    <div className="bg-yellow min-h-screen">
+    <div className="bg-grey min-h-screen">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -144,9 +144,9 @@ const CreateAccountForm = () => {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="bg-grey mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
-            className="space-y-6 bg-white p-6 rounded-lg shadow-lg"
+            className="space-y-6 bg-grey p-6 rounded-lg shadow-lg"
             action="#"
             method="POST"
           >
@@ -165,7 +165,7 @@ const CreateAccountForm = () => {
                   autoComplete="userName"
                   value={input.userName}
                   onChange={handleUserName}
-                  className="bg-yellow block w-full rounded-md border-black py-1.5 text-black font-spartan text-xl shadow-sm ring-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
+                  className="bg-white block w-full rounded-md border-black py-1.5 text-black font-spartan text-xl shadow-sm ring-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
                 {errors.userName && (
                   <p className="text-red-500 text-sm">{errors.userName}</p>
@@ -188,7 +188,7 @@ const CreateAccountForm = () => {
                   name="age"
                   type="number"
                   value={input.age}
-                  className="bg-yellow block w-full rounded-md py-1.5 text-black font-spartan text-xl shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
+                  className="bg-white block w-full rounded-md py-1.5 text-black font-spartan text-xl shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
                 {errors.age && (
                   <p className="text-red-500 text-sm">{errors.age}</p>
