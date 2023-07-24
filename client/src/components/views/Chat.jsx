@@ -13,6 +13,7 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [allMessages, setAllMessages] = useState(historialChat);
 
+
   const userName = user.userName;
   const {id} = useParams()
 

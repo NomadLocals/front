@@ -8,6 +8,8 @@ import {
   getActivityDetail,
   suscribeEvent,
   unsuscribeEvent,
+  getHistorialMessages,
+  clearChatHistory
 } from "../../Redux trad/actions.js";
 
 const Detail = () => {
@@ -17,7 +19,7 @@ const Detail = () => {
   //Estados globales
   const user = useSelector((state) => state.user);
   const activityDetail = useSelector((state) => state.eventById);
-
+  const [showUsers, setShowUsers] = useState(false)
   const [showChat, setShowChat] = useState(false);
   const [joinedUsers, setJoinedUsers] = useState([{}]);
   const userId = user.id;
@@ -46,6 +48,7 @@ const Detail = () => {
   //handlers para sumarse o salir de la actividad
   const handleJoinGroup = () => {
     setShowChat(true);
+    setShowUsers(true)
     try {
       dispatch(suscribeEvent(id, userId));
       setJoinedUsers([...joinedUsers, { userName, userImage }]);
@@ -55,10 +58,12 @@ const Detail = () => {
   };
   const handleLeaveGroup = () => {
     setShowChat(false);
+    setShowUsers(false);
     // Crear una copia del estado actual de joinedUsers
     try {
       dispatch(unsuscribeEvent(id, userId));
       setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
+      dispatch(clearChatHistory());
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +71,7 @@ const Detail = () => {
 
   //para correcta renderizacion del chat->
   useEffect(() => {
+    dispatch(getHistorialMessages(id))
     const joined = async () => {
       try {
         const isJoined = await Users.some((user) => user.id === userId);

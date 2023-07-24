@@ -380,7 +380,7 @@ export const getHistorialMessages = (id) => {
 // }
 
 export const clearChatHistory = () => {
-  return dispatch ( {
+  return ({
     type: CLEAN_CHAT_HISTORY,
     payload: ""
   })
