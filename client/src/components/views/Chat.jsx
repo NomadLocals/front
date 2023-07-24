@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import  io  from "socket.io-client";
 import {useParams} from 'react-router-dom'
-const URL = "https://serverpfnomadlocals.onrender.com";
+// const URL = "https://serverpfnomadlocals.onrender.com";
 const socket = io('http://localhost:3001')
 
 
@@ -13,61 +13,6 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [allMessages, setAllMessages] = useState(historialChat);
 
-  const insultos = [
-    "puto",
-    "pUt0",
-    "PUTO",
-    "PUT0",
-    "hijodeperra",
-    "perra",
-    "culia",
-    "hijodeputa",
-    "puta",
-    "negro",
-    "mierda",
-    "trola",
-    "put@",
-    "gay",
-    "g@ay",
-    "bobo",
-    "boba",
-    "idiota",
-    "tonto",
-    "tonta",
-    "tont@",
-    "hueca",
-    "hueco",
-    "macaco",
-    "nashe",
-    "concha",
-    "pito",
-    "fuck",
-    "fucking",
-    "brasuca",
-    "culiado",
-    "huecudo",
-    "pijudo",
-    "bugs",
-    "bag",
-    "trolo",
-    "pingo",
-    "orto",
-    "poronga",
-    "culiao",
-    "culiau",
-    "negros",
-    "estupido",
-    "estupidos",
-    "pelotudito",
-    "cachondo",
-    "cachonda",
-    "mogolico",
-    "mogolica",
-    "porongo",
-    "reconcha",
-    "pija",
-    "laconcha",
-  ];
   const userName = user.userName;
   const {id} = useParams()
 
@@ -120,7 +65,7 @@ const Chat = () => {
     <div className="mt-4">
       <h4 className="text-lg font-semibold mb-2">Chat</h4>
       <div
-        ref={chatContainerRef}
+        // ref={chatContainerRef}
         className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll"
       >
         {allMessages.map((message, index) => (
@@ -135,7 +80,7 @@ const Chat = () => {
           type="text"
           value={newMessage}
           onChange={handleMessageChange}
-          onKeyDown={handleKeyDown} // Agregamos el evento onKeyDown
+          // onKeyDown={handleKeyDown} // Agregamos el evento onKeyDown
           className="border border-gray-300 rounded-md px-2 py-1 flex-grow mr-2"
           placeholder="Escribe un mensaje..."
         />
@@ -147,7 +92,7 @@ const Chat = () => {
         </button>
         <button
           className="bg-blue hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline ml-2"
-          onClick={handleClearChat}
+          // onClick={handleClearChat}
         >
           Limpiar Chat
         </button>

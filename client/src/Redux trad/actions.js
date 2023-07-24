@@ -27,8 +27,8 @@ import {
   EDIT_USER,
   GET_OTHERS,
   POST_IMAGES,
-  DELETE_IMAGE
-  START_CHAT_PERSONAL,
+  DELETE_IMAGE,
+  // START_CHAT_PERSONAL,
   CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
