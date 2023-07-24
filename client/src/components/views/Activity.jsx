@@ -11,7 +11,7 @@ const Activity = ({
   place
 }) => {
   return (
-    <Link to={`detail/${id}`}>
+    <Link to={`/home/detail/${id}`}>
       <div className="flex items-center bg-white shadow-lg rounded-lg max-h-28 mt-3 mb-1 font-quick md:min-h-[150px]">
         <div className="w-1/2 h-full">
           <img
