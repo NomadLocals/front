@@ -27,12 +27,15 @@ import {
   EDIT_USER,
   GET_OTHERS,
   POST_IMAGES,
-  DELETE_IMAGE
+  DELETE_IMAGE,
+  GET_HISTORIAL_CHAT_EVENTS,
+  CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
-// const URL = "http://localhost:3001";
+const URL = "http://localhost:3001";
+// const URL = import.meta.env.SERVER_URL;
 // const URL = "https://serverpfnomadlocals.onrender.com";
-const URL = "https://serverpredeploy.onrender.com"
+// const URL = "https://serverpredeploy.onrender.com"
 
 const USER = "users";
 const EVENT = "events";
@@ -344,6 +347,46 @@ export const postEvent = (activityData) => {
     }
   };
 };
+
+// dani
+export const getHistorialMessages = (id) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get(`${URL}/events/${id}/chat/event`)
+  
+      return dispatch({
+        type: GET_HISTORIAL_CHAT_EVENTS,
+        payload: data,
+      })        
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
+ 
+//! falta usar...dani
+// export const getPersonalMessages = (id) => {
+//   return async (dispatch) => {
+//     try {
+//       const {data} = await axios.get(`${URL}/events/${id}/chat/event`)
+  
+//       return dispatch({
+//         type: START_CHAT_PERSONAL,
+//         payload: data,
+//       })        
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   }
+// }
+
+export const clearChatHistory = () => {
+  return dispatch ( {
+    type: CLEAN_CHAT_HISTORY,
+    payload: ""
+  })
+}
+// //dani
 
 export const fetchPlaceName = (latitude, longitude) => {
   return async (dispatch) => {

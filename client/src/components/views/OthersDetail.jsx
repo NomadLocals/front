@@ -1,21 +1,26 @@
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
+import ChatPersonal from "./ChatPersonal.jsx";
 import { getOthersById } from "../../Redux trad/actions.js";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect,  } from "react";
+import { Link } from "react-router-dom";
 
 const OthersDetail = () => {
-  const { id } = useParams();
 
   const others = useSelector((state) => state.others);
-
-  const { userName, image, bio } = others;
-
+  const { userName, image, bio, id } = others;
+  
+  // const user = useSelector((state) => state.user);
+  // const [data, setData] = useState({senderId: "", receiverId : ""});
   const dispatch = useDispatch();
+  // const receiverId = id
+  // const senderId = user.id
 
+  // console.log (receiverId)
   useEffect(() => {
-    dispatch(getOthersById(id));
+    dispatch(getOthersById(id));    
   }, []);
+  
 
   return (
     <>
@@ -71,9 +76,16 @@ const OthersDetail = () => {
               Bio:
             </h3>
             <p className="text-gray-600 mt-2" style={{ color: "#000000" }}>
-              {bio}
+              {bio}|
             </p>
           </div>
+          <Link to="/chat/personal">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-5"
+            >
+            Iniciar Chat Personal
+          </button>
+            </Link>
         </div>
       </div>
     </>
