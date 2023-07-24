@@ -105,7 +105,7 @@ const Detail = () => {
               {name}
             </h2>
             <h2 className="text-center mb-2 font-semibold ">{activityType}</h2>
-           
+          
             <div className="flex flex-wrap">
               <div className="w-1/2">
                 <p>
