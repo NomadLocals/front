@@ -11,7 +11,7 @@ function AdminHome() {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
-  const adminState = !user.admin;
+  const adminState = user.admin;
 
   useEffect(() => {
     if (!adminState) {
@@ -34,7 +34,10 @@ function AdminHome() {
               <Link to="/admin/allOrders">TODOS LOS EVENTOS</Link>
             </button>
             <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-              <Link to="/admin/allReviews">TODOS LAS OPINIONES</Link>
+              <Link to="/admin/eventsReports">REPORTES DE EVENTOS</Link>
+            </button>
+            <button className="text-white mr-3 mt-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+              <Link to="/admin/usersReports">REPORTES DE USUARIOS</Link>
             </button>
           </div>
 

@@ -24,6 +24,8 @@ import {
   DELETE_IMAGE,
   GET_USERS,
   DELETE_EVENTS,
+  ADMIN_GET_REPORTS,
+  ADMIN_GET_REPORTS_USERS,
 } from "./action-types.js";
 
 const initialState = {
@@ -41,6 +43,8 @@ const initialState = {
   others: {},
   activityImage: "",
   allUsers: [],
+  allEventsReports: [],
+  allUsersReports: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -186,6 +190,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         events: state.activities.filter((event) => event.id !== action.payload),
+      };
+    case ADMIN_GET_REPORTS:
+      return {
+        ...state,
+        allEventsReports: action.payload,
+      };
+    case ADMIN_GET_REPORTS_USERS:
+      return {
+        ...state,
+        allUsersReports: action.payload,
       };
     default:
       return state;

@@ -28,8 +28,9 @@ import Report from "./components/views/Report.jsx";
 //Componentes administrador:
 import AllUsers from "./components/AdminComponents/AllUsers.jsx";
 import AdminHome from "./components/AdminComponents/AdminHome.jsx";
-import AllReviews from "./components/AdminComponents/AllReviews.jsx";
+import EventsReports from "./components/AdminComponents/EventsReports.jsx";
 import AllEvents from "./components/AdminComponents/AllEvents.jsx";
+import UsersReports from "./components/AdminComponents/UsersReports";
 
 function App() {
   return (
@@ -61,7 +62,8 @@ function App() {
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/users" element={<AllUsers />} />
         <Route path="/admin/allOrders" element={<AllEvents />} />
-        <Route path="/admin/allReviews" element={<AllReviews />} />
+        <Route path="/admin/eventsReports" element={<EventsReports />} />
+        <Route path="/admin/usersReports" element={<UsersReports />} />
       </Routes>
     </div>
   );

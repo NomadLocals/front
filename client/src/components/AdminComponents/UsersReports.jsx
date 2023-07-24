@@ -1,30 +1,24 @@
 import React, { useEffect, useState } from "react";
-import {
-  deleteEvent,
-  editUser,
-  getActivities,
-} from "../../Redux trad/actions.js";
+import { getUsersReportsAdmin, deleteUser } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
-
 import Remove from "../../iconos/Remove.jsx";
 import Edit from "../../iconos/Edit.jsx";
 import View from "../../iconos/View.jsx";
-
 import swal from "sweetalert";
 
-// la idea es que el lapiz permita ver los reportes de ese evento
-
-function AllEvents() {
-  const navigate = useNavigate();
+function UsersReports() {
   const dispatch = useDispatch();
-  const allActivities = useSelector((state) => state.activities);
+  const allReports = useSelector((state) => state.allUsersReports);
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
 
+  const navigate = useNavigate();
+  console.log(allReports);
+
   useEffect(() => {
-    dispatch(getActivities());
+    dispatch(getUsersReportsAdmin(userActu.id));
   }, []);
   useEffect(() => {
     if (!adminState) {
@@ -32,16 +26,18 @@ function AllEvents() {
     }
   }, [adminState]);
 
-  const handleDelete = async (e, id, userEmail) => {
-    e.preventDefault();
-
-    if (
-      window.confirm(
-        "¿Estás seguro que quieres eliminar este evento? Si lo eliminas, no podrás deshacer esta acción."
-      ) === true
-    ) {
-      dispatch(deleteEvent(id));
-      swal("Evento eliminado correctamente.");
+  const handleDelete = async (id) => {
+    if (userActu.id === id) {
+      swal("No puedes eliminarte a ti mismo");
+    } else {
+      if (
+        window.confirm(
+          "¿Estás seguro que quieres eliminar este usuario? Si lo eliminas, no podrás deshacer esta acción."
+        ) === true
+      ) {
+        dispatch(deleteUser(id));
+        swal("Usuario eliminado correctamente.");
+      }
     }
   };
 
@@ -61,49 +57,42 @@ function AllEvents() {
               <thead className="bg-blue text-white">
                 <tr>
                   <th className="bg-blue-500  p-2">FECHA</th>
-                  <th className="bg-blue-500  p-2">IMAGEN</th>
-                  <th className="bg-blue-500  p-2">NOMBRE</th>
-                  <th className="bg-blue-500  p-2">LUGAR</th>
-                  <th className="bg-blue-500  p-2">EVENTO REPORTADO?</th>
+                  <th className="bg-blue-500  p-2">TIPO DE REPORTE</th>
+                  <th className="bg-blue-500  p-2">EVENTO REPORTADO</th>
+
+                  <th className="bg-blue-500  p-2">DETALLE</th>
                   <th className="bg-blue-500  p-2" colSpan="2">
                     OPCIONES
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {allActivities
-                  ?.sort((a, b) => a.eventDate - b.eventDate)
+                {allReports
+                  ?.sort((a, b) => a.createdAt.localeCompare(b.createdAt))
                   .map((u) => {
                     return (
                       <tr key={u.id} className="bg-white border-b text-center">
-                        <td className="p-2">{u.eventDate.split("T")[0]}</td>
+                        <td className="p-2">{u.createdAt.split("T")[0]}</td>
+                        <td className="p-2">{u.type}</td>
                         <td className="p-2">
-                          <img
-                            className="w-12 h-12 object-cover rounded-full"
-                            src={u.image}
-                            alt="No disponible"
-                          />
-                        </td>
-                        <td className="p-2">{u.name}</td>
-                        {/* falta hacer el blocked en el modelo */}
-                        <td className="p-2">
-                          {u.place.length > 15
-                            ? `${u.place.substring(0, 15)}...`
-                            : u.place}
+                          {u.reportEvent?.name
+                            ? u.reportEvent.name
+                            : "Eliminado"}
                         </td>
 
-                        <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
+                        <td className="p-2  max-w-[300px] overflow-ellipsis overflow-hidden">
+                          {u.description}
+                        </td>
 
                         <td>
                           <button className="text-blue-500 hover:text-blue-700 focus:outline-none">
-                            {" "}
-                            <Link to={`/home/detail/${u.id}`}>
+                            <Link to={`/profile/${u.idUserReporter}`}>
                               <View />
                             </Link>
                           </button>
 
                           <button
-                            onClick={(e) => handleDelete(e, u.id, u.email)}
+                            onClick={(e) => handleDelete(u.idUserReporter)}
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
                           >
                             <Remove />
@@ -122,4 +111,4 @@ function AllEvents() {
   );
 }
 
-export default AllEvents;
+export default UsersReports;

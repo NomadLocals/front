@@ -25,7 +25,7 @@ const Home = () => {
   console.log(user);
 
   //Invertir la logica para que funcione bien!
-  const isAdmin = !user.admin;
+  const isAdmin = user.admin;
 
   return (
     <div className="bg-grey">

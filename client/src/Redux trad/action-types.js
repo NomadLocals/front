@@ -25,6 +25,11 @@ export const EDIT_USER = "EDIT_USER";
 export const GET_OTHERS = "GET_OTHERS";
 export const POST_IMAGES = "POST_IMAGES";
 export const DELETE_IMAGE = "DELETE_IMAGE";
+
+//Rutas de Administrador
 export const GET_USERS = "GET_USERS";
-export const DELETE_USERS = "DELETE_USERS";
+export const ADMIN_GET_ACTIVITIES = "ADMIN_GET_ACTIVITIES";
 export const DELETE_EVENTS = "DELETE_EVENTS";
+export const DELETE_USERS = "DELETE_USERS";
+export const ADMIN_GET_REPORTS = "ADMIN_GET_REPORTS";
+export const ADMIN_GET_REPORTS_USERS = "ADMIN_GET_REPORTS_USERS";

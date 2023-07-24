@@ -31,6 +31,8 @@ import {
   GET_USERS,
   DELETE_USERS,
   DELETE_EVENTS,
+  ADMIN_GET_REPORTS,
+  ADMIN_GET_REPORTS_USERS,
 } from "./action-types.js";
 
 // const URL = "http://localhost:3001";
@@ -248,7 +250,7 @@ export const getActivityDetail = (id) => {
         payload: data,
       });
     } catch (error) {
-      window.alert("Este es el alert de activity detail");
+      window.alert("El evento ah sido eliminado");
     }
   };
 };
@@ -426,18 +428,18 @@ export const deleteImage = () => {
   };
 };
 
-export const getAllUsers = () => {
+export const getAllUsers = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL}/${USER}`);
-      if (data) {
-        return dispatch({
-          type: GET_USERS,
-          payload: data,
-        });
-      }
+      const { data } = await axios.get(`${URL}/admin/${id}/${USER}`);
+
+      return dispatch({
+        type: GET_USERS,
+        payload: data,
+      });
     } catch (error) {
-      alert(error);
+      console.log("error");
+      console.log(error);
     }
   };
 };
@@ -465,6 +467,39 @@ export const deleteEvent = (id) => {
         type: DELETE_EVENTS,
         payload: id,
       });
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+
+export const getEventsReportsAdmin = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/reportevent`);
+      console.log(data);
+      if (data) {
+        return dispatch({
+          type: ADMIN_GET_REPORTS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+export const getUsersReportsAdmin = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/reportuser`);
+      console.log(data);
+      if (data) {
+        return dispatch({
+          type: ADMIN_GET_REPORTS_USERS,
+          payload: data,
+        });
+      }
     } catch (error) {
       alert(error);
     }

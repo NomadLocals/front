@@ -3,7 +3,6 @@ import { getAllUsers, deleteUser, editUser } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
-
 import Remove from "../../iconos/Remove.jsx";
 import Edit from "../../iconos/Edit.jsx";
 
@@ -13,13 +12,18 @@ function AllUsers() {
   const dispatch = useDispatch();
   const allUsers = useSelector((state) => state.allUsers);
   const userActu = useSelector((state) => state.user);
-  const adminState = !userActu.admin;
+  const adminState = userActu.admin;
 
   console.log(allUsers);
 
   useEffect(() => {
-    dispatch(getAllUsers());
+    dispatch(getAllUsers(userActu.id));
   }, []);
+  useEffect(() => {
+    if (!adminState) {
+      navigate("/home");
+    }
+  }, [adminState]);
 
   const handleEdit = (e, userId, userEmail, userAdmin) => {
     // e.preventDefault();
@@ -83,9 +87,9 @@ function AllUsers() {
             <table className="mt-3 w-full table-auto border-collapse">
               <thead className="bg-blue text-white">
                 <tr>
-                  <th className="bg-blue-500  p-2">NOMBRE</th>
-                  <th className="bg-blue-500  p-2">IMAGEN</th>
                   <th className="bg-blue-500  p-2">EMAIL</th>
+                  <th className="bg-blue-500  p-2">IMAGEN</th>
+                  <th className="bg-blue-500  p-2">REPORTES</th>
                   <th className="bg-blue-500  p-2">BLOQUEADO</th>
                   <th className="bg-blue-500  p-2">ADMINISTRADOR</th>
                   <th className="bg-blue-500  p-2" colSpan="2">
@@ -99,7 +103,11 @@ function AllUsers() {
                   .map((u) => {
                     return (
                       <tr key={u.id} className="bg-white border-b text-center">
-                        <td className="p-2">{u.userName}</td>
+                        <td className="p-2">
+                          {u.email.length > 15
+                            ? u.email.substring(0, 15) + "..."
+                            : u.email}
+                        </td>
                         <td className="p-2">
                           <img
                             className="w-12 h-12 object-cover rounded-full"
@@ -107,7 +115,7 @@ function AllUsers() {
                             alt="No disponible"
                           />
                         </td>
-                        <td className="p-2">{u.email}</td>
+                        <td className="p-2">{u.reviewUser.length}</td>
                         {/* falta hacer el blocked en el modelo */}
                         <td className="p-2">
                           {u.deletedAt === null ? "NO" : "SI"}
