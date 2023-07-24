@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { reviewUser } from "../../Redux trad/actions";
-import { useNavigate, useParams } from "react-router-dom";
-
+import { useParams, useNavigate } from "react-router-dom";
+import NavBar from "./NavBar.jsx";
 
 const UserReview = () => {
   const [comment, setComment] = useState("");
@@ -17,11 +17,10 @@ const UserReview = () => {
   const navigate = useNavigate();
   
 
-
-  useEffect(()=>{
-    setUserId(id)
-    setUserNameUserReview(userName)
-  },[])
+  useEffect(() => {
+    setUserId(id);
+    setUserNameUserReview(userName);
+  }, []);
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -57,12 +56,15 @@ const UserReview = () => {
   };
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-2xl font-semibold mb-4">
+    <>
+      <NavBar />
+    <div className="bg-grey min-h-screen lg:min-w-52 flex justify-center font-quick">
+    <div className="mt-10 lg:w-8/12 shadow-2xl rounded-lg overflow-hidden flex flex-col justify-center items-center p-5">
+      <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">
         Hacer una reseña al usuario
       </h2>
-        <div className="text-blue-600 bg-yellow mb-2"> {isError} </div>
-      <form onSubmit={handleSubmit}>
+        <div className="text-blue bg-yellow mb-2"> {isError} </div>
+      <form onSubmit={handleSubmit} className="lg:w-100 lg:px-2">
         <div className="mb-4">
           <label className="block font-semibold mb-2">Tipo de revisión:</label>
           <select
@@ -86,17 +88,16 @@ const UserReview = () => {
         <div className="mb-4">
           <label className="block font-semibold mb-2">Comentario:</label>
           <textarea
-            className="block w-min px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
+            className="w-full p-2 border border-gray-300 rounded"
             value={comment}
             onChange={handleCommentChange}
             rows="4"
-            cols="50"
           />
         </div>
         <div className="flex justify">
           <button
             type="submit"
-            className="px-6 py-2 rounded-lg bg-blue text-black font-semibold hover:bg-indigo-700"
+            className="px-6 mx-2 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-indigo-700"
           >
             Enviar reseña
           </button>
@@ -107,14 +108,17 @@ const UserReview = () => {
               setUserId(userId);
               setUserNameUserReview(userName);
               setIsError("");
+              navigate("/home")
             }}
-            className="px-6 py-2 rounded-lg bg-blue text-black font-semibold hover:bg-gray-400"
+            className="px-6 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
           >
             Cancelar
           </button>
         </div>
       </form>
+      </div>
     </div>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postReportEvent } from "../../Redux trad/actions.js";
 import { useNavigate, useParams } from "react-router-dom";
+import NavBar from "./NavBar.jsx";
 
 const ReportForm = () => {
   const dispatch = useDispatch();
@@ -64,69 +65,73 @@ const ReportForm = () => {
   };
 
   return (
-    <div className="bg-F1EFE7 min-h-screen py-8">
-      <div className="max-w-md mx-auto bg-white p-6 shadow-md">
-        <h2 className="text-2xl mb-4">Formulario de Reporte de Evento</h2>
-        {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="type" className="block font-bold mb-1">
-              Motivo:
-            </label>
-            <select
-              id="type"
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+    <>
+      < NavBar />
+      <div className="bg-grey min-h-screen lg:min-w-52 flex justify-center font-quick">
+        <div className="mt-10 lg:w-8/12 shadow-2xl rounded-lg overflow-hidden flex flex-col justify-center items-center p-5">
+          <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">Formulario de Reporte de Evento</h2>
+          {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="type" className="block font-bold mb-1">
+                Motivo:
+              </label>
+              <select
+                id="type"
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                className="block px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
+              >
+                <option value="">Selecciona un Motivo</option>
+                <option value="Scam">
+                  Comportamiento fraudulento o engañoso
+                </option>
+                <option value="Breach of Contract">
+                  Violación de derechos de autor o propiedad intelectual
+                </option>
+                <option value="Violence">
+                  Comportamiento ofensivo o abusivo
+                </option>
+                <option value="Inappropriate">
+                  Contenido inapropiado o inadecuado
+                </option>
+                <option value="Other">Otros</option>
+              </select>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="description" className="block font-bold mb-1">
+                Descripción:
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded"
+                rows="4"
+                cols="30"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="px-6 mx-2 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
             >
-              <option value="">Selecciona un Motivo</option>
-              <option value="Scam">
-                Comportamiento fraudulento o engañoso
-              </option>
-              <option value="Breach of Contract">
-                Violación de derechos de autor o propiedad intelectual
-              </option>
-              <option value="Violence">
-                Comportamiento ofensivo o abusivo
-              </option>
-              <option value="Inappropriate">
-                Contenido inapropiado o inadecuado
-              </option>
-              <option value="Other">Otros</option>
-            </select>
-          </div>
-          <div className="mb-4">
-            <label htmlFor="description" className="block font-bold mb-1">
-              Descripción:
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              rows="4"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="w-full xl:w-auto bg-blue text-black py-2 px-8 rounded-xl text-xl"
-          >
-            Submit
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              navigate("/home");
-            }}
-            className="px-6 py-2 rounded-lg bg-blue text-black font-semibold hover:bg-gray-400"
-          >
-            Cancelar
-          </button>
-        </form>
+              Submit
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                navigate("/home");
+              }}
+              className="px-6 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
+            >
+              Cancelar
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import { reviewEvent } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { FaStar } from "react-icons/fa";
 import { useNavigate, useParams} from "react-router-dom";
+import NavBar from "./NavBar.jsx";
 
 const EventReview = () => {
   const navigate = useNavigate()
@@ -67,12 +68,14 @@ const EventReview = () => {
   };
 
   return (
+    <>
+      <NavBar />
     <div className="bg-grey min-h-screen lg:min-w-52 flex justify-center font-quick">
-      <div className="mt-10 shadow-2xl rounded-lg overflow-hidden flex flex-col justify-center items-center p-5">
-      <h2 className="text-2xl font-semibold mb-4 text-center font-spartan">
+      <div className="mt-10 lg:w-8/12 shadow-2xl rounded-lg overflow-hidden flex flex-col justify-center items-center p-5">
+      <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">
         Hacer una reseña de evento:
       </h2>
-        <div className="text-blue-600 bg-yellow mb-3"> {isError} </div>
+        <div className="text-blue bg-yellow mb-3"> {isError} </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block font-semibold mb-2">Calificación:</label>
@@ -96,7 +99,7 @@ const EventReview = () => {
           <label className="block font-semibold mb-2">Tipo de revisión:</label>
           <select
             onChange={(event) => setType(event.target.value)}
-            className="block w-min px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
+            className="block px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
             required
           >
             <option value="Opciones">Elige una opción</option>
@@ -114,7 +117,7 @@ const EventReview = () => {
         <div className="mb-4">
           <label className="block font-semibold mb-2">Comentario:</label>
           <textarea
-            className="block w-min px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
+            className="w-full p-2 border border-gray-300 rounded"
             value={comment}
             onChange={handleCommentChange}
             rows="4"
@@ -146,6 +149,7 @@ const EventReview = () => {
       </form>
       </div>
     </div>
+    </>
   );
 };
 
