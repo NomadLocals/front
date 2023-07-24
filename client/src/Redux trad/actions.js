@@ -28,13 +28,13 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
-  // START_CHAT_PERSONAL,
+  GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
-// const URL = "http://localhost:3001";
+const URL = "http://localhost:3001";
 // const URL = "https://serverpfnomadlocals.onrender.com";
-const URL = "https://serverpredeploy.onrender.com"
+// const URL = "https://serverpredeploy.onrender.com"
 
 const USER = "users";
 const EVENT = "events";

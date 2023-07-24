@@ -5,6 +5,7 @@
 // const socket = io('http://localhost:3001');
 
 
+<<<<<<< HEAD
 // const ChatPersonal = () => {
   
 //   const others = useSelector((state) => state.others);
@@ -15,9 +16,31 @@
 //   const [chatMessages, setChatMessages] = useState([]);
 //   const [chatStarted, setChatStarted] = useState(false); // Estado para controlar si el chat se ha iniciado
 //   const dispatch = useDispatch()
+=======
+const ChatPersonal = () => {
+
+  //* importacion de estados... 
+
+  const others = useSelector((state) => state.others);
+  const user = useSelector((state) => state.user);
+  const startChat = useSelector((state) => state.startChat);
+  const historialChatPersonal = useSelector((state) => state.historialChatPersonal);
+
+  //* Estados locales para funcionalidad de Chat...
+
+  const [isConnected, setIsConnected] = useState(false); //? para conexion
+  const [newMessage, setNewMessage] = useState("") //? Para cada mensaje que se envie..
+  const [chatMessages, setChatMessages] = useState(historialChatPersonal) //? para historial..
+
+  
+  
+
+  const dispatch = useDispatch()
+>>>>>>> 92f4e49b5ebaeb434bcccc1dba9988a91850c5c6
 
 //   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
+<<<<<<< HEAD
 //   const handleSendMessage = () => {
 //     console.log(newMessage)
 //     socket.emit("chatPersonalMessage", {
@@ -40,6 +63,33 @@
 //       setIsConnected (true),
 //       setChatStarted(true));
 //     socket.emit("joinPersonalChat", others.id);
+=======
+  const handleSendMessage = () => {
+    console.log(newMessage)
+    socket.emit("chatPersonalMessage", {
+      senderId: user.id,
+      receiverId: others.id,
+      senderUsername: user.username,
+      message: newMessage,
+    });
+    setNewMessage("");
+  };
+
+
+  // console.log(others)
+
+  useEffect(() => {
+    socket.on("startPersonalChat",
+      setIsConnected (true),
+      );
+
+    socket.on('getPersonalMessage', (data) => {
+      // console.log(data)
+      setChatMessages((prevMessages) => [...prevMessages, data])
+    })
+    
+    socket.emit("joinPersonalChat", others.id);
+>>>>>>> 92f4e49b5ebaeb434bcccc1dba9988a91850c5c6
 
 //     socket.on("chatPersonalMessage", (message) => {
 //       setChatMessages([...chatMessages, message]);

@@ -22,7 +22,7 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
-  // START_CHAT_PERSONAL,
+  GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY
 } from "./action-types.js";
 
@@ -178,11 +178,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         activityImage: "",
       };
-    // case GET_HISTORIAL_CHAT_EVENTS:
-    //   return {
-    //     ...state,
-    //     historialChat: action.payload
-    //   };
+    case GET_HISTORIAL_CHAT_EVENTS:
+      return {
+        ...state,
+        historialChat: action.payload
+      };
       case CLEAN_CHAT_HISTORY:
       return {
         ...state,

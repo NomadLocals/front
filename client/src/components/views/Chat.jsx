@@ -41,15 +41,6 @@ const Chat = () => {
       console.log(data)
       setAllMessages((prevMessages) => [...prevMessages, data]);
     });
-    // socket.on("chatEventMessage", (data) => {
-      
-      //   const palabras = data.message.split(" ").map((palabra) =>
-    //   insultos.includes(palabra.toLowerCase()) ? "****" : palabra
-    // );
-    //     const mensajeFiltrado = { ...data, message: palabras.join(" ") };
-      
-    //   setAllMessages((allMessages) => [...allMessages, mensajeFiltrado]);
-    // });
     
 
     return () => {
