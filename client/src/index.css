@@ -2,3 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Estilos para centrar el icono */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  /* .dropzone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+  } */
+  
+  /* .dropzone p {
+    margin-bottom: 20px
+  } */
+  
+  .dropzone span {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+  
+  .delete-button {
+    background-color: #ff0000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .paimon {
+    height: 34px;
+    width: 80%;
+    margin-left: 10%;
+    border-radius: 4px;
+    padding: 1em;
+    background-color: #FFDE59;
+    color: black;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    animation: location 2s infinite;
+
+  }
+
+  @keyframes location {
+    10% {
+      transform: scale(1.05) rotate(5deg);
+    }
+    20% {
+      transform: scale(1.05) rotate(-5deg);
+    }
+    30% {
+      transform: scale(1.05) rotate(5deg);
+    }
+    40% {
+      transform: none;
+    }
+  }
+
+  .location-button {
+    background: #5271FF;
+    cursor: pointer;
+    border: none;
+    padding: 2px 4px;
+    color: #F1EFE7;
+    font-size: 21px;
+    font-weight: bold;
+    position: relative;
+    border-radius: 6px;
+  }
+
+  .location-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      45deg,
+      #5271FF, #FFDE59, #F1EFE7, #000000,
+      #5271FF, #FFDE59, #F1EFE7, #000000
+    );
+    background-size: 1000%;
+    border-radius: 10px;
+    filter: blur(8px);
+    animation: glowing 20s linear infinite;
+  }
+
+  @keyframes glowing {
+    0% {
+      background-position: 0 0;
+    }
+
+    50% {
+      background-position: 400% 0;
+    }
+
+    100% {
+      background-position: 0 0;
+    }
+  }

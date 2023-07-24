@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
 import { getUserById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
+import { FcSettings } from "react-icons/fc";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -29,7 +31,7 @@ const Profile = () => {
             {userName}
           </h2>
 
-          <div className="flex justify-center mt-5">
+          {/* <div className="flex justify-center mt-5">
             <a
               href="https://www.instagram.com"
               target="_blank"
@@ -57,7 +59,7 @@ const Profile = () => {
             >
               Reddit
             </a>
-          </div>
+          </div> */}
           <div className="mt-5">
             <h3
               className="text-xl font-semibold text-center"
@@ -70,9 +72,11 @@ const Profile = () => {
             </p>
           </div>
           <div className="mt-5 text-center">
-            <button className="text-blue-500 hover:text-blue-700 bg-blue p-2 rounded-lg">
-              🔧
+            <Link to="/settings">
+            <button className="p-2">
+              <FcSettings />
             </button>
+            </Link>
           </div>
         </div>
       </div>

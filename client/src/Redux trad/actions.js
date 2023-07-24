@@ -26,10 +26,13 @@ import {
   CHECK_USER_BY_ID,
   EDIT_USER,
   GET_OTHERS,
+  POST_IMAGES,
+  DELETE_IMAGE
 } from "./action-types.js";
 
-const URL = "http://localhost:3001";
+// const URL = "http://localhost:3001";
 // const URL = "https://serverpfnomadlocals.onrender.com";
+const URL = "https://serverpredeploy.onrender.com"
 
 const USER = "users";
 const EVENT = "events";
@@ -155,10 +158,11 @@ export const reviewUser = (review) => {
   };
 };
 
-export const postReportEvent = (report) => {
+export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${URL}/${REPORT_EVENT}`, report);
+      console.log(formData)
+      const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
       if (!response || !response?.data) {
         throw new Error("Failed to create Report");
@@ -268,7 +272,6 @@ export const checkUserById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
-
       let saved = "";
       if (data) {
         saved = true;
@@ -279,6 +282,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
+      console.log(error)
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,
@@ -388,5 +392,33 @@ export const getOthersById = (id) => {
     } catch (error) {
       alert(error);
     }
+  };
+};
+
+export const postImage = (formData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "https://api.cloudinary.com/v1_1/dwit2djhy/image/upload",
+        formData,
+        {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        }
+      );
+      const fileURL = data.secure_url;
+
+      return dispatch({
+        type: POST_IMAGES,
+        payload: fileURL,
+      });
+    } catch (error) {
+      console.error("Error uploading image: ", error);
+    }
+  };
+};
+
+export const deleteImage = () => {
+  return {
+    type: DELETE_IMAGE,
   };
 };
