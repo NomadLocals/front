@@ -29,6 +29,8 @@ import {
   ADMIN_GET_REVIEWS_EVENTS,
   ADMIN_GET_REVIEWS_USERS,
   ADMIN_GET_ACTIVITIES,
+  GET_HISTORIAL_CHAT_EVENTS,
+  CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
 const initialState = {
@@ -51,6 +53,8 @@ const initialState = {
   allEventsReviews: [],
   allUsersReviews: [],
   allActivities: [],
+  historialChat: [],
+  startChat: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -221,6 +225,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allActivities: action.payload,
+      };
+    case GET_HISTORIAL_CHAT_EVENTS:
+      return {
+        ...state,
+        historialChat: action.payload,
+      };
+    case CLEAN_CHAT_HISTORY:
+      return {
+        ...state,
+        historialChat: action.payload,
       };
     default:
       return state;

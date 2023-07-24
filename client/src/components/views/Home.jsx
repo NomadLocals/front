@@ -70,7 +70,6 @@ const Home = () => {
           <Link to="/activities">Encuentra una actividad</Link>
         </button>
       </section>
-
       <Footer />
     </div>
   );
