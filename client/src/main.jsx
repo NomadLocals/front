@@ -7,7 +7,12 @@ import store, { persistor } from "./Redux trad/store.js";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { PersistGate } from "redux-persist/integration/react";
 
+
 const clerk_pub_key = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
+
+// const URL = "http://localhost:3001";
+// const URL = import.meta.env.SERVER_URL;
+// const socket = io(URL);
 
   
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -17,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <PersistGate persistor={persistor}>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+      <App/>
       </BrowserRouter>
     </Provider>
   </PersistGate>

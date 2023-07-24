@@ -1,70 +1,120 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import { io } from "socket.io-client";
-// const URL = "http://localhost:3001";
-// const URL = "https://serverpfnomadlocals.onrender.com";
-const URL = "https://serverpredeploy.onrender.com"
-const socket = io(URL); // Establecer conexión con el servidor de chat
+import  io  from "socket.io-client";
+import {useParams} from 'react-router-dom'
+const URL = "https://serverpfnomadlocals.onrender.com";
+const socket = io('http://localhost:3001')
+
 
 const Chat = () => {
   const user = useSelector((state) => state.user);
+  const historialChat = useSelector((state) => state.historialChat)
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
-  const [allMessages, setAllMessages] = useState(() => {
-    const storedMessages = localStorage.getItem("chatHistory");
-    return storedMessages ? JSON.parse(storedMessages) : [];
-  });
+  const [allMessages, setAllMessages] = useState(historialChat);
 
+  const insultos = [
+    "puto",
+    "pUt0",
+    "PUTO",
+    "PUT0",
+    "hijodeperra",
+    "perra",
+    "culia",
+    "hijodeputa",
+    "puta",
+    "negro",
+    "mierda",
+    "trola",
+    "put@",
+    "gay",
+    "g@ay",
+    "bobo",
+    "boba",
+    "idiota",
+    "tonto",
+    "tonta",
+    "tont@",
+    "hueca",
+    "hueco",
+    "macaco",
+    "nashe",
+    "concha",
+    "pito",
+    "fuck",
+    "fucking",
+    "brasuca",
+    "culiado",
+    "huecudo",
+    "pijudo",
+    "bugs",
+    "bag",
+    "trolo",
+    "pingo",
+    "orto",
+    "poronga",
+    "culiao",
+    "culiau",
+    "negros",
+    "estupido",
+    "estupidos",
+    "pelotudito",
+    "cachondo",
+    "cachonda",
+    "mogolico",
+    "mogolica",
+    "porongo",
+    "reconcha",
+    "pija",
+    "laconcha",
+  ];
   const userName = user.userName;
-  const chatContainerRef = useRef(null); // Referencia al div del chat
+  const {id} = useParams()
 
-  useEffect(() => {
-    socket.on("connect", () => setIsConnected(true));
-
-    socket.on("chat message", (data) => {
-      setAllMessages((prevMessages) => [...prevMessages, data]);
-    });
-
-    // Guardar el historial de mensajes en LocalStorage cada vez que cambie
-    localStorage.setItem("chatHistory", JSON.stringify(allMessages));
-
-    // Desplazarse hacia abajo cuando se agrega un nuevo mensaje
-    scrollToBottom();
-
-    return () => {
-      socket.off("connect");
-      socket.off("chat message");
-    };
-  }, [allMessages]);
-
+  console.log(historialChat)
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
   const handleSendMessage = () => {
-    if (newMessage.trim() === "") {
-      return; // Evitar enviar mensajes vacíos
-    }
-    socket.emit("chat message", {
-      usuario: userName,
+    socket.emit("chatEventMessage", {
+      eventId: id,
+      senderId: user.id,
       message: newMessage,
+      userName: userName 
     });
     setNewMessage("");
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSendMessage();
-    }
-  };
+  useEffect(() => {
+    socket.on("connect", () => setIsConnected(true));
+    
+    socket.on('getMessagesEvent', (data) => {
+      // console.log(data)
+      setAllMessages((prevMessages) => [...prevMessages, data])
+    })
 
-  const handleClearChat = () => {
-    setAllMessages([]);
-    localStorage.removeItem("chatHistory");
-  };
+    socket.on("chatEventMessage", (data) => {
+      console.log(data)
+      setAllMessages((prevMessages) => [...prevMessages, data]);
+    });
+    // socket.on("chatEventMessage", (data) => {
+      
+      //   const palabras = data.message.split(" ").map((palabra) =>
+    //   insultos.includes(palabra.toLowerCase()) ? "****" : palabra
+    // );
+    //     const mensajeFiltrado = { ...data, message: palabras.join(" ") };
+      
+    //   setAllMessages((allMessages) => [...allMessages, mensajeFiltrado]);
+    // });
+    
 
-  const scrollToBottom = () => {
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  };
+    return () => {
+      socket.off("connect");
+      socket.off("chatEventMessage");
+    };
+  }, [allMessages]);
+
+
+  console.log(allMessages)
 
   return (
     <div className="mt-4">
@@ -75,7 +125,7 @@ const Chat = () => {
       >
         {allMessages.map((message, index) => (
           <div key={index} className="mb-2">
-            <span className="font-semibold">{message.usuario}: </span>
+            <span className="font-semibold">{message.userName}: </span>
             <span>{message.message}</span>
           </div>
         ))}

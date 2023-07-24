@@ -22,6 +22,8 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
+  START_CHAT_PERSONAL,
+  CLEAN_CHAT_HISTORY
 } from "./action-types.js";
 
 const initialState = {
@@ -38,6 +40,8 @@ const initialState = {
   initSesion: "",
   others: {},
   activityImage: "",
+  historialChat : [],
+  startChat: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -174,7 +178,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         activityImage: "",
       };
-
+    case GET_HISTORIAL_CHAT_EVENTS:
+      return {
+        ...state,
+        historialChat: action.payload
+      };
+      case CLEAN_CHAT_HISTORY:
+      return {
+        ...state,
+        historialChat: action.payload
+      };
     default:
       return state;
   }

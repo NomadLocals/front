@@ -8,7 +8,10 @@ import {
   getActivityDetail,
   suscribeEvent,
   unsuscribeEvent,
+  getHistorialMessages,
+  clearChatHistory
 } from "../../Redux trad/actions.js";
+import { START_CHAT_PERSONAL } from "../../Redux trad/action-types.js";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -18,6 +21,7 @@ const Detail = () => {
   const user = useSelector((state) => state.user);
   const activityDetail = useSelector((state) => state.eventById);
 
+  const [showUsers, setShowUsers] = useState(false)
   const [showChat, setShowChat] = useState(false);
   const [joinedUsers, setJoinedUsers] = useState([{}]);
   const userId = user.id;
@@ -45,6 +49,7 @@ const Detail = () => {
 
   //handlers para sumarse o salir de la actividad
   const handleJoinGroup = () => {
+    setShowUsers(true);
     setShowChat(true);
     try {
       dispatch(suscribeEvent(id, userId));
@@ -55,10 +60,12 @@ const Detail = () => {
   };
   const handleLeaveGroup = () => {
     setShowChat(false);
+    setShowUsers(false);
     // Crear una copia del estado actual de joinedUsers
     try {
       dispatch(unsuscribeEvent(id, userId));
       setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
+      dispatch(clearChatHistory())
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +73,7 @@ const Detail = () => {
 
   //para correcta renderizacion del chat->
   useEffect(() => {
+    dispatch(getHistorialMessages(id))
     const joined = async () => {
       try {
         const isJoined = await Users.some((user) => user.id === userId);
@@ -142,6 +150,8 @@ const Detail = () => {
             {/* <StarRating /> */}
 
             <h3 className="text-lg font-semibold mb-2 text-center">Miembros</h3>
+              {
+                showUsers && (
 
             <div className="flex flex-wrap">
               {Users
@@ -170,7 +180,9 @@ const Detail = () => {
                   })
                 : null}
             </div>
-
+                )
+                }
+                
             {showChat && <Chat />}
             <div className="flex justify-center">
               {!showChat ? (

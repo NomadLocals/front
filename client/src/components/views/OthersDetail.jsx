@@ -1,21 +1,26 @@
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
+import ChatPersonal from "./ChatPersonal.jsx";
 import { getOthersById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const OthersDetail = () => {
-  const { id } = useParams();
 
   const others = useSelector((state) => state.others);
-
-  const { userName, image, bio } = others;
-
+  const { userName, image, bio, id } = others;
+  
+  // const user = useSelector((state) => state.user);
+  // const [data, setData] = useState({senderId: "", receiverId : ""});
   const dispatch = useDispatch();
+  // const receiverId = id
+  // const senderId = user.id
 
+  // console.log (receiverId)
   useEffect(() => {
-    dispatch(getOthersById(id));
+    dispatch(getOthersById(id));    
   }, []);
+  
 
   return (
     <>
@@ -71,13 +76,8 @@ const OthersDetail = () => {
               Bio:
             </h3>
             <p className="text-gray-600 mt-2" style={{ color: "#000000" }}>
-              {bio}
+              {bio}|
             </p>
-          </div>
-
-          <div className="flex flex-row mt-5 justify-center">
-          <div> <Link to={"/reviewuser/" + id} > <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">Review</button> </Link> </div>
-          <div> <Link to={"/reportuser/" + id} > <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">Report</button> </Link> </div>
           </div>
         </div>
       </div>
