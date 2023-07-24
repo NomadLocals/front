@@ -9,7 +9,7 @@ import NavBar from "../views/NavBar.jsx";
 import swal from "sweetalert";
 import { useLocation } from "react-router-dom";
 
-function UserReports() {
+function EventReports() {
   const location = useLocation();
   const reportUser = location.state ? location.state.reports : null;
   const user = location.state ? location.state.user : null;
@@ -31,7 +31,7 @@ function UserReports() {
 
       {adminState ? (
         <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
-          <Link to="/admin/users">
+          <Link to="/admin/allEvents">
             <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               Atrás
             </button>
@@ -42,7 +42,7 @@ function UserReports() {
                 <tr>
                   <th className="bg-blue-500  p-2">FECHA</th>
                   <th className="bg-blue-500  p-2">TIPO DE REPORTE</th>
-                  <th className="bg-blue-500  p-2">PERSONA REPORTADA</th>
+                  <th className="bg-blue-500  p-2">EVENTO REPORTADO</th>
 
                   <th className="bg-blue-500  p-2">DETALLE</th>
                 </tr>
@@ -73,4 +73,4 @@ function UserReports() {
   );
 }
 
-export default UserReports;
+export default EventReports;

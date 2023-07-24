@@ -29,14 +29,26 @@ function EventsReports() {
     }
   }, [adminState]);
 
-  const handleDelete = async (id) => {
-    if (
-      window.confirm(
-        "¿Estás seguro que quieres eliminar este evento? Si lo eliminas, no podrás deshacer esta acción."
-      ) === true
-    ) {
-      dispatch(deleteEvent(id));
-      swal("Evento eliminado correctamente.");
+  const handleDelete = async (id, deleted) => {
+    if (!deleted) {
+      if (
+        window.confirm(
+          "¿Estás seguro que quieres eliminar este evento? Si lo eliminas, no podrás deshacer esta acción."
+        ) === true
+      ) {
+        dispatch(deleteEvent(id));
+        swal("El evento eliminado correctamente.");
+      }
+    } else {
+      swal("Evento ya se encuentra eliminado");
+    }
+  };
+
+  const handleViewDetail = (id, deleted) => {
+    if (!deleted) {
+      navigate(`/home/detail/${id}`);
+    } else {
+      swal("El evento ya se encuentra eliminado");
     }
   };
 
@@ -76,7 +88,7 @@ function EventsReports() {
                         <td className="p-2">
                           {u.reportEvent?.name
                             ? u.reportEvent.name
-                            : "Eliminado"}
+                            : "Evento eliminado"}
                         </td>
 
                         <td className="p-2  max-w-[300px] overflow-ellipsis overflow-hidden">
@@ -84,14 +96,27 @@ function EventsReports() {
                         </td>
 
                         <td>
-                          <button className="text-blue-500 hover:text-blue-700 focus:outline-none">
-                            <Link to={`/home/detail/${u.reportEvent?.id}`}>
-                              <View />
-                            </Link>{" "}
+                          <button
+                            title="Ver detalle del evento"
+                            className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                            onClick={() =>
+                              handleViewDetail(
+                                u.reportEvent ? u.reportEvent?.id : "",
+                                u.reportEvent ? u.reportEvent?.deletedAt : true
+                              )
+                            }
+                          >
+                            <View />
                           </button>
 
                           <button
-                            onClick={(e) => handleDelete(u.reportEvent.id)}
+                            title="Borrar evento"
+                            onClick={(e) =>
+                              handleDelete(
+                                u.reportEvent ? u.reportEvent?.id : "",
+                                u.reportEvent ? u.reportEvent?.deletedAt : true
+                              )
+                            }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
                           >
                             <Remove />

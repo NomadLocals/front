@@ -35,18 +35,29 @@ function AllUsers() {
       if (userEmail === "nomad.locals01@gmail.com") {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
-        if (userAdmin === false) {
-          dispatch(editUser(userId, { admin: true }));
-          swal(
-            `Ahora el usuario ${userEmail} tiene permisos de administrador!`
-          );
-          // window.location.reload();
+        if (!userAdmin) {
+          if (
+            window.confirm(
+              "¿Estás seguro que quieres hacer ADMINISTRADOR a este usuario?"
+            ) === true
+          ) {
+            dispatch(editUser(userId, { admin: true }));
+            swal(
+              `Ahora el usuario ${userEmail} tiene permisos de administrador!`
+            );
+          }
         } else {
-          dispatch(editUser(userId, { admin: false }));
+          if (
+            window.confirm(
+              "¿Estás seguro que quieres sacar los permisos de ADMINISTRADOR a este usuario?"
+            ) === true
+          ) {
+            dispatch(editUser(userId, { admin: false }));
 
-          swal(
-            `Ahora el usuario ${userEmail} ya no tiene permisos de administrador!`
-          );
+            swal(
+              `Ahora el usuario ${userEmail} ya no tiene permisos de administrador!`
+            );
+          }
         }
       }
     }
@@ -72,8 +83,11 @@ function AllUsers() {
       }
     }
   };
-  const handleViewReports = (id, reports) => {
-    navigate(`/admin/users/${id}`, { state: { reports: reports } });
+  const handleViewReports = (id, reports, user) => {
+    navigate(`/admin/users/reports/${id}`, { state: { reports, user } });
+  };
+  const handleViewReviews = (id, reviews, user) => {
+    navigate(`/admin/users/reviews/${id}`, { state: { reviews, user } });
   };
 
   return (
@@ -132,7 +146,9 @@ function AllUsers() {
                             u.reportUser.length ? "cursor-pointer" : ""
                           }`}
                           title="Ver reportes del usuario"
-                          onClick={() => handleViewReports(u.id, u.reportUser)}
+                          onClick={() =>
+                            handleViewReports(u.id, u.reportUser, u.email)
+                          }
                         >
                           {u.reportUser.length ? <View /> : ""}
                         </td>
@@ -141,6 +157,9 @@ function AllUsers() {
                         <td
                           className="p-2 cursor-pointer"
                           title="Ver reviews del usuario"
+                          onClick={() =>
+                            handleViewReviews(u.id, u.reviewUser, u.email)
+                          }
                         >
                           {u.reviewUser.length ? <View /> : ""}
                         </td>
@@ -152,6 +171,7 @@ function AllUsers() {
                           <button
                             onClick={(e) => handleDelete(e, u.id, u.email)}
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
+                            title="Eliminar usuario"
                           >
                             <Remove />
                           </button>
@@ -163,6 +183,7 @@ function AllUsers() {
                               handleEdit(e, u.id, u.email, u.admin)
                             }
                             className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                            title="Editar permisos de administrador"
                           >
                             <Edit />
                           </button>

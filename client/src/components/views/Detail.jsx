@@ -23,7 +23,7 @@ const Detail = () => {
   const userId = user.id;
   const userName = user.userName;
   const userImage = user.image;
-
+  const isAdmin = user.admin;
   const {
     name,
     activityType,
@@ -100,6 +100,20 @@ const Detail = () => {
             alt={name}
             className="h-48 w-full object-cover rounded-lg"
           />
+          <div className="flex justify-end pr-2 md:pr-5 xl:pr-10 mt-4">
+            {isAdmin ? (
+              <div>
+                <button className="text-white p-2  mr-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+                  <Link to="/admin/allEvents">Panel de Eventos</Link>
+                </button>
+                <button className="text-white p-2  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+                  <Link to="/admin/eventsReports">Panel de Reportes</Link>
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="p-4">
             <h2 className="text-2xl font-bold mb-2 text-center font-quick">
               {name}

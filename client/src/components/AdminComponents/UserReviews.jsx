@@ -9,9 +9,9 @@ import NavBar from "../views/NavBar.jsx";
 import swal from "sweetalert";
 import { useLocation } from "react-router-dom";
 
-function UserReports() {
+function UserReviews() {
   const location = useLocation();
-  const reportUser = location.state ? location.state.reports : null;
+  const reviewsUser = location.state ? location.state.reviews : null;
   const user = location.state ? location.state.user : null;
   console.log(location.state);
   const userActu = useSelector((state) => state.user);
@@ -42,13 +42,13 @@ function UserReports() {
                 <tr>
                   <th className="bg-blue-500  p-2">FECHA</th>
                   <th className="bg-blue-500  p-2">TIPO DE REPORTE</th>
-                  <th className="bg-blue-500  p-2">PERSONA REPORTADA</th>
+                  <th className="bg-blue-500  p-2">EVENTO REPORTADO</th>
 
                   <th className="bg-blue-500  p-2">DETALLE</th>
                 </tr>
               </thead>
               <tbody>
-                {reportUser
+                {reviewsUser
                   ?.sort((a, b) => a.createdAt.localeCompare(b.createdAt))
                   .map((u) => {
                     return (
@@ -73,4 +73,4 @@ function UserReports() {
   );
 }
 
-export default UserReports;
+export default UserReviews;

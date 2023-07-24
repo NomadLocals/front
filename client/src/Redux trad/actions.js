@@ -35,6 +35,7 @@ import {
   ADMIN_GET_REPORTS_USERS,
   ADMIN_GET_REVIEWS_EVENTS,
   ADMIN_GET_REVIEWS_USERS,
+  ADMIN_GET_ACTIVITIES,
 } from "./action-types.js";
 
 // const URL = "http://localhost:3001";
@@ -168,7 +169,7 @@ export const reviewUser = (review) => {
 export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      console.log(formData)
+      console.log(formData);
       const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
       if (!response || !response?.data) {
@@ -441,7 +442,6 @@ export const getAllUsers = (id) => {
         payload: data,
       });
     } catch (error) {
-      console.log("error");
       console.log(error);
     }
   };
@@ -480,7 +480,6 @@ export const getEventsReportsAdmin = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/admin/${id}/reportevent`);
-      console.log(data);
       if (data) {
         return dispatch({
           type: ADMIN_GET_REPORTS,
@@ -496,7 +495,6 @@ export const getUsersReportsAdmin = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/admin/${id}/reportuser`);
-      console.log(data);
       if (data) {
         return dispatch({
           type: ADMIN_GET_REPORTS_USERS,
@@ -512,7 +510,6 @@ export const getEventsReviewsAdmin = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/admin/${id}/reviewevent`);
-      console.log(data);
       if (data) {
         return dispatch({
           type: ADMIN_GET_REVIEWS_EVENTS,
@@ -528,7 +525,6 @@ export const getUsersReviewsAdmin = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/admin/${id}/reviewuser`);
-      console.log(data);
       if (data) {
         return dispatch({
           type: ADMIN_GET_REVIEWS_USERS,
@@ -537,6 +533,19 @@ export const getUsersReviewsAdmin = (id) => {
       }
     } catch (error) {
       alert(error);
+    }
+  };
+};
+export const adminGetActivities = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/${EVENT}`);
+      return dispatch({
+        type: ADMIN_GET_ACTIVITIES,
+        payload: data,
+      });
+    } catch (error) {
+      // console.log(error.message);
     }
   };
 };

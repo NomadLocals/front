@@ -35,6 +35,9 @@ import UsersReports from "./components/AdminComponents/UsersReports.jsx";
 import UserReports from "./components/AdminComponents/UserReports.jsx";
 import UsersReviews from "./components/AdminComponents/UsersReviews";
 import EventsReviews from "./components/AdminComponents/EventsReviews";
+import UserReviews from "./components/AdminComponents/UserReviews";
+import EventReports from "./components/AdminComponents/EventReports";
+import EventReviewsAdmin from "./components/AdminComponents/EventReviewsAdmin";
 
 function App() {
   return (
@@ -65,13 +68,21 @@ function App() {
         <Route path="/settings" element={<Settings />} />
 
         <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/allOrders" element={<AllEvents />} />
+        <Route path="/admin/allEvents" element={<AllEvents />} />
         <Route path="/admin/eventsReports" element={<EventsReports />} />
         <Route path="/admin/usersReports" element={<UsersReports />} />
         <Route path="/admin/users" element={<AllUsers />} />
-        <Route path="/admin/users/:id" element={<UserReports />} />
+        <Route path="/admin/users/reports/:id" element={<UserReports />} />
+        <Route path="/admin/users/reviews/:id" element={<UserReviews />} />
+
         <Route path="/admin/eventsReviews" element={<EventsReviews />} />
         <Route path="/admin/usersReviews" element={<UsersReviews />} />
+
+        <Route path="/admin/events/allReports/:id" element={<EventReports />} />
+        <Route
+          path="/admin/events/allReviews/:id"
+          element={<EventReviewsAdmin />}
+        />
       </Routes>
     </div>
   );

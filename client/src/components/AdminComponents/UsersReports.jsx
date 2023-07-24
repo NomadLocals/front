@@ -26,18 +26,35 @@ function UsersReports() {
     }
   }, [adminState]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, deleted) => {
     if (userActu.id === id) {
       swal("No puedes eliminarte a ti mismo");
     } else {
-      if (
-        window.confirm(
-          "¿Estás seguro que quieres eliminar este usuario? Si lo eliminas, no podrás deshacer esta acción."
-        ) === true
-      ) {
-        dispatch(deleteUser(id));
-        swal("Usuario eliminado correctamente.");
+      if (!deleted) {
+        if (
+          window.confirm(
+            "¿Estás seguro que quieres eliminar este usuario? Si lo eliminas, no podrás deshacer esta acción."
+          ) === true
+        ) {
+          dispatch(deleteUser(id));
+          swal("Usuario eliminado correctamente.");
+        }
+      } else {
+        swal(
+          "El usuario ya se encuentra eliminado, puedes restaurarlo desde el panel de Usuarios"
+        );
       }
+    }
+  };
+
+  const handleViewDetail = (id, deleted) => {
+    console.log(id);
+    if (!deleted) {
+      navigate(`/others/${id}`);
+    } else {
+      swal(
+        "El usuario se encuentra eliminado, puedes restaurarlo desde el panel de Usuarios"
+      );
     }
   };
 
@@ -58,8 +75,7 @@ function UsersReports() {
                 <tr>
                   <th className="bg-blue-500  p-2">FECHA</th>
                   <th className="bg-blue-500  p-2">TIPO DE REPORTE</th>
-                  <th className="bg-blue-500  p-2">EVENTO REPORTADO</th>
-
+                  <th className="bg-blue-500  p-2">USUARIO REPORTADO</th>
                   <th className="bg-blue-500  p-2">DETALLE</th>
                   <th className="bg-blue-500  p-2" colSpan="2">
                     OPCIONES
@@ -75,9 +91,7 @@ function UsersReports() {
                         <td className="p-2">{u.createdAt.split("T")[0]}</td>
                         <td className="p-2">{u.type}</td>
                         <td className="p-2">
-                          {u.reportEvent?.name
-                            ? u.reportEvent.name
-                            : "Eliminado"}
+                          {u.reportUser ? u.reportUser.email : "Eliminado"}
                         </td>
 
                         <td className="p-2  max-w-[300px] overflow-ellipsis overflow-hidden">
@@ -85,14 +99,26 @@ function UsersReports() {
                         </td>
 
                         <td>
-                          <button className="text-blue-500 hover:text-blue-700 focus:outline-none">
-                            <Link to={`/profile/${u.idUserReporter}`}>
-                              <View />
-                            </Link>
+                          <button
+                            title="Ver perfil del usuario"
+                            className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                            onClick={() =>
+                              handleViewDetail(
+                                u.reportUser ? u.reportUser?.id : "",
+                                u.reportUser ? u.reportUser?.deletedAt : true
+                              )
+                            }
+                          >
+                            <View />
                           </button>
 
                           <button
-                            onClick={(e) => handleDelete(u.idUserReporter)}
+                            onClick={() =>
+                              handleDelete(
+                                u.idUserReporter,
+                                u.reportEvent ? u.reportUser?.deletedAt : true
+                              )
+                            }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
                           >
                             <Remove />
