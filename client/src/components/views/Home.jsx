@@ -15,7 +15,12 @@ const Home = () => {
   useEffect(() => {
     dispatch(getUserActivities(user.id));
   }, []);
-
+  if (user.deletedAt) {
+    return (
+      <h2>Tu cuenta está suspendida. Por favor, contacta al administrador.</h2>
+    );
+  }
+  console.log(user);
   //Acomodar fecha:
   const currentDate = new Date();
   const day = String(currentDate.getDate()).padStart(2, "0");
