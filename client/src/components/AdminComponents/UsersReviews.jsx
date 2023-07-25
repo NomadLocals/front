@@ -83,8 +83,8 @@ function usersReviews() {
                             className="text-blue-500 hover:text-blue-700 focus:outline-none"
                             onClick={() =>
                               handleViewDetail(
-                                u.reviewEvent ? u.reviewUser?.id : "",
-                                u.reviewEvent ? u.reviewUser?.deletedAt : true
+                                u.reviewUser ? u.reviewUser?.id : "",
+                                u.reviewUser ? u.reviewUser?.deletedAt : true
                               )
                             }
                           >

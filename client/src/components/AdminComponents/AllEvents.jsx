@@ -17,7 +17,7 @@ function AllEvents() {
   const allActivities = useSelector((state) => state.allActivities);
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
-  console.log(allActivities);
+
   useEffect(() => {
     dispatch(adminGetActivities(userActu.id));
   }, []);
@@ -27,14 +27,14 @@ function AllEvents() {
     }
   }, [adminState]);
 
-  const handleDelete = async (id, deletedAt) => {
+  const handleDelete = async (id, deletedAt, eventName, users) => {
     if (deletedAt === null) {
       if (
         window.confirm(
           "¿Estás seguro que quieres eliminar este evento? Si lo eliminas, no podrás deshacer esta acción."
         ) === true
       ) {
-        dispatch(deleteEvent(id));
+        dispatch(deleteEvent(id, users, eventName));
         swal("Evento eliminado correctamente.");
       }
     } else {
@@ -138,7 +138,9 @@ function AllEvents() {
                         <td>
                           <button
                             title="eliminar evento"
-                            onClick={(e) => handleDelete(u.id, u.deletedAt)}
+                            onClick={(e) =>
+                              handleDelete(u.id, u.deletedAt, u.name, u.Users)
+                            }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
                           >
                             <Remove />

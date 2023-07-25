@@ -80,7 +80,7 @@ function AllUsers() {
               "¿Estás seguro que quieres eliminar este usuario?"
             ) === true
           ) {
-            dispatch(deleteUser(id));
+            dispatch(deleteUser(id, userEmail));
             swal("Usuario eliminado correctamente.");
           }
         } else {
@@ -89,7 +89,7 @@ function AllUsers() {
               `¿Estás seguro que quieres volver a habilitar al usuario ${userEmail}?`
             ) === true
           ) {
-            dispatch(adminRetrieveUsers(id, adminId));
+            dispatch(adminRetrieveUsers(id, adminId, userEmail));
             swal(`El usuario ${userEmail} fue habilitado correctamente`);
           }
         }
@@ -191,7 +191,7 @@ function AllUsers() {
                               )
                             }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
-                            title="Eliminar usuario"
+                            title="Eliminar/Recuperar usuario"
                           >
                             <Remove />
                           </button>

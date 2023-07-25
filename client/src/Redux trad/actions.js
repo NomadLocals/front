@@ -497,24 +497,34 @@ export const getAllUsers = (id) => {
   };
 };
 
-export const deleteUser = (id) => {
+export const deleteUser = (id, email) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(`${URL}/${USER}/${id}`);
-
+      await axios.post(`${URL}/send-mail/delete`, { email });
       return dispatch({
         type: DELETE_USERS,
       });
     } catch (error) {
-      // alert(error);
+      console.log(error);
     }
   };
 };
 
-export const deleteEvent = (id) => {
+export const deleteEvent = (id, users, event) => {
   return async (dispatch) => {
     try {
+      const arrayDeEmails = users?.map((objeto) => objeto.email);
       const { data } = await axios.delete(`${URL}/${EVENT}/${id}`);
+
+      const promises = arrayDeEmails.map((email) =>
+        axios.post(`${URL}/send-mail/delete-event`, {
+          email,
+          event,
+        })
+      );
+
+      await Promise.all(promises);
 
       return dispatch({
         type: DELETE_EVENTS,
@@ -599,13 +609,14 @@ export const adminGetActivities = (id) => {
     }
   };
 };
-export const adminRetrieveUsers = (id, adminId) => {
+export const adminRetrieveUsers = (id, adminId, email) => {
   return async (dispatch) => {
     try {
       console.log(`${URL}/admin/${adminId}/userreset?idUser=${id}`);
       const { data } = await axios.get(
         `${URL}/admin/${adminId}/userreset?idUser=${id}`
       );
+      await axios.post(`${URL}/send-mail/retrieve`, { email });
       console.log(data);
       return dispatch({
         type: ADMIN_RETRIEVE_USERS,
