@@ -2,15 +2,14 @@ import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
 import ChatPersonal from "./ChatPersonal.jsx";
 import { getOthersById } from "../../Redux trad/actions.js";
-import { useEffect,  } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CreatedActivities from "./CreatedActivities.jsx";
 
 const OthersDetail = () => {
-
   const others = useSelector((state) => state.others);
   const { userName, image, bio, id } = others;
-  
+
   // const user = useSelector((state) => state.user);
   // const [data, setData] = useState({senderId: "", receiverId : ""});
   const dispatch = useDispatch();
@@ -19,9 +18,8 @@ const OthersDetail = () => {
 
   // console.log (receiverId)
   useEffect(() => {
-    dispatch(getOthersById(id));    
+    dispatch(getOthersById(id));
   }, []);
-  
 
   return (
     <>
@@ -46,30 +44,47 @@ const OthersDetail = () => {
             >
               Bio:
             </h3>
-            <p className="text-gray-600 mt-2 text-center" style={{ color: "#000000" }}>
+            <p
+              className="text-gray-600 mt-2 text-center"
+              style={{ color: "#000000" }}
+            >
               {bio}
             </p>
           </div>
           <hr className="mt-5 mb-5 border-t border-gray-400" />
           <h3
-              className="text-xl font-semibold text-center"
-              style={{ color: "#000000" }}
-            >
-              Actividades del usuario:
-            </h3>
-            <CreatedActivities />
+            className="text-xl font-semibold text-center"
+            style={{ color: "#000000" }}
+          >
+            Actividades del usuario:
+          </h3>
+          <CreatedActivities />
           <hr className="mt-5 mb-5 border-t border-gray-400" />
           <div className="flex flex-row mt-5 justify-center">
-          <div> <Link to={"/reviewuser/" + id} > <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">Review</button> </Link> </div>
-          <div> <Link to={"/reportuser/" + id} > <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">Report</button> </Link> </div>
+            <div>
+              {" "}
+              <Link to={"/reviewuser/" + id}>
+                {" "}
+                <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">
+                  Review
+                </button>{" "}
+              </Link>{" "}
+            </div>
+            <div>
+              {" "}
+              <Link to={"/reportuser/" + id}>
+                {" "}
+                <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">
+                  Report
+                </button>{" "}
+              </Link>{" "}
+            </div>
           </div>
           <Link to="/chat/personal">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-5"
-            >
-            Iniciar Chat Personal
-          </button>
-            </Link>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-5">
+              Iniciar Chat Personal
+            </button>
+          </Link>
         </div>
       </div>
     </>

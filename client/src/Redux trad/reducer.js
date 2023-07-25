@@ -22,8 +22,6 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
-  GET_HISTORIAL_CHAT_EVENTS,
-  CLEAN_CHAT_HISTORY,
   GET_USERS,
   DELETE_EVENTS,
   ADMIN_GET_REPORTS,
@@ -31,6 +29,8 @@ import {
   ADMIN_GET_REVIEWS_EVENTS,
   ADMIN_GET_REVIEWS_USERS,
   ADMIN_GET_ACTIVITIES,
+  GET_HISTORIAL_CHAT_EVENTS,
+  CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
 const initialState = {
@@ -47,14 +47,14 @@ const initialState = {
   initSesion: "",
   others: {},
   activityImage: "",
-  historialChat : [],
-  startChat: {},
   allUsers: [],
   allEventsReports: [],
   allUsersReports: [],
   allEventsReviews: [],
   allUsersReviews: [],
   allActivities: [],
+  historialChat: [],
+  startChat: {},
 };
 
 const rootReducer = (state = initialState, action) => {

@@ -1,23 +1,26 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import  io  from "socket.io-client";
-import {useParams} from 'react-router-dom'
+import io from "socket.io-client";
+import { useParams } from "react-router-dom";
 // const URL = "https://serverpfnomadlocals.onrender.com";
+<<<<<<< HEAD
 const socket = io('http://localhost:3001')
 
+=======
+const socket = io("http://localhost:3001");
+>>>>>>> deb62fc5cfd4e8c9b06fbed342c8b625b0e36787
 
 const Chat = () => {
   const user = useSelector((state) => state.user);
-  const historialChat = useSelector((state) => state.historialChat)
+  const historialChat = useSelector((state) => state.historialChat);
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [allMessages, setAllMessages] = useState(historialChat);
 
-
   const userName = user.userName;
-  const {id} = useParams()
+  const { id } = useParams();
 
-  console.log(historialChat)
+  console.log(historialChat);
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
   const handleSendMessage = () => {
@@ -25,24 +28,23 @@ const Chat = () => {
       eventId: id,
       senderId: user.id,
       message: newMessage,
-      userName: userName 
+      userName: userName,
     });
     setNewMessage("");
   };
 
   useEffect(() => {
     socket.on("connect", () => setIsConnected(true));
-    
-    socket.on('getMessagesEvent', (data) => {
-      // console.log(data)
-      setAllMessages((prevMessages) => [...prevMessages, data])
-    })
 
-    socket.on("chatEventMessage", (data) => {
-      console.log(data)
+    socket.on("getMessagesEvent", (data) => {
+      // console.log(data)
       setAllMessages((prevMessages) => [...prevMessages, data]);
     });
-    
+
+    socket.on("chatEventMessage", (data) => {
+      console.log(data);
+      setAllMessages((prevMessages) => [...prevMessages, data]);
+    });
 
     return () => {
       socket.off("connect");
@@ -50,8 +52,7 @@ const Chat = () => {
     };
   }, [allMessages]);
 
-
-  console.log(allMessages)
+  console.log(allMessages);
 
   return (
     <div className="mt-4">
@@ -60,12 +61,22 @@ const Chat = () => {
         // ref={chatContainerRef}
         className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll"
       >
+<<<<<<< HEAD
         {allMessages?.map((message, index) => (
           <div key={index} className="mb-2">
             <span className="font-semibold">{message.userName}: </span>
             <span>{message.message}</span>
           </div>
         ))}
+=======
+        {allMessages &&
+          allMessages?.map((message, index) => (
+            <div key={index} className="mb-2">
+              <span className="font-semibold">{message.userName}: </span>
+              <span>{message.message}</span>
+            </div>
+          ))}
+>>>>>>> deb62fc5cfd4e8c9b06fbed342c8b625b0e36787
       </div>
       <div className="flex mt-2 text-black">
         <input
