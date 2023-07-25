@@ -86,7 +86,7 @@ const ChatPersonal = () => {
           <div className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll">
             {chatMessages?.map((message, index) => (
               <div key={index} className="mb-2">
-                <span className="font-semibold">{message.id}: </span>
+                <span className="font-semibold">{message.sender.userName}: </span>
                 <span>{message.message}</span>
               </div>
             ))}
