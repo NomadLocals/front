@@ -36,28 +36,39 @@ function AllUsers() {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
         if (!userAdmin) {
-          if (
-            window.confirm(
-              "¿Estás seguro que quieres hacer ADMINISTRADOR a este usuario?"
-            ) === true
-          ) {
-            dispatch(editUser(userId, { admin: true }));
-            swal(
-              `Ahora el usuario ${userEmail} tiene permisos de administrador!`
-            );
-          }
+          swal({
+            title: "¿Estas seguro que deseas que el usuario sea administrador?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#008000",
+            dangerMode: true,
+            buttons: true,          
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          })
+          .then(willDelete => {
+            if (willDelete) {
+              dispatch(editUser(userId, { admin: true }));
+              location.reload(true)
+            }
+          })
         } else {
-          if (
-            window.confirm(
-              "¿Estás seguro que quieres sacar los permisos de ADMINISTRADOR a este usuario?"
-            ) === true
-          ) {
-            dispatch(editUser(userId, { admin: false }));
-
-            swal(
-              `Ahora el usuario ${userEmail} ya no tiene permisos de administrador!`
-            );
-          }
+          swal({
+            title: "¿Estas seguro que deseas que el usuario ya no sea administrador?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            dangerMode: true,
+            buttons: true,          
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          })
+          .then(willDelete => {
+            if (willDelete) {
+              dispatch(editUser(userId, { admin: false }));
+              location.reload(true)
+            }
+          })
         }
       }
     }
@@ -72,14 +83,22 @@ function AllUsers() {
       if (userEmail === "nomad.locals01@gmail.com") {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
-        if (
-          window.confirm(
-            "¿Estás seguro que quieres eliminar este usuario? Si lo eliminas, no podrás deshacer esta acción."
-          ) === true
-        ) {
-          dispatch(deleteUser(id));
-          swal("Usuario eliminado correctamente.");
-        }
+        swal({
+          title: "¿Estas seguro que deseas eliminar este usuario?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          dangerMode: true,
+          buttons: true,          
+          closeOnConfirm: false,
+          closeOnCancel: false,
+        })
+        .then(willDelete => {
+          if (willDelete) {
+            dispatch(deleteUser(id));
+            location.reload(true)
+          }
+        })
       }
     }
   };
@@ -89,6 +108,7 @@ function AllUsers() {
   const handleViewReviews = (id, reviews, user) => {
     navigate(`/admin/users/reviews/${id}`, { state: { reviews, user } });
   };
+
 
   return (
     <div>
