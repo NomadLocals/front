@@ -33,13 +33,10 @@ function AllEvents() {
         swal({
           title: "Eliminar",
           text: `¿Estas seguro que deseas eliminar al evento?`,
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
+          icon: "warning",
           dangerMode: true,
           buttons: true,          
-          closeOnConfirm: false,
-          closeOnCancel: false,
+          closeModel: false,
         })
         .then(async(willDelete) => {
           if (willDelete) {

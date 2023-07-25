@@ -43,12 +43,9 @@ function AllUsers() {
           swal({
             title: "Crear administrador",
             text: `¿Estas seguro que deseas que el usuario ${userEmail} sea administrador?`,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#008000",
+            icon: "warning",
             buttons: true,          
-            closeOnConfirm: false,
-            closeOnCancel: false,
+            closeModel: false,
           })
           .then(willDelete => {
             if (willDelete) {
@@ -64,13 +61,10 @@ function AllUsers() {
           swal({
             title: "Quitar administrador",
             text: `¿Estas seguro que deseas que el usuario ${userEmail} ya no sea administrador?`,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
+            icon: "warning",
             dangerMode: true,
             buttons: true,          
-            closeOnConfirm: false,
-            closeOnCancel: false,
+            closeModel: false,
           })
           .then(async(willDelete) => {
             if (willDelete) {
@@ -98,13 +92,10 @@ function AllUsers() {
         swal({
           title: "Eliminar",
           text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
+          icon: "warning",
           dangerMode: true,
           buttons: true,          
-          closeOnConfirm: false,
-          closeOnCancel: false,
+          closeModel: false,
         })
         .then(async(willDelete) => {
           if (willDelete) {
@@ -120,12 +111,9 @@ function AllUsers() {
             swal({
               title: "Reestablecer",
               text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
-              type: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#DD6B55",
+              icon: "warning",
               buttons: true,          
-              closeOnConfirm: false,
-              closeOnCancel: false,
+              closeModel: false,
             })
             .then(async(willDelete) => {
               if (willDelete) {
