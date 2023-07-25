@@ -60,7 +60,7 @@ const Chat = () => {
         // ref={chatContainerRef}
         className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll"
       >
-        {allMessages.map((message, index) => (
+        {allMessages?.map((message, index) => (
           <div key={index} className="mb-2">
             <span className="font-semibold">{message.userName}: </span>
             <span>{message.message}</span>
