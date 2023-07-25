@@ -28,10 +28,8 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
-<<<<<<< HEAD
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
-=======
   GET_USERS,
   DELETE_USERS,
   DELETE_EVENTS,
@@ -40,16 +38,11 @@ import {
   ADMIN_GET_REVIEWS_EVENTS,
   ADMIN_GET_REVIEWS_USERS,
   ADMIN_GET_ACTIVITIES,
->>>>>>> b9471725f7310cb725849014217a57b2dd092075
 } from "./action-types.js";
 
 const URL = "http://localhost:3001";
 // const URL = "https://serverpfnomadlocals.onrender.com";
-<<<<<<< HEAD
 // const URL = "https://serverpredeploy.onrender.com"
-=======
-const URL = "https://serverpredeploy.onrender.com";
->>>>>>> b9471725f7310cb725849014217a57b2dd092075
 
 const USER = "users";
 const EVENT = "events";
