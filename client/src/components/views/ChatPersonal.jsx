@@ -12,19 +12,17 @@ const ChatPersonal = () => {
 
   const others = useSelector((state) => state.others);
   const user = useSelector((state) => state.user);
-  const startChat = useSelector((state) => state.startChat);
   const historialChatPersonal = useSelector((state) => state.historialChatPersonal);
-
+  console.log(user)
+  const dispatch = useDispatch()
   //* Estados locales para funcionalidad de Chat...
-
-  const [isConnected, setIsConnected] = useState(false); //? para conexion
   const [newMessage, setNewMessage] = useState("") //? Para cada mensaje que se envie..
+  
+  const [isConnected, setIsConnected] = useState(false); //? para conexion
   const [chatMessages, setChatMessages] = useState(historialChatPersonal) //? para historial..
 
-  console.log(others);
   
 
-  const dispatch = useDispatch()
 
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
@@ -40,7 +38,6 @@ const ChatPersonal = () => {
   };
 
 
-  // console.log(others)
 
   const data = {
     senderId : user.id,
@@ -48,34 +45,37 @@ const ChatPersonal = () => {
   }
 
   useEffect(() => {
-    socket.on("startPersonalChat",
-    setIsConnected (true),
     dispatch(getPersonalMessages(data))
-
-      );
-      socket.emit("joinPersonalChat", others.id);
-      
-      socket.on('getPersonalMessage', (message) => {
-
-        // console.log(data)
-      setChatMessages((prevMessages) => [...prevMessages, message])
-    })
     
+    socket.emit('startPersonalChat', {
+      senderId: user.id,
+      receiverId: others.id,
+    })
+    socket.on("joinPersonalChat", others.id);
 
-    socket.on("chatPersonalMessage", (message) => {
-      setChatMessages([...chatMessages, message]);
+    socket.on("startPersonalChat",()=>{
+      setIsConnected (true)
     });
 
+    
+    socket.on("chatPersonalMessage", (data) => {
+      setChatMessages((prevMessages) => [...prevMessages, data]);
+    });
 
-
+      
+    socket.on('getPersonalMessage', (data) => {
+    setChatMessages((prevMessages) => [...prevMessages, data])
+    })
+    
     return () => {
-      socket.off("startPersonalChat");
-      socket.off("chatPersonalMessage");
+    socket.off("startPersonalChat");
+    socket.off("chatPersonalMessage");
     };
   }, [socket]);
   
+  console.log(historialChatPersonal);
   
-  console.log(chatMessages)
+  // console.log(chatMessages)
   return (
     <div className="mt-4">
       {(

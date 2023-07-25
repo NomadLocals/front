@@ -383,11 +383,11 @@ export const getHistorialMessages = (id) => {
 export const getPersonalMessages = ({senderId, receiverId}) => {
   return async (dispatch) => {
     try {
-      const respuesta = await axios.get(`${URL}/chat/personal/${senderId}/${receiverId}`);
+      const {data} = await axios.get(`${URL}/chat/personal?senderId=${senderId}&receiverId=${receiverId}`);
 
       return dispatch({
         type: GET_HISTORIAL_CHAT_PERSONAL,
-        payload: respuesta.data,
+        payload: data,
       });
     } catch (error) {
       console.log(error.message);

@@ -183,12 +183,12 @@ const rootReducer = (state = initialState, action) => {
     case GET_HISTORIAL_CHAT_EVENTS:
       return {
         ...state,
-        historialChat: action.payload
+        historialChat: action.payload,
       };
     case GET_HISTORIAL_CHAT_PERSONAL:
       return {
         ...state,
-        historialChatPersonal: action.payload
+        historialChatPersonal: action.payload,
       };
       case CLEAN_CHAT_HISTORY:
       return {
