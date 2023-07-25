@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getUsersReportsAdmin, deleteUser } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
 import Remove from "../../iconos/Remove.jsx";
-import Edit from "../../iconos/Edit.jsx";
+
 import View from "../../iconos/View.jsx";
 import swal from "sweetalert";
 
@@ -15,7 +15,6 @@ function UsersReports() {
   const adminState = userActu.admin;
 
   const navigate = useNavigate();
-  console.log(allReports);
 
   useEffect(() => {
     dispatch(getUsersReportsAdmin(userActu.id));

@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
-import {
-  getEventsReportsAdmin,
-  deleteEvent,
-} from "../../Redux trad/actions.js";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
-import swal from "sweetalert";
 import { useLocation } from "react-router-dom";
 
 function UserReviews() {
   const location = useLocation();
   const reviewsUser = location.state ? location.state.reviews : null;
   const user = location.state ? location.state.user : null;
-  console.log(location.state);
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
 

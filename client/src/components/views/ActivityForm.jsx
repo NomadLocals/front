@@ -21,6 +21,7 @@ export default function ActivityForm() {
   const image = useSelector((state) => state.activityImage);
   const userId = user.id;
   const dispatch = useDispatch();
+  console.log(user);
 
   const [activityData, setActivityData] = useState({
     userId: userId,
@@ -109,7 +110,7 @@ export default function ActivityForm() {
 
     if (isValid) {
       try {
-        dispatch(postEvent(activityData));
+        dispatch(postEvent(activityData, user.userName, user.email));
         dispatch(getUserActivities(userId));
         setActivityData({
           userId: userId,
@@ -141,6 +142,36 @@ export default function ActivityForm() {
       hour12: false,
     })
     .slice(0, 16);
+
+  //---------------------Evitar ingreso de usuarios banneados:---------------------------------
+  const [isUserSuspended, setIsUserSuspended] = useState(false);
+  useEffect(() => {
+    // Verificar si el usuario está suspendido al cargar el componente
+    const delay = 1000;
+    const timerId = setTimeout(() => {
+      // Verificar si el usuario está suspendido después del retraso
+      if (!(user && "deletedAt" in user)) {
+        setIsUserSuspended(true);
+      }
+    }, delay);
+
+    // Limpiar el timer al desmontar el componente para evitar errores
+    return () => clearTimeout(timerId);
+  }, [user]);
+
+  if (isUserSuspended) {
+    return (
+      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-grey">
+        <div className="text-white text-center p-8 rounded-lg bg-blue w-2/3">
+          <h2 className="text-4xl">
+            Tu cuenta está suspendida. Por favor, contacta al administrador via
+            mail a nomad.locals01@gmail.com
+          </h2>
+        </div>
+      </div>
+    );
+  }
+  //-------------------Fin usuario banneado-----------------------------------
 
   return (
     <>

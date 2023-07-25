@@ -27,6 +27,7 @@ import UserReview from "./components/views/ReviewUser.jsx";
 import OthersDetail from "./components/views/OthersDetail.jsx";
 import Report from "./components/views/Report.jsx";
 import ReportUser from "./components/views/ReportUser.jsx";
+import NotFound from "./components/views/NotFound";
 //Componentes administrador:
 import AllUsers from "./components/AdminComponents/AllUsers.jsx";
 import AdminHome from "./components/AdminComponents/AdminHome.jsx";
@@ -84,6 +85,7 @@ function App() {
           path="/admin/events/allReviews/:id"
           element={<EventReviewsAdmin />}
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
