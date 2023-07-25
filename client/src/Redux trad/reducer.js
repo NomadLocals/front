@@ -56,7 +56,7 @@ const initialState = {
   allActivities: [],
   historialChat: [],
   startChat: {},
-  historialChatPersonal : [],,
+  historialChatPersonal : [],
 };
 
 const rootReducer = (state = initialState, action) => {
