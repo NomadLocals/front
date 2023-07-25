@@ -8,8 +8,12 @@ import {
   POST_USER,
   SAVE_USER_FORM,
   RESET_FILTER,
-  POST_REPORT_USER,
-  POST_REPORT_EVENT,
+  POST_REPORT_EVENT_SUCCESS,
+  POST_REPORT_EVENT_FAILURE,
+  POST_REPORT_USER_SUCCESS,
+  POST_REPORT_USER_FAILURE,
+  POST_REVIEW_USER,
+  POST_REVIEW_EVENT,
   SET_PLACE_NAME,
   GET_USER_ACTIVITIES,
   GET_EVENT_BY_ID,
@@ -20,10 +24,26 @@ import {
   GET_USER_BY_ID,
   UNSUSCRIBE_EVENT,
   CHECK_USER_BY_ID,
+  EDIT_USER,
+  GET_OTHERS,
+  POST_IMAGES,
+  DELETE_IMAGE,
+  GET_USERS,
+  DELETE_USERS,
+  DELETE_EVENTS,
+  ADMIN_GET_REPORTS,
+  ADMIN_GET_REPORTS_USERS,
+  ADMIN_GET_REVIEWS_EVENTS,
+  ADMIN_GET_REVIEWS_USERS,
+  ADMIN_GET_ACTIVITIES,
+  GET_HISTORIAL_CHAT_EVENTS,
+  CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
-//const URL = "http://localhost:3001";
-const URL = "https://serverpfnomadlocals.onrender.com";
+const URL = "http://localhost:3001";
+// const URL = import.meta.env.SERVER_URL;
+// const URL = "https://serverpfnomadlocals.onrender.com";
+// const URL = "https://serverpredeploy.onrender.com";
 
 const USER = "users";
 const EVENT = "events";
@@ -99,7 +119,7 @@ export const postUser = (userData) => {
     try {
       const endPoint = `${URL}/${USER}`;
       const { data } = await axios.post(endPoint, userData);
-      await axios.post(`${URL}/send-mail`, userData)
+      await axios.post(`${URL}/send-mail/register`, userData);
       dispatch({
         type: POST_USER,
         payload: data,
@@ -117,16 +137,31 @@ export const resetFilters = () => {
 };
 
 //Reports
-export const postReportUser = (reportData) => {
+
+export const reviewEvent = (reviewE) => {
   return async (dispatch) => {
+    console.log(reviewE);
     try {
-      const endPoint = `${URL}/${REPORT_USER}`;
-
-      const response = await axios.post(endPoint, reportData);
-      const { data } = response;
-
+      const endPoint = `${URL}/${REVIEW_EVENT}`;
+      const { data } = await axios.post(endPoint, reviewE);
       dispatch({
-        type: POST_REPORT_USER,
+        type: POST_REVIEW_EVENT,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+export const reviewUser = (review) => {
+  return async (dispatch) => {
+    console.log(review);
+    try {
+      const endPoint = `${URL}/${REVIEW_USER}`;
+
+      const { data } = await axios.post(endPoint, review);
+      dispatch({
+        type: POST_REVIEW_USER,
         payload: data,
       });
     } catch (error) {
@@ -135,21 +170,59 @@ export const postReportUser = (reportData) => {
   };
 };
 
-export const postReportEvent = (reportData) => {
+export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      const endPoint = `${URL}/${REPORT_EVENT}`;
+      console.log(formData);
+      const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
-      const response = await axios.post(endPoint, reportData);
-      const { data } = response;
+      if (!response || !response?.data) {
+        throw new Error("Failed to create Report");
+      }
 
-      dispatch({
-        type: POST_REPORT_EVENT,
-        payload: data,
-      });
+      dispatch(postReportEventSuccess(response.data));
     } catch (error) {
-      alert(error.message);
+      dispatch(postReportEventFailure(error.message));
     }
+  };
+};
+
+export const postReportEventSuccess = (report) => {
+  return {
+    type: POST_REPORT_EVENT_SUCCESS,
+    payload: report,
+  };
+};
+
+export const postReportEventFailure = (error) => {
+  return {
+    type: POST_REPORT_EVENT_FAILURE,
+    payload: error,
+  };
+};
+
+export const postReportUser = (report) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${URL}/${REPORT_USER}`, report);
+      dispatch(postReportUserSuccess(response.data));
+    } catch (error) {
+      dispatch(postReportUserFailure(error.message));
+    }
+  };
+};
+
+export const postReportUserSuccess = (report) => {
+  return {
+    type: POST_REPORT_USER_SUCCESS,
+    payload: report,
+  };
+};
+
+export const postReportUserFailure = (error) => {
+  return {
+    type: POST_REPORT_USER_FAILURE,
+    payload: error,
   };
 };
 
@@ -175,7 +248,6 @@ export const getUserActivities = (id) => {
     }
   };
 };
-
 export const getActivityDetail = (id) => {
   return async (dispatch) => {
     try {
@@ -186,7 +258,7 @@ export const getActivityDetail = (id) => {
         payload: data,
       });
     } catch (error) {
-      window.alert("Este es el alert de activity detail");
+      window.alert("El evento ah sido eliminado");
     }
   };
 };
@@ -203,7 +275,7 @@ export const getUserById = (id) => {
         });
       }
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 };
@@ -212,7 +284,6 @@ export const checkUserById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
-
       let saved = "";
       if (data) {
         saved = true;
@@ -223,6 +294,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
+      console.log(error);
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,
@@ -247,7 +319,6 @@ export const suscribeEvent = (id, userId) => {
     }
   };
 };
-
 export const unsuscribeEvent = (id, userId) => {
   return async (dispatch) => {
     try {
@@ -271,11 +342,13 @@ export const setSingOut = (userVacio) => {
   };
 };
 
-export const postEvent = (activityData) => {
+export const postEvent = (activityData,userName,email) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${URL}/events`, activityData);
       console.log(response);
+      await axios.post(`${URL}/send-mail/newEventCreated`, {userName,email,activityData});
+
       return dispatch({
         type: POST_EVENT,
       });
@@ -285,6 +358,46 @@ export const postEvent = (activityData) => {
     }
   };
 };
+
+// dani
+export const getHistorialMessages = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/events/${id}/chat/event`);
+
+      return dispatch({
+        type: GET_HISTORIAL_CHAT_EVENTS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+//! falta usar...dani
+// export const getPersonalMessages = (id) => {
+//   return async (dispatch) => {
+//     try {
+//       const {data} = await axios.get(`${URL}/events/${id}/chat/event`)
+
+//       return dispatch({
+//         type: START_CHAT_PERSONAL,
+//         payload: data,
+//       })
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   }
+// }
+
+export const clearChatHistory = () => {
+  return {
+    type: CLEAN_CHAT_HISTORY,
+    payload: "",
+  };
+};
+// //dani
 
 export const fetchPlaceName = (latitude, longitude) => {
   return async (dispatch) => {
@@ -301,6 +414,184 @@ export const fetchPlaceName = (latitude, longitude) => {
       });
     } catch (error) {
       console.error(error);
+    }
+  };
+};
+export const editUser = (userId, userData) => {
+  return async (dispatch) => {
+    console.log(userData);
+    try {
+      const endPoint = `${URL}/${USER}/${userId}`;
+      const { data } = await axios.put(endPoint, userData);
+      console.log(data);
+      return dispatch({
+        type: EDIT_USER,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getOthersById = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/${USER}/${id}`);
+      if (data) {
+        return dispatch({
+          type: GET_OTHERS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+
+export const postImage = (formData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "https://api.cloudinary.com/v1_1/dwit2djhy/image/upload",
+        formData,
+        {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        }
+      );
+      const fileURL = data.secure_url;
+
+      return dispatch({
+        type: POST_IMAGES,
+        payload: fileURL,
+      });
+    } catch (error) {
+      console.error("Error uploading image: ", error);
+    }
+  };
+};
+
+export const deleteImage = () => {
+  return {
+    type: DELETE_IMAGE,
+  };
+};
+
+export const getAllUsers = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/${USER}`);
+
+      return dispatch({
+        type: GET_USERS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deleteUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`${URL}/${USER}/${id}`);
+
+      return dispatch({
+        type: DELETE_USERS,
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+
+export const deleteEvent = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`${URL}/${EVENT}/${id}`);
+
+      return dispatch({
+        type: DELETE_EVENTS,
+        payload: id,
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+
+export const getEventsReportsAdmin = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/reportevent`);
+      if (data) {
+        return dispatch({
+          type: ADMIN_GET_REPORTS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+export const getUsersReportsAdmin = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/reportuser`);
+      if (data) {
+        return dispatch({
+          type: ADMIN_GET_REPORTS_USERS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+export const getEventsReviewsAdmin = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/reviewevent`);
+      if (data) {
+        return dispatch({
+          type: ADMIN_GET_REVIEWS_EVENTS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+export const getUsersReviewsAdmin = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/reviewuser`);
+      if (data) {
+        return dispatch({
+          type: ADMIN_GET_REVIEWS_USERS,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+};
+export const adminGetActivities = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL}/admin/${id}/${EVENT}`);
+      return dispatch({
+        type: ADMIN_GET_ACTIVITIES,
+        payload: data,
+      });
+    } catch (error) {
+      // console.log(error.message);
     }
   };
 };

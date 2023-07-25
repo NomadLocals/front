@@ -6,8 +6,12 @@ import {
   POST_USER,
   SAVE_USER_FORM,
   RESET_FILTER,
-  POST_REPORT_USER,
-  POST_REPORT_EVENT,
+  POST_REPORT_EVENT_SUCCESS,
+  POST_REPORT_EVENT_FAILURE,
+  POST_REPORT_USER_SUCCESS,
+  POST_REPORT_USER_FAILURE,
+  POST_REVIEW_USER,
+  POST_REVIEW_EVENT,
   SET_PLACE_NAME,
   GET_USER_ACTIVITIES,
   GET_EVENT_BY_ID,
@@ -15,6 +19,18 @@ import {
   VACIAR_USER,
   CHECK_USER_BY_ID,
   FETCH_PLACE_NAME,
+  GET_OTHERS,
+  POST_IMAGES,
+  DELETE_IMAGE,
+  GET_USERS,
+  DELETE_EVENTS,
+  ADMIN_GET_REPORTS,
+  ADMIN_GET_REPORTS_USERS,
+  ADMIN_GET_REVIEWS_EVENTS,
+  ADMIN_GET_REVIEWS_USERS,
+  ADMIN_GET_ACTIVITIES,
+  GET_HISTORIAL_CHAT_EVENTS,
+  CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
 const initialState = {
@@ -24,9 +40,21 @@ const initialState = {
   user: {},
   userReport: null,
   eventReport: null,
+  userReview: {},
+  reviewEvent: {},
   placeName: "",
   eventById: {},
   initSesion: "",
+  others: {},
+  activityImage: "",
+  allUsers: [],
+  allEventsReports: [],
+  allUsersReports: [],
+  allEventsReviews: [],
+  allUsersReviews: [],
+  allActivities: [],
+  historialChat: [],
+  startChat: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -73,15 +101,42 @@ const rootReducer = (state = initialState, action) => {
       };
 
     //Report YAM
-    case POST_REPORT_USER:
+    case POST_REVIEW_USER:
       return {
         ...state,
-        userReport: action.payload,
+        userReview: action.payload,
+        error: null,
       };
-    case POST_REPORT_EVENT:
+    case POST_REVIEW_EVENT:
+      return {
+        ...state,
+        eventReview: action.payload,
+        error: null,
+      };
+    case POST_REPORT_EVENT_SUCCESS:
       return {
         ...state,
         eventReport: action.payload,
+        error: null,
+      };
+    case POST_REPORT_EVENT_FAILURE:
+      return {
+        ...state,
+        eventReport: null,
+        error: action.payload,
+      };
+
+    case POST_REPORT_USER_SUCCESS:
+      return {
+        ...state,
+        userReport: action.payload,
+        error: null,
+      };
+    case POST_REPORT_USER_FAILURE:
+      return {
+        ...state,
+        userReport: null,
+        error: action.payload,
       };
     case SET_PLACE_NAME:
       return {
@@ -121,7 +176,66 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         eventById: action.payload,
       };
-
+    case GET_OTHERS:
+      return {
+        ...state,
+        others: action.payload,
+      };
+    case POST_IMAGES:
+      return {
+        ...state,
+        activityImage: action.payload,
+      };
+    case DELETE_IMAGE:
+      return {
+        ...state,
+        activityImage: "",
+      };
+    case GET_HISTORIAL_CHAT_EVENTS:
+      return {
+        ...state,
+        historialChat: action.payload
+      };
+      case CLEAN_CHAT_HISTORY:
+      return {
+        ...state,
+        historialChat: action.payload
+        }
+    case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
+    case DELETE_EVENTS:
+      return {
+        ...state,
+        events: state.activities.filter((event) => event.id !== action.payload),
+      };
+    case ADMIN_GET_REPORTS:
+      return {
+        ...state,
+        allEventsReports: action.payload,
+      };
+    case ADMIN_GET_REPORTS_USERS:
+      return {
+        ...state,
+        allUsersReports: action.payload,
+      };
+    case ADMIN_GET_REVIEWS_EVENTS:
+      return {
+        ...state,
+        allEventsReviews: action.payload,
+      };
+    case ADMIN_GET_REVIEWS_USERS:
+      return {
+        ...state,
+        allUsersReviews: action.payload,
+      };
+    case ADMIN_GET_ACTIVITIES:
+      return {
+        ...state,
+        allActivities: action.payload,
+      };
     default:
       return state;
   }

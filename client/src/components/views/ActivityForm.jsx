@@ -1,20 +1,24 @@
 import MapSelect from "./Map";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+/* eslint no-unused-vars: "off" */
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   postEvent,
   getActivities,
   getUserActivities,
-} from "../../Redux trad/actions";
+  deleteImage,
+} from "../../Redux trad/actions.js";
+import Images from "../Images.jsx";
 
 export default function ActivityForm() {
   const location = useSelector((state) => state.eventLocation);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const place = useSelector((state) => state.placeName);
+  const image = useSelector((state) => state.activityImage);
   const userId = user.id;
   const dispatch = useDispatch();
 
@@ -32,7 +36,19 @@ export default function ActivityForm() {
     activityType: "",
     image: "",
   });
+
   const [errors, setErrors] = useState("");
+
+  useEffect(() => {
+    dispatch(deleteImage());
+  }, []);
+
+  useEffect(() => {
+    setActivityData({
+      ...activityData,
+      image: image,
+    });
+  }, [image]);
 
   useEffect(() => {
     setActivityData((prevActivityData) => ({
@@ -60,7 +76,7 @@ export default function ActivityForm() {
       [property]: value,
     }));
   };
-
+  console.log(activityData);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,10 +102,14 @@ export default function ActivityForm() {
       setErrors("Se requiere duracion de la actividad");
       isValid = false;
     }
+    if (activityData.image === "") {
+      setErrors("Se requiere imagen");
+      isValid = false;
+    }
 
     if (isValid) {
       try {
-        dispatch(postEvent(activityData));
+        dispatch(postEvent(activityData, user.userName, user.email));
         dispatch(getUserActivities(userId));
         setActivityData({
           userId: userId,
@@ -103,7 +123,7 @@ export default function ActivityForm() {
           minSizePeople: "0",
           active: true,
           activityType: "",
-          image: "",
+          image: image,
         });
         setErrors("");
         dispatch(getActivities());
@@ -115,7 +135,12 @@ export default function ActivityForm() {
     }
   };
   //este codigo es para que traiga la zona horaria local
-  const currentDate = new Date().toLocaleString('es-ES', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, hour12: false }).slice(0, 16);
+  const currentDate = new Date()
+    .toLocaleString("es-ES", {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      hour12: false,
+    })
+    .slice(0, 16);
 
   return (
     <>
@@ -185,7 +210,7 @@ export default function ActivityForm() {
                 <option value="restaurates y cafes">restaurates y cafes</option>
                 <option value="otros">otros</option>
               </select>
-              <label className="uppercase text-sm font-bold opacity-70">
+              {/* <label className="uppercase text-sm font-bold opacity-70">
                 Imagen
               </label>
               <input
@@ -195,7 +220,7 @@ export default function ActivityForm() {
                 className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
                 value={activityData.image}
                 onChange={handleChange}
-              />
+              /> */}
 
               <label className="uppercase text-sm font-bold opacity-70">
                 Duración
@@ -235,6 +260,16 @@ export default function ActivityForm() {
                 max="99999"
                 className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
               />
+
+              <label className="uppercase text-sm font-bold opacity-70">
+                Imagen
+              </label>
+              <Images
+                setImage={(url) =>
+                  setActivityData({ ...activityData, image: url })
+                }
+              />
+
               <label className="uppercase text-sm font-bold opacity-70">
                 Lugar
               </label>

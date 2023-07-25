@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer.jsx";
 import SuggestionCarousel from "./SuggestionCarousel.jsx";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserActivities } from "../../Redux trad/actions.js";
+import { getUserActivities, getUserById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
 
 const Home = () => {
@@ -15,7 +15,12 @@ const Home = () => {
   useEffect(() => {
     dispatch(getUserActivities(user.id));
   }, []);
-
+  if (user.deletedAt) {
+    return (
+      <h2>Tu cuenta está suspendida. Por favor, contacta al administrador.</h2>
+    );
+  }
+  console.log(user);
   //Acomodar fecha:
   const currentDate = new Date();
   const day = String(currentDate.getDate()).padStart(2, "0");
@@ -23,8 +28,13 @@ const Home = () => {
   const year = currentDate.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
 
+  //Invertir la logica para que funcione bien!
+  const isAdmin = user.admin;
+
+  console.log(isAdmin);
+
   return (
-    <div>
+    <div className="bg-grey">
       <NavBar />
 
       <section className="flex flex-row justify-between pt-2 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey">
@@ -35,11 +45,21 @@ const Home = () => {
           📆 {formattedDate}
         </span>
       </section>
-      <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-2xl bg-grey">
+      <div className="flex justify-end pr-2 md:pr-5 xl:pr-10 mt-4">
+        {isAdmin ? (
+          <button className="text-white p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+            <Link to="/admin">Admin Panel</Link>
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
+
+      <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-3xl bg-grey">
         Tus Actividades:
       </h1>
       <div className="flex flex-col text-white content-around py-5 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey font-spartan text-lg md:flex-row md:justify-around">
-        <button className="p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+        <button className="p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 md:w-56 lg:w-80 lg:h-20 lg:text-2xl">
           <Link to="/activity-form">Crea tu actividad</Link>
         </button>
       </div>
@@ -51,11 +71,10 @@ const Home = () => {
           Lo que se viene:
         </h1>
         <SuggestionCarousel />
-        <button className="p-2 rounded-lg bg-blue text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-spartan">
+        <button className="p-2 rounded-lg bg-blue text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 font-spartan lg:w-80 lg:h-20 lg:text-2xl">
           <Link to="/activities">Encuentra una actividad</Link>
         </button>
       </section>
-
       <Footer />
     </div>
   );

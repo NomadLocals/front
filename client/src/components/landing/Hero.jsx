@@ -16,25 +16,25 @@ const Hero = () => {
           <h1 className="text-5xl xl:text-7xl text-black font-bold xl:leading-[7.5rem]">
           
             <span
-              className="text-black py-2 px-6 border-8 border-white relative inline-block"
+              className="text-black py-2 px-6 border-8 border-black relative inline-block"
               style={{ color: "#F1EFE7" }}
             >
-              <img src="5.png" alt="Logo" className="h-17" />
-              <RiCheckboxBlankCircleFill className="text-white text-base absolute -left-5 -top-5 p-2 bg-grey rounded-full box-content" />
-              <RiCheckboxBlankCircleFill className="text-white text-base absolute -right-5 -top-5 p-2 bg-grey rounded-full box-content" />
-              <RiCheckboxBlankCircleFill className="text-white text-base absolute -right-5 -bottom-5 p-2 bg-grey rounded-full box-content" />
-              <RiCheckboxBlankCircleFill className="text-white text-base absolute -left-5 -bottom-5 p-2 bg-grey rounded-full box-content" />
+              <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/5_n5vayy.png" alt="Logo" className="h-17" />
+              <RiCheckboxBlankCircleFill className="text-yellow text-base absolute -left-5 -top-5 p-2 bg-grey rounded-full box-content" />
+              <RiCheckboxBlankCircleFill className="text-yellow text-base absolute -right-5 -top-5 p-2 bg-grey rounded-full box-content" />
+              <RiCheckboxBlankCircleFill className="text-yellow text-base absolute -right-5 -bottom-5 p-2 bg-grey rounded-full box-content" />
+              <RiCheckboxBlankCircleFill className="text-yellow text-base absolute -left-5 -bottom-5 p-2 bg-grey rounded-full box-content" />
             </span>
           </h1>
           <p
-            className="text-black text-2xl leading-[1.8rem]"
+            className="text-black text-2xl leading-[1.8rem] font-spartan"
             style={{ color: "#000000" }}
           >
             La plataforma donde la pasión une a las personas y las convierte en amistades auténticas. <br />
             Descubre conexiones genuinas basadas en intereses comunes donde sea estés.
           </p>
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <button className="w-full xl:w-auto bg-blue text-black py-2 px-8 rounded-xl text-xl"
+            <button className="w-full xl:w-auto bg-blue text-black font-quick py-2 px-8 rounded-xl text-xl"
             onClick={() => (window.location.href = "/sign-in")}
             >
               Únete a Nomad Locals
@@ -48,7 +48,7 @@ const Hero = () => {
         {/* Content image */}
         <div>
           <img
-            src="1.png"
+            src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/1_z79ppu.png"
             className="w-[250px] h-[250px] md:w-[450px] md:h-[450px] object-cover xl:-mt-28"
           />
           <div className="relative bg-grey shadow-xl rounded-lg p-4 flex flex-col justify-center gap-2 max-w-[250px] mx-auto -mt-12">
@@ -74,7 +74,7 @@ const Hero = () => {
                 className="w-10 h-10 object-cover rounded-full ring-2 ring-gray-300 -ml-4"
               />
             </div>
-            <h2 className="text-xl font-bold tracking-[1px] text-gray-800">
+            <h2 className="text-xl font-spartan tracking-[1px] text-black">
               100 + Eventos
             </h2>
             <div className="absolute -right-12 -bottom-12 -z-10">
@@ -84,8 +84,6 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        {/* Circle */}
-        <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[280px] h-[280px] md:w-[380px] md:h-[380px] bg-black border-[10px] border-black rounded-full -z-10"></div>
       </div>
     </section>
   );
