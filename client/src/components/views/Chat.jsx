@@ -3,12 +3,7 @@ import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import { useParams } from "react-router-dom";
 // const URL = "https://serverpfnomadlocals.onrender.com";
-<<<<<<< HEAD
-const socket = io('http://localhost:3001')
-
-=======
 const socket = io("http://localhost:3001");
->>>>>>> deb62fc5cfd4e8c9b06fbed342c8b625b0e36787
 
 const Chat = () => {
   const user = useSelector((state) => state.user);
@@ -61,14 +56,6 @@ const Chat = () => {
         // ref={chatContainerRef}
         className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll"
       >
-<<<<<<< HEAD
-        {allMessages?.map((message, index) => (
-          <div key={index} className="mb-2">
-            <span className="font-semibold">{message.userName}: </span>
-            <span>{message.message}</span>
-          </div>
-        ))}
-=======
         {allMessages &&
           allMessages?.map((message, index) => (
             <div key={index} className="mb-2">
@@ -76,7 +63,6 @@ const Chat = () => {
               <span>{message.message}</span>
             </div>
           ))}
->>>>>>> deb62fc5cfd4e8c9b06fbed342c8b625b0e36787
       </div>
       <div className="flex mt-2 text-black">
         <input

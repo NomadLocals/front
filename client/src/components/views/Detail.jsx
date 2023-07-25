@@ -41,7 +41,6 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getActivityDetail(id));
-
     setJoinedUsers(Users);
   }, [id, joinedUsers, showChat]);
 
@@ -76,6 +75,7 @@ const Detail = () => {
       try {
         const isJoined = await Users.some((user) => user.id === userId);
         setShowChat(isJoined);
+        setShowUsers(isJoined);
       } catch (error) {
         // console.error(error);
       }
@@ -106,16 +106,16 @@ const Detail = () => {
             alt={name}
             className="h-48 w-full object-cover rounded-lg"
           />
-          <div className="flex justify-end pr-2 md:pr-5 xl:pr-10 mt-4">
+          <div>
             {isAdmin ? (
-              <div>
-                <button className="text-white p-2  mr-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+              <div className="flex justify-center px-2 md:pr-5 xl:pr-10 mt-4">
+                <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
                   <Link to="/admin/allEvents">Panel Eventos</Link>
                 </button>
-                <button className="text-white p-2  mr-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+                <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
                   <Link to="/admin/eventsReports">Panel Reportes</Link>
                 </button>
-                <button className="text-white p-2  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+                <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
                   <Link to="/admin/eventsReviews">Panel Reviews</Link>
                 </button>
               </div>
@@ -142,7 +142,7 @@ const Detail = () => {
                   Duración: <span className="font-semibold">{duration}hs.</span>
                 </p>
               </div>
-              <div className="w-1/2 text-center">
+              <div className="w-1/2 text-center flex flex-col justify-center">
                 <span>
                   {minCost === 0 ? (
                     <p>Coste: Free</p>
@@ -151,7 +151,7 @@ const Detail = () => {
                   )}
                 </span>
                 <p>
-                  Personas:{" "}
+                  Personas(min):{" "}
                   <span className="font-semibold">{minSizePeople}</span>
                 </p>
               </div>
