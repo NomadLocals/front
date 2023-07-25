@@ -35,11 +35,11 @@ import EventsReports from "./components/AdminComponents/EventsReports.jsx";
 import AllEvents from "./components/AdminComponents/AllEvents.jsx";
 import UsersReports from "./components/AdminComponents/UsersReports.jsx";
 import UserReports from "./components/AdminComponents/UserReports.jsx";
-import UsersReviews from "./components/AdminComponents/UsersReviews";
-import EventsReviews from "./components/AdminComponents/EventsReviews";
-import UserReviews from "./components/AdminComponents/UserReviews";
-import EventReports from "./components/AdminComponents/EventReports";
-import EventReviewsAdmin from "./components/AdminComponents/EventReviewsAdmin";
+import UsersReviews from "./components/AdminComponents/UsersReviews.jsx";
+import EventsReviews from "./components/AdminComponents/EventsReviews.jsx";
+import UserReviews from "./components/AdminComponents/UserReviews.jsx";
+import EventReports from "./components/AdminComponents/EventReports.jsx";
+import EventReviewsAdmin from "./components/AdminComponents/EventReviewsAdmin.jsx";
 
 function App() {
   return (

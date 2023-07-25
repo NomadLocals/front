@@ -72,7 +72,7 @@ const ReportForm = () => {
           <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">Formulario de Reporte de Evento</h2>
           {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="mb-4 w-[250px] lg:w-[450px] lg:h-[400px]">
               <label htmlFor="type" className="block font-bold mb-1">
                 Motivo:
               </label>
@@ -81,7 +81,7 @@ const ReportForm = () => {
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
-                className="block px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
+                className="block px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500  w-[250px] lg:w-[400px]"
               >
                 <option value="">Selecciona un Motivo</option>
                 <option value="Scam">
@@ -98,9 +98,8 @@ const ReportForm = () => {
                 </option>
                 <option value="Other">Otros</option>
               </select>
-            </div>
-            <div className="mb-4">
-              <label htmlFor="description" className="block font-bold mb-1">
+            
+              <label htmlFor="description" className="block font-bold mb-1 mt-3">
                 Descripción:
               </label>
               <textarea
@@ -112,7 +111,7 @@ const ReportForm = () => {
                 rows="4"
                 cols="30"
               ></textarea>
-            </div>
+            
             <button
               type="submit"
               className="px-6 mx-2 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
@@ -128,6 +127,7 @@ const ReportForm = () => {
             >
               Cancelar
             </button>
+            </div>
           </form>
         </div>
       </div>

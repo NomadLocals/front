@@ -40,28 +40,48 @@ function AllUsers() {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
         if (!userAdmin) {
-          if (
-            window.confirm(
-              "¿Estás seguro que quieres hacer ADMINISTRADOR a este usuario?"
-            ) === true
-          ) {
-            dispatch(editUser(userId, { admin: true }));
-            swal(
-              `Ahora el usuario ${userEmail} tiene permisos de administrador!`
-            );
-          }
+          swal({
+            title: "Crear administrador",
+            text: `¿Estas seguro que deseas que el usuario ${userEmail} sea administrador?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#008000",
+            buttons: true,
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          }).then((willDelete) => {
+            if (willDelete) {
+              dispatch(editUser(userId, { admin: true })).then(
+                swal({
+                  title: "Creando administrador...",
+                  timer: 2000,
+                })
+              );
+              location.reload(true);
+            }
+          });
         } else {
-          if (
-            window.confirm(
-              "¿Estás seguro que quieres sacar los permisos de ADMINISTRADOR a este usuario?"
-            ) === true
-          ) {
-            dispatch(editUser(userId, { admin: false }));
-
-            swal(
-              `Ahora el usuario ${userEmail} ya no tiene permisos de administrador!`
-            );
-          }
+          swal({
+            title: "Quitar administrador",
+            text: `¿Estas seguro que deseas que el usuario ${userEmail} ya no sea administrador?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            dangerMode: true,
+            buttons: true,
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          }).then(async (willDelete) => {
+            if (willDelete) {
+              await dispatch(editUser(userId, { admin: false })).then(
+                swal({
+                  title: "Quitando administrador...",
+                  timer: 2000,
+                })
+              );
+              location.reload(true);
+            }
+          });
         }
       }
     }
@@ -75,23 +95,48 @@ function AllUsers() {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
         if (!deleted) {
-          if (
-            window.confirm(
-              "¿Estás seguro que quieres eliminar este usuario?"
-            ) === true
-          ) {
-            dispatch(deleteUser(id, userEmail));
-            swal("Usuario eliminado correctamente.");
-          }
+          swal({
+            title: "Eliminar",
+            text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            dangerMode: true,
+            buttons: true,
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          }).then(async (willDelete) => {
+            if (willDelete) {
+              await dispatch(deleteUser(id, adminId, userEmail)).then(
+                swal({
+                  title: "Eliminando...",
+                  timer: 2000,
+                })
+              );
+              location.reload(true);
+            }
+          });
         } else {
-          if (
-            window.confirm(
-              `¿Estás seguro que quieres volver a habilitar al usuario ${userEmail}?`
-            ) === true
-          ) {
-            dispatch(adminRetrieveUsers(id, adminId, userEmail));
-            swal(`El usuario ${userEmail} fue habilitado correctamente`);
-          }
+          swal({
+            title: "Reestablecer",
+            text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            buttons: true,
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          }).then(async (willDelete) => {
+            if (willDelete) {
+              await dispatch(adminRetrieveUsers(id, adminId)).then(
+                swal({
+                  title: "Reestableciendo...",
+                  timer: 2000,
+                })
+              );
+              window.location.reload();
+            }
+          });
         }
       }
     }
@@ -108,7 +153,7 @@ function AllUsers() {
       <NavBar />
 
       {adminState ? (
-        <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
+        <div className="p-4 rounded-lg bg-gray-100 shadow-md bg-grey min-h-screen">
           <Link to="/admin">
             <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               Atrás
@@ -199,7 +244,7 @@ function AllUsers() {
                         <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
                         <td>
                           <button
-                            onClick={(e) => handleEdit(u.id, u.email, u.admin)}
+                            onClick={() => handleEdit(u.id, u.email, u.admin)}
                             className="text-blue-500 hover:text-blue-700 focus:outline-none"
                             title="Editar permisos de administrador"
                           >

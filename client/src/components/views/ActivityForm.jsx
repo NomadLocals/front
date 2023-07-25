@@ -311,7 +311,7 @@ export default function ActivityForm() {
                 <span className="text-blue bg-yellow"> {errors} </span>
               )}
               <div className="text-center mt-2">
-                <button className="py-3 px-6 my-2 text-white font-medium rounded bg-blue cursor-pointer ease-in-out duration-300">
+                <button className="paimon my-4">
                   Crear
                 </button>
               </div>

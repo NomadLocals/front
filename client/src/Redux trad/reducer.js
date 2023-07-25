@@ -191,6 +191,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         activityImage: "",
       };
+    case GET_HISTORIAL_CHAT_EVENTS:
+      return {
+        ...state,
+        historialChat: action.payload
+      };
+      case CLEAN_CHAT_HISTORY:
+      return {
+        ...state,
+        historialChat: action.payload
+        }
     case GET_USERS:
       return {
         ...state,
@@ -225,16 +235,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allActivities: action.payload,
-      };
-    case GET_HISTORIAL_CHAT_EVENTS:
-      return {
-        ...state,
-        historialChat: action.payload,
-      };
-    case CLEAN_CHAT_HISTORY:
-      return {
-        ...state,
-        historialChat: action.payload,
       };
     default:
       return state;

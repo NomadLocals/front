@@ -104,7 +104,7 @@ export default function NavBar() {
                 <button
                   onClick={() => setShowSearchBar(!showSearchBar)}
                   type="button"
-                  className="rounded-full bg-gray-800 p-1 text-grey focus:outline-none"
+                  className="rounded-full bg-gray-800 p-1 text-grey focus:outline-none hover:scale-125 ease-in-out duration-300"
                 >
                   <span className="sr-only">View notifications</span>
                   {!showSearchBar && !open && (

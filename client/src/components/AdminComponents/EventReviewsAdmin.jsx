@@ -35,7 +35,7 @@ function EventReviewsAdmin() {
       <NavBar />
 
       {adminState ? (
-        <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
+        <div className="p-4 rounded-lg bg-grey min-h-screen shadow-md">
           <div className="flex justify-between items-center">
             <Link to="/admin/allEvents">
               <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md text-white font-bold">
@@ -45,7 +45,7 @@ function EventReviewsAdmin() {
             <div className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               <h3 className="text-white font-bold text-xl">Score Promedio</h3>
               <h3 className="text-white text-3xl text-center">
-                {average(reviewsUser)}
+                ⭐{average(reviewsUser)}
               </h3>
             </div>
           </div>
