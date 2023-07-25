@@ -6,8 +6,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
-import Remove from "../../iconos/Remove.jsx";
-import Edit from "../../iconos/Edit.jsx";
 import View from "../../iconos/View.jsx";
 import swal from "sweetalert";
 

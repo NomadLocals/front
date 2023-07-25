@@ -11,13 +11,15 @@ const Home = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const userPlace = user.place;
-
+  console.log(user);
   useEffect(() => {
     dispatch(getUserActivities(user.id));
   }, []);
-  if (user.deletedAt) {
+  if (!user.deletedAt) {
     return (
-      <h2>Tu cuenta está suspendida. Por favor, contacta al administrador.</h2>
+      <h2 className="text-center">
+        Tu cuenta está suspendida. Por favor, contacta al administrador.
+      </h2>
     );
   }
   console.log(user);
