@@ -76,7 +76,7 @@ export default function ActivityForm() {
       [property]: value,
     }));
   };
-
+  console.log(activityData);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
