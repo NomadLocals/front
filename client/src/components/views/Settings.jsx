@@ -12,7 +12,9 @@ const Settings = () => {
   //Estados globales
   const user = useSelector((state) => state.user);
   const userId = user.id;
-  const [inputs, setInputs] = useState({ userName: "", bio: "" });
+  const userName = user.userName;
+  const bio = user.bio
+  const [inputs, setInputs] = useState({ userName: userName, bio: bio });
 
   const handleOnChange = (event) => {
     setInputs({
@@ -28,22 +30,22 @@ const Settings = () => {
     //DESPACHAR ACCION CON OBJETO DE ACTIVIDAD A POSTEAR
     dispatch(editUser(userId, inputs));
     //REINICIO estado local:
-    setInputs({ userName: "", bio: "" });
+    setInputs({userName: userName, bio: bio})
     navigate(`/profile/${userId}`);
   };
   return (
     <>
       <NavBar />
-      <div className="bg-grey min-h-screen pt-2 font-mono my-16 mt-0">
+      <div className="bg-grey min-h-screen pt-2 font-mono my-16 mt-0 font-quick">
         <div className="container mx-auto">
           <div className="inputs w-full max-w-2xl p-6 mx-auto">
-            <h2 className="text-2xl text-black">
+            <h2 className="text-2xl text-black font-spartan">
               Configuraciones de tu cuenta
             </h2>
             <form className="mt-6 pt-4" onSubmit={handleSubmit}>
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="personal w-full border-t border-gray-400 pt-4">
-                  <h2 className="text-2xl text-gray-900 mb-7">
+                  <h2 className="text-2xl text-gray-900 mb-7 font-spartan">
                     Información personal:
                   </h2>
 
