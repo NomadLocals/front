@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { deleteEvent, adminGetActivities } from "../../Redux trad/actions.js";
+import {
+  deleteEvent,
+  adminGetActivities,
+  deleteEventEmail,
+} from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
@@ -49,6 +53,7 @@ function AllEvents() {
                 buttons: false,
               })
             );
+            sendEmail(eventName, users);
             location.reload(true);
           }
         });
@@ -56,6 +61,14 @@ function AllEvents() {
     } else {
       swal("El evento ya se encuentra eliminado");
     }
+  };
+  const sendEmail = (eventName, users) => {
+    console.log(eventName);
+    const emails = users.map((user) => user.email);
+    console.log(emails);
+    emails.forEach((email) => {
+      dispatch(deleteEventEmail(email, eventName));
+    });
   };
 
   const handleViewReports = (id, reports, user) => {

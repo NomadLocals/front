@@ -39,6 +39,7 @@ import {
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
   ADMIN_RETRIEVE_USERS,
+  ADMIN_EMAIL_DELETE_EVENT,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001"; //* servidor
@@ -511,23 +512,27 @@ export const deleteUser = (id, email) => {
   };
 };
 
-export const deleteEvent = (id, users, event) => {
+export const deleteEvent = (id) => {
   return async (dispatch) => {
     try {
-      const arrayDeEmails = users?.map((objeto) => objeto.email);
       const { data } = await axios.delete(`${URL}/${EVENT}/${id}`);
-
-      const promises = arrayDeEmails.map((email) =>
-        axios.post(`${URL}/send-mail/delete-event`, {
-          email,
-          event,
-        })
-      );
-
-      await Promise.all(promises);
 
       return dispatch({
         type: DELETE_EVENTS,
+        payload: id,
+      });
+    } catch (error) {
+      // alert(error);
+    }
+  };
+};
+export const deleteEventEmail = (email, event) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(`${URL}/send-mail/delete-event`, { email, event });
+
+      return dispatch({
+        type: ADMIN_EMAIL_DELETE_EVENT,
         payload: id,
       });
     } catch (error) {
