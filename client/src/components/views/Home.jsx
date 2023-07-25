@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
-  const [isUserSuspended, setIsUserSuspended] = useState(false);
   const dispatch = useDispatch();
   const userPlace = user.place;
 
@@ -17,9 +16,11 @@ const Home = () => {
     dispatch(getUserActivities(user.id));
   }, []);
 
+  //Evitar ingreso de usuarios banneados:
+  const [isUserSuspended, setIsUserSuspended] = useState(false);
   useEffect(() => {
     // Verificar si el usuario está suspendido al cargar el componente
-    const delay = 500;
+    const delay = 1000;
     const timerId = setTimeout(() => {
       // Verificar si el usuario está suspendido después del retraso
       if (!(user && "deletedAt" in user)) {
@@ -33,9 +34,14 @@ const Home = () => {
 
   if (isUserSuspended) {
     return (
-      <h2 className="text-center">
-        Tu cuenta está suspendida. Por favor, contacta al administrador.
-      </h2>
+      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-grey">
+        <div className="text-white text-center p-8 rounded-lg bg-blue w-2/3">
+          <h2 className="text-4xl">
+            Tu cuenta está suspendida. Por favor, contacta al administrador via
+            mail a nomad.locals01@gmail.com
+          </h2>
+        </div>
+      </div>
     );
   }
 

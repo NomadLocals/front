@@ -25,6 +25,7 @@ function AllUsers() {
   useEffect(() => {
     dispatch(getAllUsers(userActu.id));
   }, []);
+
   useEffect(() => {
     if (!adminState) {
       navigate("/home");

@@ -41,7 +41,7 @@ import {
   ADMIN_RETRIEVE_USERS,
 } from "./action-types.js";
 
-const URL = "http://localhost:3001";
+const URL = "http://localhost:3001"; //* servidor
 // const URL = import.meta.env.SERVER_URL;
 // const URL = "https://serverpfnomadlocals.onrender.com";
 // const URL = "https://serverpredeploy.onrender.com";
@@ -120,6 +120,7 @@ export const postUser = (userData) => {
     try {
       const endPoint = `${URL}/${USER}`;
       const { data } = await axios.post(endPoint, userData);
+      await axios.post(`${URL}/send-mail/register`, userData);
       dispatch({
         type: POST_USER,
         payload: data,
@@ -165,7 +166,7 @@ export const reviewUser = (review) => {
         payload: data,
       });
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
     }
   };
 };
@@ -173,7 +174,7 @@ export const reviewUser = (review) => {
 export const postReportEvent = (formData) => {
   return async (dispatch) => {
     try {
-      console.log(formData);
+      // console.log(formData);
       const response = await axios.post(`${URL}/${REPORT_EVENT}`, formData);
 
       if (!response || !response?.data) {
@@ -244,7 +245,7 @@ export const getUserActivities = (id) => {
         payload: events,
       });
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
     }
   };
 };
@@ -315,7 +316,7 @@ export const suscribeEvent = (id, userId) => {
         type: SUSCRIBE_EVENT,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -330,7 +331,7 @@ export const unsuscribeEvent = (id, userId) => {
         type: UNSUSCRIBE_EVENT,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -342,17 +343,22 @@ export const setSingOut = (userVacio) => {
   };
 };
 
-export const postEvent = (activityData) => {
+export const postEvent = (activityData, userName, email) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${URL}/events`, activityData);
-      console.log(response);
+      await axios.post(`${URL}/send-mail/newEventCreated`, {
+        userName,
+        email,
+        activityData,
+      });
+
       return dispatch({
         type: POST_EVENT,
       });
     } catch (error) {
       console.log(error);
-      window.alert(error);
+      // window.alert(error);
     }
   };
 };
@@ -411,7 +417,7 @@ export const fetchPlaceName = (latitude, longitude) => {
         payload: placeName,
       });
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 };
@@ -427,7 +433,7 @@ export const editUser = (userId, userData) => {
         payload: data,
       });
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
     }
   };
 };
@@ -443,7 +449,7 @@ export const getOthersById = (id) => {
         });
       }
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 };
@@ -486,7 +492,7 @@ export const getAllUsers = (id) => {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -500,7 +506,7 @@ export const deleteUser = (id) => {
         type: DELETE_USERS,
       });
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 };
@@ -515,7 +521,7 @@ export const deleteEvent = (id) => {
         payload: id,
       });
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 };
@@ -531,7 +537,7 @@ export const getEventsReportsAdmin = (id) => {
         });
       }
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 };
@@ -546,7 +552,7 @@ export const getUsersReportsAdmin = (id) => {
         });
       }
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 };
@@ -561,7 +567,7 @@ export const getEventsReviewsAdmin = (id) => {
         });
       }
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 };
@@ -576,7 +582,7 @@ export const getUsersReviewsAdmin = (id) => {
         });
       }
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 };
