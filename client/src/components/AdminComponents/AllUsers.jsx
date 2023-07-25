@@ -41,24 +41,29 @@ function AllUsers() {
       } else {
         if (!userAdmin) {
           swal({
-            title: "¿Estas seguro que deseas que el usuario sea administrador?",
+            title: "Crear administrador",
+            text: `¿Estas seguro que deseas que el usuario ${userEmail} sea administrador?`,
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#008000",
-            dangerMode: true,
             buttons: true,          
             closeOnConfirm: false,
             closeOnCancel: false,
           })
           .then(willDelete => {
             if (willDelete) {
-              dispatch(editUser(userId, { admin: true }));
+              dispatch(editUser(userId, { admin: true }))
+              .then(swal({
+                title: "Creando administrador...",
+                timer: 2000,
+              }))
               location.reload(true)
             }
           })
         } else {
           swal({
-            title: "¿Estas seguro que deseas que el usuario ya no sea administrador?",
+            title: "Quitar administrador",
+            text: `¿Estas seguro que deseas que el usuario ${userEmail} ya no sea administrador?`,
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
@@ -67,9 +72,13 @@ function AllUsers() {
             closeOnConfirm: false,
             closeOnCancel: false,
           })
-          .then(willDelete => {
+          .then(async(willDelete) => {
             if (willDelete) {
-              dispatch(editUser(userId, { admin: false }));
+              await dispatch(editUser(userId, { admin: false }))
+              .then(swal({
+                title: "Quitando administrador...",
+                timer: 2000,
+              }))
               location.reload(true)
             }
           })
@@ -87,7 +96,8 @@ function AllUsers() {
       } else {
         if (!deleted){
         swal({
-          title: "¿Estas seguro que deseas eliminar este usuario?",
+          title: "Eliminar",
+          text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#DD6B55",
@@ -96,29 +106,39 @@ function AllUsers() {
           closeOnConfirm: false,
           closeOnCancel: false,
         })
-        .then(willDelete => {
+        .then(async(willDelete) => {
           if (willDelete) {
-            dispatch(deleteUser(id));
+            await dispatch(deleteUser(id))
+            .then(swal({
+              title: "Eliminando...",
+              timer: 2000,
+            }))
             location.reload(true);
           }
         })}
           else {
             swal({
-              title: "¿Estas seguro que deseas reestablecer este usuario?",
+              title: "Reestablecer",
+              text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
               type: "warning",
               showCancelButton: true,
               confirmButtonColor: "#DD6B55",
-              dangerMode: true,
               buttons: true,          
               closeOnConfirm: false,
               closeOnCancel: false,
             })
-            .then(willDelete => {
+            .then(async(willDelete) => {
               if (willDelete) {
-                dispatch(adminRetrieveUsers(id, adminId));
-                location.reload(true);
+                await dispatch(adminRetrieveUsers(id, adminId))
+                .then(swal({
+                  title: "Reestableciendo...",
+                  timer: 2000,
+                }))
+                window.location.reload()
               }
-            })}
+            })
+            
+          }
       }
     }
   };
@@ -135,7 +155,7 @@ function AllUsers() {
       <NavBar />
 
       {adminState ? (
-        <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
+        <div className="p-4 rounded-lg bg-gray-100 shadow-md bg-grey min-h-screen">
           <Link to="/admin">
             <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               Atrás

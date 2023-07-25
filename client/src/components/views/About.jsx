@@ -6,7 +6,7 @@ const About = () => {
   return (
     <>
       <NavBar />
-      <section className="relative pt-16 bg-grey">
+      <section className="relative pt-16 bg-grey min-h-screen">
         <div className="container mx-auto">
           <div className="flex flex-wrap items-center">
             <div className="w-10/12 md:w-6/12 lg:w-4/12 px-12 md:px-4 mr-auto ml-auto -mt-78">
