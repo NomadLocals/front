@@ -9,17 +9,6 @@ const Footer = () => {
         id="footer"
         className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-grey-500 pb-4" /* Reducir el padding */
       >
-        {/* Logo */}
-        {/* <div className="w-1/6">
-          <a
-            className="text-1xl font-bold relative p-1 bg-blue"
-            href="#"
-            title="Logo"
-          >
-            <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png" alt="Logo" className="h-6" />
-          </a>
-        </div> */}
-        {/* Social media */}
         <nav className="flex items-center gap-4">
           <a
             href="https://www.instagram.com"
@@ -47,7 +36,7 @@ const Footer = () => {
           </a>
         </nav>
       </div>
-      <div className="mt-1"> {/* Reducir el margen superior */}
+      <div className="mt-1">
         <nav className="-mt-1 flex flex-col md:flex-row items-center justify-between gap-4">
           <a
             href="#"
@@ -61,12 +50,6 @@ const Footer = () => {
           >
             Privacy policy
           </a>
-          <button
-            type="button"
-            className="font-semibold py-2 px-6 bg-grey text-black rounded-xl text-sm" /* Reducir el tamaño de fuente */
-          >
-            Contáctanos
-          </button>
         </nav>
       </div>
       <div className="mt-8">

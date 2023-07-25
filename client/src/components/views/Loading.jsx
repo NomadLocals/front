@@ -43,7 +43,7 @@ const Loading = () => {
   return (
     <div
       style={{
-        backgroundColor: "#F1EFE7",
+        backgroundColor: "#000000",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -51,7 +51,7 @@ const Loading = () => {
       }}
     >
       <img
-        src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/5_n5vayy.png"
+        src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png"
         alt="Loading"
         style={{
           maxWidth: "100%",
