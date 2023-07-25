@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import  io  from "socket.io-client";
 
-const socket = io('http://localhost:3001');
+// const socket = io('http://localhost:3001');
+const socket = io("https://serverpredeploy.onrender.com");
 
 
 const ChatPersonal = () => {

@@ -134,15 +134,21 @@ const Detail = () => {
           <div>
             {isAdmin ? (
               <div className="flex justify-center px-2 md:py-5 xl:py-5 mt-4">
+                <Link to="/admin/allEvents">
                 <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  <Link to="/admin/allEvents">Panel Eventos</Link>
+                  Panel Eventos
                 </button>
+                </Link>
+                <Link to="/admin/eventsReports">
                 <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  <Link to="/admin/eventsReports">Panel Reportes</Link>
+                  Panel Reportes
                 </button>
+                </Link>
+                <Link to="/admin/eventsReviews">
                 <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  <Link to="/admin/eventsReviews">Panel Reviews</Link>
+                  Panel Reviews
                 </button>
+                </Link>
               </div>
             ) : (
               ""
