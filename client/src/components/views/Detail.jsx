@@ -10,6 +10,7 @@ import {
   unsuscribeEvent,
   getHistorialMessages,
   clearChatHistory,
+  deleteEvent,
 } from "../../Redux trad/actions.js";
 
 const Detail = () => {
@@ -82,6 +83,11 @@ const Detail = () => {
     };
     joined();
   }, [Users]);
+
+  const handleDelete = (id) =>{
+    dispatch(deleteEvent(id))
+    console.log("evento eliminado")
+  }
 
   //formateo de fecha:
   let formattedDate = "";
@@ -231,6 +237,9 @@ const Detail = () => {
                     Report
                   </button>{" "}
                 </Link>{" "}
+              </div>
+              <div>
+                {userId === activityDetail.userId ? <button onClick={()=>handleDelete()} style={{backgroundColor: "#a12d3a"}} className="rounded-lg p-1 text-white font-quick m-2 border border-black-500 text-sm md:text-base">Eliminar actividad</button> : ""}
               </div>
             </div>
           </div>

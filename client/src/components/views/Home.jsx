@@ -69,7 +69,7 @@ const Home = () => {
       </section>
       <div className="flex justify-end pr-2 md:pr-5 xl:pr-10 mt-4">
         {isAdmin ? (
-          <button className="text-white p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold hover:scale-110 ease-in-out duration-300">
+          <button className="text-white font-quick p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md hover:scale-110 ease-in-out duration-300">
             <Link to="/admin">Admin Panel</Link>
           </button>
         ) : (
