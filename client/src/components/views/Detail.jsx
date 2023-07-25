@@ -9,9 +9,8 @@ import {
   suscribeEvent,
   unsuscribeEvent,
   getHistorialMessages,
-  clearChatHistory
+  clearChatHistory,
 } from "../../Redux trad/actions.js";
-
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -20,14 +19,13 @@ const Detail = () => {
   //Estados globales
   const user = useSelector((state) => state.user);
   const activityDetail = useSelector((state) => state.eventById);
-
-  const [showUsers, setShowUsers] = useState(false)
+  const [showUsers, setShowUsers] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [joinedUsers, setJoinedUsers] = useState([{}]);
   const userId = user.id;
   const userName = user.userName;
   const userImage = user.image;
-
+  const isAdmin = user.admin;
   const {
     name,
     activityType,
@@ -43,14 +41,13 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getActivityDetail(id));
-
     setJoinedUsers(Users);
   }, [id, joinedUsers, showChat]);
 
   //handlers para sumarse o salir de la actividad
   const handleJoinGroup = () => {
-    setShowUsers(true);
     setShowChat(true);
+    setShowUsers(true);
     try {
       dispatch(suscribeEvent(id, userId));
       setJoinedUsers([...joinedUsers, { userName, userImage }]);
@@ -65,7 +62,7 @@ const Detail = () => {
     try {
       dispatch(unsuscribeEvent(id, userId));
       setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
-      dispatch(clearChatHistory())
+      dispatch(clearChatHistory());
     } catch (error) {
       console.log(error);
     }
@@ -73,11 +70,12 @@ const Detail = () => {
 
   //para correcta renderizacion del chat->
   useEffect(() => {
-    dispatch(getHistorialMessages(id))
+    dispatch(getHistorialMessages(id));
     const joined = async () => {
       try {
         const isJoined = await Users.some((user) => user.id === userId);
         setShowChat(isJoined);
+        setShowUsers(isJoined);
       } catch (error) {
         // console.error(error);
       }
@@ -108,12 +106,29 @@ const Detail = () => {
             alt={name}
             className="h-48 w-full object-cover rounded-lg"
           />
+          <div>
+            {isAdmin ? (
+              <div className="flex justify-center px-2 md:pr-5 xl:pr-10 mt-4">
+                <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                  <Link to="/admin/allEvents">Panel Eventos</Link>
+                </button>
+                <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                  <Link to="/admin/eventsReports">Panel Reportes</Link>
+                </button>
+                <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                  <Link to="/admin/eventsReviews">Panel Reviews</Link>
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="p-4">
             <h2 className="text-2xl font-bold mb-2 text-center font-quick">
               {name}
             </h2>
             <h2 className="text-center mb-2 font-semibold ">{activityType}</h2>
-           
+
             <div className="flex flex-wrap">
               <div className="w-1/2">
                 <p>
@@ -127,12 +142,16 @@ const Detail = () => {
                   Duración: <span className="font-semibold">{duration}hs.</span>
                 </p>
               </div>
-              <div className="w-1/2 text-center">
+              <div className="w-1/2 text-center flex flex-col justify-center">
                 <span>
-                  {minCost === 0 ? <p>Cost: Free</p> : <p>Cost: ${minCost}</p>}
+                  {minCost === 0 ? (
+                    <p>Coste: Free</p>
+                  ) : (
+                    <p>Coste: ${minCost}</p>
+                  )}
                 </span>
                 <p>
-                  Personas:{" "}
+                  Personas(min):{" "}
                   <span className="font-semibold">{minSizePeople}</span>
                 </p>
               </div>
@@ -146,38 +165,36 @@ const Detail = () => {
             {/* <StarRating /> */}
 
             <h3 className="text-lg font-semibold mb-2 text-center">Miembros</h3>
-              {
-                showUsers && (
-
-                
-              
-            <div className="flex flex-wrap">
-              {Users
-                ? Users?.map(({ userName, image, id }) => {
-                    return (
-                      <div
-                        key={id}
-                        className="flex flex-col items-center mb-4 mr-3 mt-2"
-                      >
-                        < Link to={`/others/${id}`} >
-                        <div className="w-12 h-12 rounded-full overflow-hidden">
-
-                          <img
-                            src={image}
-                            alt="Imagen de miembro"
-                            className="h-full w-full object-cover"
-                            />
+            {showUsers && (
+              <div className="flex flex-wrap">
+                {Users
+                  ? Users?.map(({ userName, image, id }) => {
+                      return (
+                        <div
+                          key={id}
+                          className="flex flex-col items-center mb-4 mr-3 mt-2"
+                        >
+                          <Link
+                            to={
+                              userId === id ? `/profile/${id}` : `/others/${id}`
+                            }
+                          >
+                            <div className="w-12 h-12 rounded-full overflow-hidden">
+                              <img
+                                src={image}
+                                alt="Imagen de miembro"
+                                className="h-full w-full object-cover"
+                              />
+                            </div>
+                          </Link>
+                          <p className="mt-2 text-center text-xs">{userName}</p>
                         </div>
-                        </Link>
-                        <p className="mt-2 text-center text-xs">{userName}</p>
-                      </div>
-                    );
-                  })
-                : null}
-            </div>
-                )
-                }
-                
+                      );
+                    })
+                  : null}
+              </div>
+            )}
+
             {showChat && <Chat />}
             <div className="flex justify-center">
               {!showChat ? (
@@ -197,8 +214,24 @@ const Detail = () => {
               )}
             </div>
             <div className="flex flex-row mt-5 justify-center">
-            <div> <Link to={"/reviewevent/" + id} > <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">Review</button> </Link> </div>
-            <div> <Link to={"/report/" + id} > <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">Report</button> </Link> </div>
+              <div>
+                {" "}
+                <Link to={"/reviewevent/" + id}>
+                  {" "}
+                  <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">
+                    Review
+                  </button>{" "}
+                </Link>{" "}
+              </div>
+              <div>
+                {" "}
+                <Link to={"/report/" + id}>
+                  {" "}
+                  <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">
+                    Report
+                  </button>{" "}
+                </Link>{" "}
+              </div>
             </div>
           </div>
         </div>
