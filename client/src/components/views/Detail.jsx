@@ -11,7 +11,7 @@ import {
   getHistorialMessages,
   clearChatHistory
 } from "../../Redux trad/actions.js";
-import { START_CHAT_PERSONAL } from "../../Redux trad/action-types.js";
+
 
 const Detail = () => {
   const dispatch = useDispatch();

@@ -29,6 +29,7 @@ import {
   POST_IMAGES,
   DELETE_IMAGE,
   GET_HISTORIAL_CHAT_EVENTS,
+  GET_HISTORIAL_CHAT_PERSONAL,
   CLEAN_CHAT_HISTORY,
 } from "./action-types.js";
 
@@ -365,13 +366,13 @@ export const getHistorialMessages = (id) => {
 }
  
 //! falta usar...dani
-// export const getPersonalMessages = (id) => {
+// export const getPersonalMessages = () => {
 //   return async (dispatch) => {
 //     try {
-//       const {data} = await axios.get(`${URL}/events/${id}/chat/event`)
+//       const {data} = await axios.get(`${URL}/chat/personal/`, data)
   
 //       return dispatch({
-//         type: START_CHAT_PERSONAL,
+//         type: GET_HISTORIAL_CHAT_PERSONAL,
 //         payload: data,
 //       })        
 //     } catch (error) {
@@ -379,6 +380,20 @@ export const getHistorialMessages = (id) => {
 //     }
 //   }
 // }
+export const getPersonalMessages = ({senderId, receiverId}) => {
+  return async (dispatch) => {
+    try {
+      const respuesta = await axios.get(`${URL}/chat/personal/${senderId}/${receiverId}`);
+
+      return dispatch({
+        type: GET_HISTORIAL_CHAT_PERSONAL,
+        payload: respuesta.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 
 export const clearChatHistory = () => {
   return dispatch ( {

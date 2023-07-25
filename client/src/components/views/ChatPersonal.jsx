@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import  io  from "socket.io-client";
+import { getPersonalMessages } from "../../Redux trad/actions";
 
 const socket = io('http://localhost:3001');
 
@@ -20,7 +21,7 @@ const ChatPersonal = () => {
   const [newMessage, setNewMessage] = useState("") //? Para cada mensaje que se envie..
   const [chatMessages, setChatMessages] = useState(historialChatPersonal) //? para historial..
 
-  
+  console.log(others);
   
 
   const dispatch = useDispatch()
@@ -28,11 +29,11 @@ const ChatPersonal = () => {
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
   const handleSendMessage = () => {
-    console.log(newMessage)
+    // console.log(chatMessages)
     socket.emit("chatPersonalMessage", {
       senderId: user.id,
       receiverId: others.id,
-      senderUsername: user.username,
+      senderUserName: user.userName,
       message: newMessage,
     });
     setNewMessage("");
@@ -41,37 +42,40 @@ const ChatPersonal = () => {
 
   // console.log(others)
 
+  const data = {
+    senderId : user.id,
+    receiverId: others.id,
+  }
+
   useEffect(() => {
     socket.on("startPersonalChat",
-      setIsConnected (true),
-      );
+    setIsConnected (true),
+    dispatch(getPersonalMessages(data))
 
-    socket.on('getPersonalMessage', (data) => {
-      // console.log(data)
-      setChatMessages((prevMessages) => [...prevMessages, data])
+      );
+      socket.emit("joinPersonalChat", others.id);
+      
+      socket.on('getPersonalMessage', (message) => {
+
+        // console.log(data)
+      setChatMessages((prevMessages) => [...prevMessages, message])
     })
     
-    socket.emit("joinPersonalChat", others.id);
 
     socket.on("chatPersonalMessage", (message) => {
       setChatMessages([...chatMessages, message]);
     });
 
-    // socket.on("personalChatCreated", (newPersonalChat) => {
-    //   // Recibimos el chat personal recién creado desde el servidor
-    //   setChatMessages(newPersonalChat.messages);
-    //   setChatStarted(true);
-    // });
+
 
     return () => {
       socket.off("startPersonalChat");
       socket.off("chatPersonalMessage");
-      // socket.off("personalChatCreated");
     };
   }, [socket]);
   
   
-  
+  console.log(chatMessages)
   return (
     <div className="mt-4">
       {(
@@ -80,9 +84,9 @@ const ChatPersonal = () => {
             Chat personal con {others.userName}
           </h4>
           <div className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll">
-            {chatMessages.map((message, index) => (
+            {chatMessages?.map((message, index) => (
               <div key={index} className="mb-2">
-                <span className="font-semibold">{message.senderUsername}: </span>
+                <span className="font-semibold">{message.id}: </span>
                 <span>{message.message}</span>
               </div>
             ))}
