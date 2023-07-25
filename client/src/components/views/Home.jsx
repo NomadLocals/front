@@ -20,7 +20,7 @@ const Home = () => {
   const [isUserSuspended, setIsUserSuspended] = useState(false);
   useEffect(() => {
     // Verificar si el usuario está suspendido al cargar el componente
-    const delay = 1000;
+    const delay = 3000;
     const timerId = setTimeout(() => {
       // Verificar si el usuario está suspendido después del retraso
       if (!(user && "deletedAt" in user)) {

@@ -31,6 +31,7 @@ import {
   ADMIN_GET_ACTIVITIES,
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
+  GET_HISTORIAL_CHAT_PERSONAL
 } from "./action-types.js";
 
 const initialState = {
@@ -55,6 +56,7 @@ const initialState = {
   allActivities: [],
   historialChat: [],
   startChat: {},
+  historialChatPersonal : [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -194,7 +196,12 @@ const rootReducer = (state = initialState, action) => {
     case GET_HISTORIAL_CHAT_EVENTS:
       return {
         ...state,
-        historialChat: action.payload
+        historialChat: action.payload,
+      };
+    case GET_HISTORIAL_CHAT_PERSONAL:
+      return {
+        ...state,
+        historialChatPersonal: action.payload,
       };
       case CLEAN_CHAT_HISTORY:
       return {
