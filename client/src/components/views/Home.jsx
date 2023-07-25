@@ -23,8 +23,13 @@ const Home = () => {
   const year = currentDate.getFullYear();
   const formattedDate = `${day}/${month}/${year}`;
 
+  //Invertir la logica para que funcione bien!
+  const isAdmin = user.admin;
+
+  console.log(isAdmin);
+
   return (
-    <div>
+    <div className="bg-grey">
       <NavBar />
 
       <section className="flex flex-row justify-between pt-2 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey">
@@ -35,6 +40,16 @@ const Home = () => {
           📆 {formattedDate}
         </span>
       </section>
+      <div className="flex justify-end pr-2 md:pr-5 xl:pr-10 mt-4">
+        {isAdmin ? (
+          <button className="text-white p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+            <Link to="/admin">Admin Panel</Link>
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
+
       <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-3xl bg-grey">
         Tus Actividades:
       </h1>

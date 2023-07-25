@@ -110,10 +110,20 @@ const Detail = () => {
             {isAdmin ? (
               <div>
                 <button className="text-white p-2  mr-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+<<<<<<< HEAD
                   <Link to="/admin/allEvents">Panel de Eventos</Link>
                 </button>
                 <button className="text-white p-2  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
                   <Link to="/admin/eventsReports">Panel de Reportes</Link>
+=======
+                  <Link to="/admin/allEvents">Panel Eventos</Link>
+                </button>
+                <button className="text-white p-2  mr-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+                  <Link to="/admin/eventsReports">Panel Reportes</Link>
+                </button>
+                <button className="text-white p-2  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+                  <Link to="/admin/eventsReviews">Panel Reviews</Link>
+>>>>>>> b9471725f7310cb725849014217a57b2dd092075
                 </button>
               </div>
             ) : (

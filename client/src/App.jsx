@@ -23,11 +23,22 @@ import About from "./components/views/About.jsx";
 import Settings from "./components/views/Settings.jsx";
 import Loading from "./components/views/Loading.jsx";
 import EventReview from "./components/views/ReviewEvents.jsx";
-import LayoutAdmin from "./components/views/LayoutAdmin.jsx";
 import UserReview from "./components/views/ReviewUser.jsx";
 import OthersDetail from "./components/views/OthersDetail.jsx";
 import Report from "./components/views/Report.jsx";
 import ReportUser from "./components/views/ReportUser.jsx";
+//Componentes administrador:
+import AllUsers from "./components/AdminComponents/AllUsers.jsx";
+import AdminHome from "./components/AdminComponents/AdminHome.jsx";
+import EventsReports from "./components/AdminComponents/EventsReports.jsx";
+import AllEvents from "./components/AdminComponents/AllEvents.jsx";
+import UsersReports from "./components/AdminComponents/UsersReports.jsx";
+import UserReports from "./components/AdminComponents/UserReports.jsx";
+import UsersReviews from "./components/AdminComponents/UsersReviews";
+import EventsReviews from "./components/AdminComponents/EventsReviews";
+import UserReviews from "./components/AdminComponents/UserReviews";
+import EventReports from "./components/AdminComponents/EventReports";
+import EventReviewsAdmin from "./components/AdminComponents/EventReviewsAdmin";
 
 function App() {
   return (
@@ -36,7 +47,7 @@ function App() {
         <Route path="/reviewevent/:id" element={<EventReview />} />
         <Route path="/reviewuser/:id" element={<UserReview />} />
         <Route path="/report/:id" element={<Report />} />
-        <Route path="/reportuser/:id" element={<ReportUser/>} />
+        <Route path="/reportuser/:id" element={<ReportUser />} />
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route
@@ -56,7 +67,23 @@ function App() {
         <Route path="/activities/detail/:id/chat" element={<Chat />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/admin" element={<LayoutAdmin />} />
+
+        <Route path="/admin" element={<AdminHome />} />
+        <Route path="/admin/allEvents" element={<AllEvents />} />
+        <Route path="/admin/eventsReports" element={<EventsReports />} />
+        <Route path="/admin/usersReports" element={<UsersReports />} />
+        <Route path="/admin/users" element={<AllUsers />} />
+        <Route path="/admin/users/reports/:id" element={<UserReports />} />
+        <Route path="/admin/users/reviews/:id" element={<UserReviews />} />
+
+        <Route path="/admin/eventsReviews" element={<EventsReviews />} />
+        <Route path="/admin/usersReviews" element={<UsersReviews />} />
+
+        <Route path="/admin/events/allReports/:id" element={<EventReports />} />
+        <Route
+          path="/admin/events/allReviews/:id"
+          element={<EventReviewsAdmin />}
+        />
       </Routes>
     </div>
   );
