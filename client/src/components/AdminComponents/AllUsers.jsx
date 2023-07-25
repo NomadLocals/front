@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { getAllUsers, deleteUser, editUser } from "../../Redux trad/actions.js";
+import {
+  getAllUsers,
+  deleteUser,
+  editUser,
+  adminRetrieveUsers,
+} from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
@@ -15,7 +20,7 @@ function AllUsers() {
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
   const navigate = useNavigate();
-  console.log(allUsers);
+  console.log(userActu);
 
   useEffect(() => {
     dispatch(getAllUsers(userActu.id));
@@ -26,9 +31,7 @@ function AllUsers() {
     }
   }, [adminState]);
 
-  const handleEdit = (e, userId, userEmail, userAdmin) => {
-    // e.preventDefault();
-
+  const handleEdit = (userId, userEmail, userAdmin) => {
     if (userActu.id === userId) {
       swal("No puedes editarte a ti mismo!");
     } else {
@@ -63,22 +66,31 @@ function AllUsers() {
     }
   };
 
-  const handleDelete = async (e, id, userEmail) => {
-    e.preventDefault();
-
+  const handleDelete = async (id, userEmail, deleted, adminId) => {
     if (userActu.id === id) {
       swal("No puedes eliminarte a ti mismo");
     } else {
       if (userEmail === "nomad.locals01@gmail.com") {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
-        if (
-          window.confirm(
-            "¿Estás seguro que quieres eliminar este usuario? Si lo eliminas, no podrás deshacer esta acción."
-          ) === true
-        ) {
-          dispatch(deleteUser(id));
-          swal("Usuario eliminado correctamente.");
+        if (!deleted) {
+          if (
+            window.confirm(
+              "¿Estás seguro que quieres eliminar este usuario?"
+            ) === true
+          ) {
+            dispatch(deleteUser(id));
+            swal("Usuario eliminado correctamente.");
+          }
+        } else {
+          if (
+            window.confirm(
+              `¿Estás seguro que quieres volver a habilitar al usuario ${userEmail}?`
+            ) === true
+          ) {
+            dispatch(adminRetrieveUsers(id, adminId));
+            swal(`El usuario ${userEmail} fue habilitado correctamente`);
+          }
         }
       }
     }
@@ -169,7 +181,14 @@ function AllUsers() {
                         </td>
                         <td>
                           <button
-                            onClick={(e) => handleDelete(e, u.id, u.email)}
+                            onClick={() =>
+                              handleDelete(
+                                u.id,
+                                u.email,
+                                u.deletedAt,
+                                userActu.id
+                              )
+                            }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
                             title="Eliminar usuario"
                           >
@@ -179,9 +198,7 @@ function AllUsers() {
                         <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
                         <td>
                           <button
-                            onClick={(e) =>
-                              handleEdit(e, u.id, u.email, u.admin)
-                            }
+                            onClick={(e) => handleEdit(u.id, u.email, u.admin)}
                             className="text-blue-500 hover:text-blue-700 focus:outline-none"
                             title="Editar permisos de administrador"
                           >

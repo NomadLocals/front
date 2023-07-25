@@ -5,24 +5,40 @@ import Footer from "./Footer.jsx";
 import SuggestionCarousel from "./SuggestionCarousel.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserActivities, getUserById } from "../../Redux trad/actions.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
+  const [isUserSuspended, setIsUserSuspended] = useState(false);
   const dispatch = useDispatch();
   const userPlace = user.place;
-  console.log(user);
+
   useEffect(() => {
     dispatch(getUserActivities(user.id));
   }, []);
-  if (!user.deletedAt) {
+
+  useEffect(() => {
+    // Verificar si el usuario está suspendido al cargar el componente
+    const delay = 500;
+    const timerId = setTimeout(() => {
+      // Verificar si el usuario está suspendido después del retraso
+      if (!(user && "deletedAt" in user)) {
+        setIsUserSuspended(true);
+      }
+    }, delay);
+
+    // Limpiar el timer al desmontar el componente para evitar errores
+    return () => clearTimeout(timerId);
+  }, [user]);
+
+  if (isUserSuspended) {
     return (
       <h2 className="text-center">
         Tu cuenta está suspendida. Por favor, contacta al administrador.
       </h2>
     );
   }
-  console.log(user);
+
   //Acomodar fecha:
   const currentDate = new Date();
   const day = String(currentDate.getDate()).padStart(2, "0");
@@ -32,8 +48,6 @@ const Home = () => {
 
   //Invertir la logica para que funcione bien!
   const isAdmin = user.admin;
-
-  console.log(isAdmin);
 
   return (
     <div className="bg-grey">

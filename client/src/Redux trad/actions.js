@@ -38,6 +38,7 @@ import {
   ADMIN_GET_ACTIVITIES,
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
+  ADMIN_RETRIEVE_USERS,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001";
@@ -124,7 +125,7 @@ export const postUser = (userData) => {
         payload: data,
       });
     } catch (error) {
-      alert(error.message);
+      console.log("Usuario no creado");
     }
   };
 };
@@ -589,6 +590,23 @@ export const adminGetActivities = (id) => {
       });
     } catch (error) {
       // console.log(error.message);
+    }
+  };
+};
+export const adminRetrieveUsers = (id, adminId) => {
+  return async (dispatch) => {
+    try {
+      console.log(`${URL}/admin/${adminId}/userreset?idUser=${id}`);
+      const { data } = await axios.get(
+        `${URL}/admin/${adminId}/userreset?idUser=${id}`
+      );
+      console.log(data);
+      return dispatch({
+        type: ADMIN_RETRIEVE_USERS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 };
