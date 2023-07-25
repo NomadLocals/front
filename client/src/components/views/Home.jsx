@@ -69,7 +69,7 @@ const Home = () => {
       </section>
       <div className="flex justify-end pr-2 md:pr-5 xl:pr-10 mt-4">
         {isAdmin ? (
-          <button className="text-white p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold">
+          <button className="text-white p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md font-bold hover:scale-110 ease-in-out duration-300">
             <Link to="/admin">Admin Panel</Link>
           </button>
         ) : (
@@ -81,7 +81,7 @@ const Home = () => {
         Tus Actividades:
       </h1>
       <div className="flex flex-col text-white content-around py-5 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey font-spartan text-lg md:flex-row md:justify-around">
-        <button className="p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 md:w-56 lg:w-80 lg:h-20 lg:text-2xl">
+        <button className="p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 md:w-56 lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-in-out duration-300">
           <Link to="/activity-form">Crea tu actividad</Link>
         </button>
       </div>
@@ -93,7 +93,7 @@ const Home = () => {
           Lo que se viene:
         </h1>
         <SuggestionCarousel />
-        <button className="p-2 rounded-lg bg-blue text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 font-spartan lg:w-80 lg:h-20 lg:text-2xl">
+        <button className="p-2 rounded-lg bg-blue text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 font-spartan lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-in-out duration-300">
           <Link to="/activities">Encuentra una actividad</Link>
         </button>
       </section>

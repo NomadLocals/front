@@ -26,7 +26,7 @@ function UserReports() {
       <NavBar />
 
       {adminState ? (
-        <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
+        <div className="p-4 rounded-lg bg-grey min-h-screen shadow-md">
           <Link to="/admin/users">
             <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               Atrás
