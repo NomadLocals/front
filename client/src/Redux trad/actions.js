@@ -43,10 +43,10 @@ import {
   ADMIN_EMAIL_DELETE_EVENT,
 } from "./action-types.js";
 
-// const URL = "http://localhost:3001"; //* servidor
+const URL = "http://localhost:3001"; //* servidor
 // const URL = import.meta.env.SERVER_URL;
 // const URL = "https://serverpfnomadlocals.onrender.com";
-const URL = "https://serverpredeploy.onrender.com";
+// const URL = "https://serverpredeploy.onrender.com";
 
 const USER = "users";
 const EVENT = "events";
@@ -307,11 +307,17 @@ export const checkUserById = (id) => {
   };
 };
 
-export const suscribeEvent = (id, userId) => {
+export const suscribeEvent = (id, userId, eventDate, place, email, name) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`${URL}/events/${id}/users`, {
         userId,
+      });
+      await axios.post(`${URL}/send-mail/suscribe-event`, {
+        eventDate,
+        email,
+        place,
+        name,
       });
 
       return dispatch({
@@ -322,13 +328,19 @@ export const suscribeEvent = (id, userId) => {
     }
   };
 };
-export const unsuscribeEvent = (id, userId) => {
+export const unsuscribeEvent = (id, userId, eventDate, place, email, name) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(
         `${URL}/events/${id}/users?userId=${userId}`
       );
-      console.log(data);
+      await axios.post(`${URL}/send-mail/unsuscribe-event`, {
+        eventDate,
+        email,
+        place,
+        name,
+      });
+
       return dispatch({
         type: UNSUSCRIBE_EVENT,
       });
@@ -386,7 +398,7 @@ export const getHistorialMessages = (id) => {
 //   return async (dispatch) => {
 //     try {
 //       const {data} = await axios.get(`${URL}/chat/personal/`, data)
-  
+
 //       return dispatch({
 //         type: GET_HISTORIAL_CHAT_PERSONAL,
 //         payload: data,
@@ -396,10 +408,12 @@ export const getHistorialMessages = (id) => {
 //     }
 //   }
 // }
-export const getPersonalMessages = ({senderId, receiverId}) => {
+export const getPersonalMessages = ({ senderId, receiverId }) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(`${URL}/chat/personal?senderId=${senderId}&receiverId=${receiverId}`);
+      const { data } = await axios.get(
+        `${URL}/chat/personal?senderId=${senderId}&receiverId=${receiverId}`
+      );
 
       return dispatch({
         type: GET_HISTORIAL_CHAT_PERSONAL,
@@ -443,7 +457,7 @@ export const editUser = (userId, userData) => {
     try {
       const endPoint = `${URL}/${USER}/${userId}`;
       const { data } = await axios.put(endPoint, userData);
-      console.log(data);
+      console.log(userId);
       return dispatch({
         type: EDIT_USER,
         payload: data,

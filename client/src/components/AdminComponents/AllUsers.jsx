@@ -11,7 +11,6 @@ import NavBar from "../views/NavBar.jsx";
 import Remove from "../../iconos/Remove.jsx";
 import Edit from "../../iconos/Edit.jsx";
 import View from "../../iconos/View.jsx";
-
 import swal from "sweetalert";
 
 function AllUsers() {
@@ -48,13 +47,16 @@ function AllUsers() {
             closeModel: false,
           }).then((willDelete) => {
             if (willDelete) {
-              dispatch(editUser(userId, { admin: true })).then(
-                swal({
-                  title: "Creando administrador...",
-                  timer: 2000,
-                })
-              );
-              location.reload(true);
+              dispatch(editUser(userId, { admin: true }))
+                .then(
+                  swal({
+                    title: "Creando administrador...",
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
             }
           });
         } else {
@@ -67,13 +69,16 @@ function AllUsers() {
             closeModel: false,
           }).then(async (willDelete) => {
             if (willDelete) {
-              await dispatch(editUser(userId, { admin: false })).then(
-                swal({
-                  title: "Quitando administrador...",
-                  timer: 2000,
-                })
-              );
-              location.reload(true);
+              await dispatch(editUser(userId, { admin: false }))
+                .then(
+                  swal({
+                    title: "Quitando administrador...",
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
             }
           });
         }
@@ -98,13 +103,16 @@ function AllUsers() {
             closeModel: false,
           }).then(async (willDelete) => {
             if (willDelete) {
-              await dispatch(deleteUser(id)).then(
-                swal({
-                  title: "Eliminando...",
-                  timer: 2000,
-                })
-              );
-              location.reload(true);
+              await dispatch(deleteUser(id))
+                .then(
+                  swal({
+                    title: "Eliminando...",
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
             }
           });
         } else {
@@ -116,13 +124,16 @@ function AllUsers() {
             closeModel: false,
           }).then(async (willDelete) => {
             if (willDelete) {
-              await dispatch(adminRetrieveUsers(id, adminId)).then(
-                swal({
-                  title: "Reestableciendo...",
-                  timer: 2000,
-                })
-              );
-              window.location.reload();
+              await dispatch(adminRetrieveUsers(id, adminId))
+                .then(
+                  swal({
+                    title: "Reestableciendo...",
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
             }
           });
         }
