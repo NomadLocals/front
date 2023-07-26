@@ -66,9 +66,6 @@ const ChatPersonal = () => {
     };
   }, [socket, chatMessages]);
   
-  console.log(historialChatPersonal);
-  
-  // console.log(chatMessages)
   return (
     <div className="mt-4">
       {(

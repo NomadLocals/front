@@ -381,21 +381,6 @@ export const getHistorialMessages = (id) => {
   };
 };
 
-//! falta usar...dani
-// export const getPersonalMessages = () => {
-//   return async (dispatch) => {
-//     try {
-//       const {data} = await axios.get(`${URL}/chat/personal/`, data)
-  
-//       return dispatch({
-//         type: GET_HISTORIAL_CHAT_PERSONAL,
-//         payload: data,
-//       })
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   }
-// }
 export const getPersonalMessages = (roomName) => {
   return async (dispatch) => {
     try {
