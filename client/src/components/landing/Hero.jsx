@@ -20,10 +20,10 @@ const Hero = () => {
               style={{ color: "#F1EFE7" }}
             >
               <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/5_n5vayy.png" alt="Logo" className="h-17" />
-              <RiCheckboxBlankCircleFill className="text-yellow text-base absolute -left-5 -top-5 p-2 bg-grey rounded-full box-content" />
-              <RiCheckboxBlankCircleFill className="text-yellow text-base absolute -right-5 -top-5 p-2 bg-grey rounded-full box-content" />
-              <RiCheckboxBlankCircleFill className="text-yellow text-base absolute -right-5 -bottom-5 p-2 bg-grey rounded-full box-content" />
-              <RiCheckboxBlankCircleFill className="text-yellow text-base absolute -left-5 -bottom-5 p-2 bg-grey rounded-full box-content" />
+              <RiCheckboxBlankCircleFill className="text-black text-base absolute -left-5 -top-5 p-2 bg-grey rounded-full box-content" />
+              <RiCheckboxBlankCircleFill className="text-black text-base absolute -right-5 -top-5 p-2 bg-grey rounded-full box-content" />
+              <RiCheckboxBlankCircleFill className="text-black text-base absolute -right-5 -bottom-5 p-2 bg-grey rounded-full box-content" />
+              <RiCheckboxBlankCircleFill className="text-black text-base absolute -left-5 -bottom-5 p-2 bg-grey rounded-full box-content" />
             </span>
           </h1>
           <p
@@ -34,7 +34,7 @@ const Hero = () => {
             Descubre conexiones genuinas basadas en intereses comunes donde sea estés.
           </p>
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <button className="w-full xl:w-auto bg-blue text-black font-quick py-2 px-8 rounded-xl text-xl"
+            <button className="w-full xl:w-auto bg-black text-white font-quick py-2 px-8 rounded-xl text-xl"
             onClick={() => (window.location.href = "/sign-in")}
             >
               Únete a Nomad Locals

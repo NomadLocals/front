@@ -77,7 +77,7 @@ const Settings = () => {
                   </div>
                   <div className="flex justify-end">
                     <button
-                      className="appearance-none bg-blue text-white px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3 font-spartan"
+                      className="appearance-none bg-black text-grey font-quick px-2 py-1 shadow-sm border border-gray-400 rounded-md mr-3"
                       type="submit"
                     >
                       Guardar Cambios

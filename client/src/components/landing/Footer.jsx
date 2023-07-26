@@ -1,83 +1,66 @@
 import React from "react";
-/* eslint no-unused-vars: "off" */
 import { RiInstagramLine, RiFacebookLine, RiTwitterLine } from "react-icons/ri";
 
 const Footer = () => {
   return (
-    <footer className="bg-blue p-4 md:p-8 xl:p-12"> {/* Reducir el padding */}
+    <footer className="bg-grey p-4 md:p-8 xl:p-12">
+      <div className="text-center mb-4 border-t">
+        <img
+          src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/5_n5vayy.png"
+          alt="logo"
+          className="h-12 mx-auto"
+        />
+      </div>
       <div
         id="footer"
-        className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-grey-500 pb-4" /* Reducir el padding */
+        className="flex flex-col md:flex-row items-center justify-center"
       >
-        {/* Logo */}
-        <div className="w-1/6">
+        <nav className="flex items-center text-center gap-4 max-w-max mx-auto">
           <a
-            className="text-1xl font-bold relative p-1 bg-blue"
-            href="#"
-            title="Logo"
-          >
-            <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png" alt="Logo" className="h-6" /> {/* Reducir el tamaño del logotipo */}
-          </a>
-        </div>
-        {/* Social media */}
-        <nav className="flex items-center gap-4">
-          <a
-            href="https://www.instagram.com"
+            href="https://www.instagram.com/nomadlocals"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-black p-3 bg-grey rounded-full" /* Reducir el padding */
+            className="block text-black p-2 md:p-3 bg-grey rounded-full"
           >
             <RiInstagramLine />
           </a>
           <a
-            href="https://www.facebook.com"
+            href="https://www.facebook.com/nomadlocals"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-black p-3 bg-grey rounded-full" /* Reducir el padding */
+            className="block text-black p-2 md:p-3 bg-grey rounded-full"
           >
             <RiFacebookLine />
           </a>
           <a
-            href="https://www.twitter.com"
+            href="https://www.twitter.com/nomadlocals"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-black p-3 bg-grey rounded-full" /* Reducir el padding */
+            className="block text-black p-2 md:p-3 bg-grey rounded-full"
           >
             <RiTwitterLine />
           </a>
         </nav>
       </div>
-      <div className="mt-4"> {/* Reducir el margen superior */}
-        <nav className="mt-2 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="mt-1">
+        <nav className="-mt-1 flex flex-col md:flex-row items-center justify-between gap-4">
           <a
             href="#"
-            className="text-gray-300 mt-2 hover:text-black transition-colors text-sm" /* Reducir el tamaño de fuente */
-          >
-            About Us
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 mt-2 hover:text-black transition-color text-sm" /* Reducir el tamaño de fuente */
+            className="text-gray-300 mt-1 md:mt-2 hover:text-black transition-color text-xs md:text-sm"
           >
             Terms of use
           </a>
           <a
             href="#"
-            className="text-gray-300 mt-2 hover:text-black transition-color text-sm" /* Reducir el tamaño de fuente */
+            className="text-gray-300 mt-1 md:mt-2 hover:text-black transition-color text-xs md:text-sm"
           >
             Privacy policy
           </a>
-          <button
-            type="button"
-            className="font-semibold py-2 px-6 bg-grey text-black rounded-xl text-sm" /* Reducir el tamaño de fuente */
-          >
-            Contáctanos
-          </button>
         </nav>
       </div>
-      <div className="mt-8">
-        <p className="text-gray-300 text-center text-sm"> {/* Reducir el tamaño de fuente */}
-          © nomadlocals 2023 - All Rights Reserved
+      <div className="mt-4">
+        <p className="text-gray-300 text-center text-xs md:text-sm">
+          &copy; nomadlocals 2023 - All Rights Reserved
         </p>
       </div>
     </footer>

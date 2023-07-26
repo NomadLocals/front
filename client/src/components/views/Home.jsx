@@ -60,7 +60,7 @@ const Home = () => {
       <NavBar />
       <section className="flex flex-row justify-between pt-2 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey">
         <span className="text-xs md:text-sm xl:text-xl bg-grey font-quick">
-          🚩 {userPlace}
+        📍 {userPlace}
         </span>
         <span className="text-xs md:text-sm xl:text-xl bg-grey font-quick">
           📆 {formattedDate}
@@ -78,8 +78,8 @@ const Home = () => {
         )}
       </div>
 
-      <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-3xl bg-grey">
-        Tus Actividades:
+      <h1 className="font-spartan pt-1 text-lg font-bold text-center md:text-3xl bg-grey">
+        Hoy vamos a:
       </h1>
       <div className="flex flex-col items-center text-white content-around py-5 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey font-spartan text-lg md:flex-row md:justify-around">
       <Link to="/activity-form">
@@ -88,12 +88,12 @@ const Home = () => {
         </button>
         </Link>
       </div>
-      <section className="pt-5 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
+      <section className="pt-1 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
         <OwnActivities />
       </section>
       <section className="flex flex-col items-center pt-5 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
-        <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-2xl bg-grey">
-          Lo que se viene:
+        <h1 className="font-spartan pt-1 text-lg font-bold text-center md:text-2xl bg-grey">
+          Proximamente:
         </h1>
         <SuggestionCarousel />
         <Link to="/activities">
