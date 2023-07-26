@@ -98,6 +98,7 @@ const rootReducer = (state = initialState, action) => {
           minCost: "",
           eventDate: "",
           location: "",
+          name: "",
         },
       };
     case SAVE_USER_FORM:

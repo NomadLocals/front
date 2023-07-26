@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react"; 
+import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MdOutlineCreate, MdTravelExplore } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
 import {
@@ -31,7 +31,6 @@ function classNames(...classes) {
 export default function NavBar() {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [name, setName] = useState("");
-  const filter = useSelector((state) => state.filter);
   const user = useSelector((state) => state.user);
   const userImage = user.image;
   const userId = user.id;
@@ -39,16 +38,15 @@ export default function NavBar() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
+    dispatch(resetFilters());
+
     dispatch(setFilters({ name }));
-    dispatch(getFilteredActivities(filter));
+
+    dispatch(getFilteredActivities({ name }));
 
     setName("");
-    dispatch(resetFilters());
     navigate("/activities");
   };
-  useEffect(() => {
-    dispatch(getFilteredActivities(filter));
-  }, [filter, dispatch]);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -63,15 +61,19 @@ export default function NavBar() {
     signOut();
     navigate("/");
   };
-  
+
   return (
     <Disclosure as="nav" className="bg-blue font-quick relative">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 lg:text-xl">
             <div className="relative flex h-16 items-center justify-around">
-            <Link to="/home" className="absolute md:relative">
-                <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/2_kbqwgr.png" alt="icon" className="h-8 w-8 mr-2 hover:scale-110 ease-out duration-300" />
+              <Link to="/home" className="absolute md:relative">
+                <img
+                  src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/2_kbqwgr.png"
+                  alt="icon"
+                  className="h-8 w-8 mr-2 hover:scale-110 ease-out duration-300"
+                />
               </Link>
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -99,7 +101,7 @@ export default function NavBar() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6 sm:pr-0 text-blue">
                 <button
                   onClick={() => setShowSearchBar(!showSearchBar)}
