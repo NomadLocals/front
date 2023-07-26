@@ -47,34 +47,8 @@ const Detail = () => {
     dispatch(getActivityDetail(id));
     setJoinedUsers(Users);
     dispatch(cleanComponent("detail"));
-  }, [id, joinedUsers]);
+  }, [id, joinedUsers, showChat]);
 
-  //handlers para sumarse o salir de la actividad
-
-  // const handleJoinGroup = async () => {
-  //   try {
-  //     setShowChat(true);
-  //     setShowUsers(true);
-  //     dispatch(
-  //       suscribeEvent(id, userId, formattedDate, place, user.email, name)
-  //     );
-  //     setJoinedUsers([...joinedUsers, { userName, userImage }]);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // const handleLeaveGroup = async () => {
-  //   // Crear una copia del estado actual de joinedUsers
-  //   try {
-  //     setShowChat(false);
-  //     setShowUsers(false);
-  //     dispatch(unsuscribeEvent(id, userId));
-  //     setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
-  //     // dispatch(clearChatHistory());
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   const handleJoinGroup = async () => {
     try {
       setShowChat(true);
@@ -87,6 +61,7 @@ const Detail = () => {
       console.log(error);
     }
   };
+
   const handleLeaveGroup = async () => {
     try {
       setShowChat(false);

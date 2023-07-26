@@ -83,8 +83,8 @@ const OwnActivities = () => {
             }
           )
       ) : (
-        <div>
-          <h2 className="text-center font-quick -mb-8">
+        <div className="text-center">
+          <h2 className="font-quick -mb-8">
             ¡Aún no has agendado ninguna actividad! Comienza a {displayText}
           </h2>
         </div>

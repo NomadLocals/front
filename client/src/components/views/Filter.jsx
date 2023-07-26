@@ -52,12 +52,13 @@ const FilterActivities = () => {
                 Tipo de Actividad
               </option>
               <option value="all">Todas las actividades</option>
-              <option value="teatro, cine, shows">Teatro y shows</option>
+              <option value="teatro, cine, shows">Teatro, cine y bares</option>
               <option value="conciertos">Conciertos</option>
-              <option value="actividades outdoor">Actividades outdoor</option>
-              <option value="deportes de equipo">Deportes de equipo</option>
-              <option value="deportes">Deportes</option>
               <option value="restaurates y cafes">Gastronomía</option>
+              <option value="deportes">Deportes</option>
+              <option value="actividades outdoor">Al aire libre</option>
+
+              <option value="deportes de equipo">Deportes de equipo</option>
               <option value="otros">Otros</option>
             </select>
           </div>

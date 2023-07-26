@@ -160,7 +160,7 @@ export default function ActivityForm() {
               <input
                 name="name"
                 type="text"
-                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="p-3 mt-2 mb-4 w-full text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
                 placeholder="¿Cómo llamaras a tu actividad?"
                 value={activityData.name}
                 onChange={handleChange}
@@ -171,7 +171,7 @@ export default function ActivityForm() {
               <textarea
                 name="description"
                 type="text"
-                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded  border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="p-3 mt-2 mb-4 w-full  text-black font-quick rounded  border border-slate-200 focus:border-slate-600 focus:outline-none"
                 placeholder="Describe tu actividad: "
                 value={activityData.description}
                 onChange={handleChange}
@@ -186,7 +186,7 @@ export default function ActivityForm() {
                 name="eventDate"
                 min={currentDate}
                 onChange={handleChange}
-                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="p-3 mt-2 mb-4 w-full text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               />
               <label className="uppercase text-sm font-bold opacity-70">
                 Tipo de Actividad
@@ -195,25 +195,22 @@ export default function ActivityForm() {
                 value={activityData.activityType}
                 name="activityType"
                 onChange={handleChange}
-                className="w-full p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="w-full p-3 mt-2 mb-4 w-full text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               >
                 <option value="" defaultValue disabled>
                   Elige el tipo de actividad
                 </option>
-                <option value="Actividades dentro de casa">
-                  Actividades dentro de casa
+                <option value="teatro, cine, shows">
+                  Teatro, cine y bares
                 </option>
+
                 <option value="conciertos">Conciertos</option>
-                <option value="cine">Cine</option>
-                <option value="teatrp">Teatro</option>
-                <option value="bares">Bares</option>
-                <option value="museos">Museos</option>
-                <option value="estudio">Estudio</option>
+                <option value="restaurates y cafes">Restaurates y cafés</option>
                 <option value="deportes">Deportes</option>
-                <option value="restaurates y cafés">Restaurates y cafés</option>
-                <option value="videojuegos en linea">
-                  Videojuegos en linea
-                </option>
+                <option value="actividades outdoor">Al aire libre</option>
+
+                <option value="deportes de equipo">Deportes de equipo</option>
+
                 <option value="otros">Otros</option>
               </select>
 
@@ -326,7 +323,10 @@ export default function ActivityForm() {
                 <span className="text-blue bg-yellow"> {errors} </span>
               )}
               <div className="text-center mt-5 flex justify-center">
-                <button style={{width: "80px", margin:"0"}} className="paimon">
+                <button
+                  style={{ width: "80px", margin: "0" }}
+                  className="paimon"
+                >
                   Crear
                 </button>
               </div>
