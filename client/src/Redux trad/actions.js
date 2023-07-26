@@ -401,15 +401,15 @@ export const getPersonalMessages = (roomName) => {
     try {
       const {data} = await axios.get(`${URL}/chat/personal/${roomName}`)
 
-//       return dispatch({
-//         type: GET_HISTORIAL_CHAT_PERSONAL,
-//         payload: data,
-//       });
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
-// };
+      return dispatch({
+        type: GET_HISTORIAL_CHAT_PERSONAL,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 
 export const clearChatHistory = () => {
   return {

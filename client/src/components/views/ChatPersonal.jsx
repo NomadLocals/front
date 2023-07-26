@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import  io  from "socket.io-client";
 import { getPersonalMessages, clearChatPersonal } from "../../Redux trad/actions";
 
-// // const socket = io('http://localhost:3001');
+const socket = io('http://localhost:3001');
 // const socket = io("https://serverpredeploy.onrender.com");
 
 
@@ -38,7 +38,7 @@ const ChatPersonal = () => {
   const roomName = [user.id, others.id].sort().join('-');
   
   useEffect(() => {
-    dispatch(getPersonalMessages(data))
+    dispatch(getPersonalMessages(roomName))
     
     socket.on("chatPersonalMessage", (data) => {
       setChatMessages((prevMessages) => [...prevMessages, data]);
