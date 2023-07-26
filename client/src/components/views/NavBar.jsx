@@ -71,8 +71,8 @@ export default function NavBar() {
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 lg:text-xl">
-            <div className="relative flex h-16 items-center justify-around">
-              <Link to="/home" className="absolute md:relative">
+            <div className="relative flex h-16 items-center justify-around lg:justify-between">
+              <Link to="/home" className="absolute md:relative hover:scale-110 ease-out duration-300">
                 <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/2_kbqwgr.png" alt="icon" className="h-8 w-8 mr-2" />
               </Link>
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -86,9 +86,9 @@ export default function NavBar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex items-center justify-center">
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-20 ml-44 pl-44 justify-center items-center">
+                  <div className="flex space-x-20 flex-row justify-center items-center">
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
@@ -98,8 +98,8 @@ export default function NavBar() {
                         onMouseLeave={() => setShowName("")}
                       >
                         <div className="flex flex-col items-center ml-8">
-                          <item.icon className="w-6 h-6 text-grey" aria-hidden="true" />
-                          <div className={`absolute bottom-0 left-0 w-full text-center bg-black text-grey p-1 -my-4 opacity-0 transition-opacity duration-300 ${showName === item.name ? "opacity-100" : ""}`}>
+                          <item.icon className="w-6 h-6 lg:w-8 lg:h-8" aria-hidden="true" />
+                          <div className={`absolute rounded-xl font-quick bg-black text-grey -bottom-3 text-center font-extrabold text-xl text-black opacity-0 transition-opacity duration-300 ${showName === item.name ? "opacity-100" : ""}`}>
                             <span className="text-xs">{item.name}</span>
                           </div>
                         </div>

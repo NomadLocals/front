@@ -83,7 +83,7 @@ const Home = () => {
       </h1>
       <div className="flex flex-col items-center text-white content-around py-5 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey font-spartan text-lg md:flex-row md:justify-around">
       <Link to="/activity-form">
-        <button className="p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 md:w-56 lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-out duration-300">
+        <button className="p-2 rounded-lg bg-black shadow-lg border border-4 border-blue ring-1 ring-black ring-opacity-5 md:w-56 lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-out duration-300">
           Crea tu actividad
         </button>
         </Link>
@@ -97,7 +97,7 @@ const Home = () => {
         </h1>
         <SuggestionCarousel />
         <Link to="/activities">
-        <button className="p-2 rounded-lg bg-blue text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 font-spartan lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-out duration-300">
+        <button className="p-2 rounded-lg bg-black border border-4 border-blue text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 font-spartan lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-out duration-300">
           Encuentra una actividad
         </button>
         </Link>

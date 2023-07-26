@@ -8,7 +8,7 @@ const About = () => {
   return (
     <>
     <NavBar />
-    <div className="bg-grey 2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
+    <div className="bg-grey 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
         <div className="flex flex-col lg:flex-row justify-between gap-8">
             <div className="w-full lg:w-5/12 flex flex-col justify-center">
                 <h1 className="text-3xl lg:text-4xl font-spartan leading-9 text-gray-800 pb-4">Nuestra historia</h1>
@@ -34,26 +34,29 @@ const About = () => {
               <span className="font-quick">Our </span><span className="font-spartan">Team</span>
                 <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-4 shadow-lg rounded-md">
                     <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                        <img className="md:block hidden rounded" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356478/Nomadlocals/DeveloperTeam/top-developers_vxjc4t.jpg" alt="Developer Team" />
-                        <img className="md:hidden block rounded" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356478/Nomadlocals/DeveloperTeam/top-developers_vxjc4t.jpg" alt="Developer Team" />
                         <Link to="/developer">
-                        <button className="font-spartan text-xl leading-5 text-black mt-4 hover:underline">Developer team</button>
+                        <img className="md:block hidden rounded hover:scale-110 ease-out duration-300 h-[110px]" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356478/Nomadlocals/DeveloperTeam/top-developers_vxjc4t.jpg" alt="Developer Team" />
+                        <img className="md:hidden block rounded hover:scale-110 ease-out duration-300 " src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356478/Nomadlocals/DeveloperTeam/top-developers_vxjc4t.jpg" alt="Developer Team" />
+                        <button className="font-spartan text-xl leading-5 text-black mt-4">Developer team</button>
                         </Link>
                     </div>
                     <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                        <img className="md:block hidden rounded" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356445/Nomadlocals/DeveloperTeam/lluvia-ideas-personas-reunion-trabajo_23-2148985493_v34uqn.avif" alt="Marketing Team" />
-                        <img className="md:hidden block rounded" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356445/Nomadlocals/DeveloperTeam/lluvia-ideas-personas-reunion-trabajo_23-2148985493_v34uqn.avif" alt="Marketing Team" />
-                        <p className="font-spartan text-xl leading-5 text-black mt-4 hover:underline">Marketing team</p>
+                     <Link to="/developer">
+                        <img className="rounded hover:scale-110 ease-out duration-300 md:h-[110px] h-[150px]" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356445/Nomadlocals/DeveloperTeam/lluvia-ideas-personas-reunion-trabajo_23-2148985493_v34uqn.avif" alt="Marketing Team" />
+                        <p className="font-spartan text-xl leading-5 text-black mt-4">Marketing team</p>
+                      </Link>
                     </div>
                     <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                        <img className="md:block hidden rounded" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356414/Nomadlocals/DeveloperTeam/hombre-elegante-traje-mostrando-dos-companeras-papel_1262-811_dljvhb.avif" alt="Administrative Team" />
-                        <img className="md:hidden block rounded" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356414/Nomadlocals/DeveloperTeam/hombre-elegante-traje-mostrando-dos-companeras-papel_1262-811_dljvhb.avif" alt="Administrative Team" />
-                        <p className="font-spartan text-xl leading-5 text-black mt-4 hover:underline">Administrative team</p>
+                    <Link to="/developer">
+                        <img className="rounded hover:scale-110 ease-out duration-300 md:h-[110px] h-[150px]" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356414/Nomadlocals/DeveloperTeam/hombre-elegante-traje-mostrando-dos-companeras-papel_1262-811_dljvhb.avif" alt="Administrative Team" />
+                        <p className="font-spartan text-xl leading-5 text-black mt-4">Administrative team</p>
+                    </Link>
                     </div>
                     <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                        <img className="md:block hidden rounded" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356395/Nomadlocals/DeveloperTeam/gente-negocios-feliz-cerrando-trato_13339-12330_utajsf.avif" alt="Business relations Team" />
-                        <img className="md:hidden block rounded" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356395/Nomadlocals/DeveloperTeam/gente-negocios-feliz-cerrando-trato_13339-12330_utajsf.avif" alt="Business relations Team" />
-                        <p className="font-spartan text-xl leading-5 text-black mt-4 hover:underline">Business relations team</p>
+                    <Link to="/developer" className="border border-black p-1 rounded-lg">
+                        <img className="rounded hover:scale-110 ease-out duration-300 md:h-[110px] h-[150px]" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690356395/Nomadlocals/DeveloperTeam/gente-negocios-feliz-cerrando-trato_13339-12330_utajsf.avif" alt="Business relations Team" />
+                        <p className="font-spartan text-xl leading-5 text-black mt-4">Business relations team</p>
+                        </Link>
                     </div>
                 </div>
             </div>
