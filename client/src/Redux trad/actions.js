@@ -43,10 +43,10 @@ import {
   ADMIN_EMAIL_DELETE_EVENT,
 } from "./action-types.js";
 
-const URL = "http://localhost:3001"; //* servidor
+// const URL = "http://localhost:3001"; //* servidor
 // const URL = import.meta.env.SERVER_URL;
 // const URL = "https://serverpfnomadlocals.onrender.com";
-// const URL = "https://serverpredeploy.onrender.com";
+const URL = "https://serverpredeploy.onrender.com";
 
 const USER = "users";
 const EVENT = "events";

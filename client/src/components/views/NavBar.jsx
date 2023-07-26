@@ -71,7 +71,7 @@ export default function NavBar() {
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 lg:text-xl">
             <div className="relative flex h-16 items-center justify-around">
             <Link to="/home" className="absolute md:relative">
-                <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/2_kbqwgr.png" alt="icon" className="h-8 w-8 mr-2" />
+                <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/2_kbqwgr.png" alt="icon" className="h-8 w-8 mr-2 hover:scale-110 ease-out duration-300" />
               </Link>
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -91,7 +91,7 @@ export default function NavBar() {
                       <Link
                         key={item.name}
                         to={item.to}
-                        className="text-grey font-spartan"
+                        className="text-grey font-spartan hover:scale-110 ease-out duration-300"
                       >
                         {item.name}
                       </Link>

@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import  io  from "socket.io-client";
 import { getPersonalMessages } from "../../Redux trad/actions";
 
-const socket = io('http://localhost:3001');
+// const socket = io('http://localhost:3001');
+const socket = io("https://serverpredeploy.onrender.com");
 
 
 const ChatPersonal = () => {

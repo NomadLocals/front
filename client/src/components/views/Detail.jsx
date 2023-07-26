@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "./NavBar.jsx";
 import Chat from "./Chat.jsx"; // Nuevo componente de chat
@@ -12,10 +12,12 @@ import {
   clearChatHistory,
   deleteEvent,
 } from "../../Redux trad/actions.js";
+import swal from "sweetalert";
 
 const Detail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   //Estados globales
   const user = useSelector((state) => state.user);
@@ -84,10 +86,27 @@ const Detail = () => {
     joined();
   }, [Users]);
 
-  const handleDelete = (id) =>{
-    dispatch(deleteEvent(id))
-    console.log("evento eliminado")
-  }
+  const handleDelete = (id) => {
+    swal({
+      title: "Eliminar",
+      text: `¿Estas seguro que deseas eliminar al evento?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+      closeModel: false,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        await dispatch(deleteEvent(id)).then(
+          swal({
+            title: "Eliminando...",
+            timer: 2000,
+            buttons: false,
+          })
+        );
+        navigate("/home");
+      }
+    });
+  };
 
   //formateo de fecha:
   let formattedDate = "";
@@ -114,16 +133,22 @@ const Detail = () => {
           />
           <div>
             {isAdmin ? (
-              <div className="flex justify-center px-2 md:pr-5 xl:pr-10 mt-4">
+              <div className="flex justify-center px-2 md:py-5 xl:py-5 mt-4">
+                <Link to="/admin/allEvents">
                 <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  <Link to="/admin/allEvents">Panel Eventos</Link>
+                  Panel Eventos
                 </button>
+                </Link>
+                <Link to="/admin/eventsReports">
                 <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  <Link to="/admin/eventsReports">Panel Reportes</Link>
+                  Panel Reportes
                 </button>
+                </Link>
+                <Link to="/admin/eventsReviews">
                 <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  <Link to="/admin/eventsReviews">Panel Reviews</Link>
+                  Panel Reviews
                 </button>
+                </Link>
               </div>
             ) : (
               ""
@@ -220,27 +245,38 @@ const Detail = () => {
               )}
             </div>
             <div className="flex flex-row mt-5 justify-center">
-              <div>
-                {" "}
-                <Link to={"/reviewevent/" + id}>
-                  {" "}
-                  <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">
-                    Review
-                  </button>{" "}
-                </Link>{" "}
-              </div>
-              <div>
-                {" "}
-                <Link to={"/report/" + id}>
-                  {" "}
-                  <button className="rounded-lg bg-white p-1 font-quick m-2 border border-black-500">
-                    Report
-                  </button>{" "}
-                </Link>{" "}
-              </div>
-              <div>
-                {userId === activityDetail.userId ? <button onClick={()=>handleDelete()} style={{backgroundColor: "#a12d3a"}} className="rounded-lg p-1 text-white font-quick m-2 border border-black-500 text-sm md:text-base">Eliminar actividad</button> : ""}
-              </div>
+              {userId === activityDetail.userId ? (
+                <button
+                  onClick={() => handleDelete(id)}
+                  style={{ backgroundColor: "#a12d3a" }}
+                  className="rounded-lg p-1 text-white font-quick m-2 border border-black-500 text-sm md:text-base"
+                >
+                  Eliminar actividad
+                </button>
+              ) : (
+                <>
+                  <div>
+                    <Link to={"/reviewevent/" + id}>
+                      <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">
+                        Review
+                      </button>
+                    </Link>
+                  </div>
+                  <div>
+                    <Link to={"/report/" + id}>
+                      <button
+                        style={{
+                          backgroundColor: "#a12d3a",
+                          border: "1px solid black",
+                        }}
+                        className="rounded-lg text-white p-1 font-quick m-2 border border-black-500"
+                      >
+                        Report
+                      </button>
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

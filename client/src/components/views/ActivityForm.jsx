@@ -21,7 +21,6 @@ export default function ActivityForm() {
   const image = useSelector((state) => state.activityImage);
   const userId = user.id;
   const dispatch = useDispatch();
-  console.log(user);
 
   const [activityData, setActivityData] = useState({
     userId: userId,
@@ -77,7 +76,7 @@ export default function ActivityForm() {
       [property]: value,
     }));
   };
-  console.log(activityData);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -111,6 +110,7 @@ export default function ActivityForm() {
     if (isValid) {
       try {
         dispatch(postEvent(activityData, user.userName, user.email));
+        console.log(activityData)
         dispatch(getUserActivities(userId));
         setActivityData({
           userId: userId,
@@ -129,6 +129,7 @@ export default function ActivityForm() {
         setErrors("");
         dispatch(getActivities());
         navigate("/home");
+        
       } catch (error) {
         console.log(error);
         setErrors("Error al crear la actividad");
@@ -261,7 +262,7 @@ export default function ActivityForm() {
                 name="duration"
                 value={activityData.duration}
                 onChange={handleChange}
-                type="string"
+                type="time"
                 className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
               />
               <label className="uppercase text-sm font-bold opacity-70">
