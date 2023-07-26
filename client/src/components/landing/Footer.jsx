@@ -17,7 +17,7 @@ const Footer = () => {
       >
         <nav className="flex items-center text-center gap-4 max-w-max mx-auto">
           <a
-            href="https://www.instagram.com"
+            href="https://www.instagram.com/nomadlocals"
             target="_blank"
             rel="noopener noreferrer"
             className="block text-black p-2 md:p-3 bg-grey rounded-full"
@@ -25,7 +25,7 @@ const Footer = () => {
             <RiInstagramLine />
           </a>
           <a
-            href="https://www.facebook.com"
+            href="https://www.facebook.com/nomadlocals"
             target="_blank"
             rel="noopener noreferrer"
             className="block text-black p-2 md:p-3 bg-grey rounded-full"
@@ -33,7 +33,7 @@ const Footer = () => {
             <RiFacebookLine />
           </a>
           <a
-            href="https://www.twitter.com"
+            href="https://www.twitter.com/nomadlocals"
             target="_blank"
             rel="noopener noreferrer"
             className="block text-black p-2 md:p-3 bg-grey rounded-full"

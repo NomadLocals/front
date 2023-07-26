@@ -23,7 +23,7 @@ const navigation = [
   { icon: MdTravelExplore, name: "Explorar Actividades", to: "/activities" },
   { icon: MdOutlineCreate, name: "Crear Actividad", to: "/activity-form" },
   { icon: FaUserFriends, name: "Sobre Nosotros", to: "/about" },
-  { icon: AiOutlineLaptop, name: "Developer Team", to: "/developer" },
+  // { icon: AiOutlineLaptop, name: "Developer Team", to: "/developer" },
 ];
 
 function classNames(...classes) {
@@ -89,7 +89,7 @@ export default function NavBar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-14 ml-44 pl-40 justify-center items-center">
+                  <div className="flex space-x-20 ml-44 pl-44 justify-center items-center">
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
@@ -190,7 +190,7 @@ export default function NavBar() {
                           </Link>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
+                      {/* <Menu.Item>
                         {({ active }) => (
                           <a
                             href="/settings"
@@ -202,7 +202,7 @@ export default function NavBar() {
                             Configuración
                           </a>
                         )}
-                      </Menu.Item>
+                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <button

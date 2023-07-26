@@ -2,6 +2,7 @@ import Activity from "./Activity.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { getUserActivities } from "../../Redux trad/actions.js";
+import Footer from "./Footer.jsx";
 
 const Activities = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const Activities = () => {
   };
 
   return (
-    <div className="grid items-center py-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 ml-1 mr-1 min-h-[250px] md:min-h-[500px]">
+    <div className="items-center py-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 ml-1 mr-1 min-h-[250px] md:min-h-[500px]">
       {activities.length > 0 ? (
         activities
           .sort(function (a, b) {
@@ -74,8 +75,15 @@ const Activities = () => {
             }
           )
       ) : (
-        <div>
-          <h2 className="font-quick">No hay actividades cerca de tu zona</h2>
+        <div className="flex flex-col items-center justify-center min-h-[250px]">
+          <h2 className="font-quick text-center mb-4">
+            No hay actividades cerca de tu zona
+          </h2>
+          <img
+            src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690294493/Nomadlocals/Logos/404_-_1_vxyny3.png"
+            alt=" 404NotActivities"
+            className="w-88 md:w-60"
+          />
         </div>
       )}
       {renderedCards <= activities.length ? (

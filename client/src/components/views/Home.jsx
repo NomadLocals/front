@@ -55,7 +55,7 @@ const Home = () => {
         )}
       </div>
 
-      <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-3xl bg-grey">
+      <h1 className="font-spartan pt-1 text-lg font-bold text-center md:text-3xl bg-grey">
         Hoy vamos a:
       </h1>
       <div className="flex flex-col text-white content-around items-center py-5 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey font-spartan text-lg md:flex-row md:justify-around">
@@ -63,11 +63,11 @@ const Home = () => {
           <Link to="/activity-form">Crea tu actividad</Link>
         </button>
       </div>
-      <section className="pt-5 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
+      <section className="pt-1 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
         <OwnActivities />
       </section>
       <section className="flex flex-col items-center pt-5 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
-        <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-2xl bg-grey">
+        <h1 className="font-spartan pt-1 text-lg font-bold text-center md:text-2xl bg-grey">
           Proximamente:
         </h1>
         <SuggestionCarousel />
