@@ -40,15 +40,11 @@ export default function NavBar() {
 
   const handleSearch = () => {
     dispatch(setFilters({ name }));
-    dispatch(getFilteredActivities(filter));
-
+    dispatch(getFilteredActivities({name}));
     setName("");
     dispatch(resetFilters());
     navigate("/activities");
   };
-  useEffect(() => {
-    dispatch(getFilteredActivities(filter));
-  }, [filter, dispatch]);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {

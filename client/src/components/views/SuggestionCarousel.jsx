@@ -1,15 +1,18 @@
+import { useEffect } from "react";
 import Activity from "./Activity.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
+import { getActivities } from "../../Redux trad/actions.js";
 
 
 const SuggestionCarousel = () => {
   let activities = useSelector((state) => state.activities);
   const user = useSelector((state) => state.user);
   const userLocation = user.geolocation;
-
+  const userEv = user.Events;
+  
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radio de la Tierra en kilómetros
@@ -39,6 +42,8 @@ activities.forEach(function (act) {
         act.distancia = distancia;
        })
   //crear estado global alternativo para renderizar actividades totales.
+
+  const userEventsIds = new Set(userEv.map((event) => event.id));
   return (
     <div className="bg-grey grid grid-cols-1 sm:grid-cols-2 md:flex md:justify-center gap-4 ml-1 mr-1 mt-3 ">
       <Carousel
@@ -56,7 +61,7 @@ activities.forEach(function (act) {
       >
         {activities.length > 0 ? (
           activities
-            
+            .filter((act) => !userEventsIds.has(act.id))
             .sort(function (a, b) {
               return a.distancia - b.distancia;
             })
