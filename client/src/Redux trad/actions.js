@@ -42,6 +42,9 @@ import {
   ADMIN_RETRIEVE_USERS,
   CLEAN_DETAIL,
   ADMIN_EMAIL_DELETE_EVENT,
+  NEXT_PAGE,
+  PREVIOUS_PAGE,
+  RESET_PAGE,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001"; //* servidor
@@ -664,5 +667,21 @@ export const cleanDetail = () => {
   return {
     type: CLEAN_DETAIL,
     payload: {},
+  }}
+  
+export const nextPage = () => {
+  return {
+    type: NEXT_PAGE,
+  };
+};
+export const previousPage = () => {
+  return {
+    type: PREVIOUS_PAGE,
+  };
+};
+
+export const resetPage = () => {
+  return {
+    type: RESET_PAGE,
   };
 };
