@@ -3,8 +3,14 @@ import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import { useParams } from "react-router-dom";
 // const URL = "https://serverpfnomadlocals.onrender.com";
+// const URL = "https://serverpredeploy.onrender.com";
+
+// http://localhost:3001
 const socket = io("http://localhost:3001");
 // const socket = io("https://serverpredeploy.onrender.com");
+
+// const socket = io("https://serverpredeploy.onrender.com");
+
 
 const Chat = () => {
   const user = useSelector((state) => state.user);

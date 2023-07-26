@@ -38,6 +38,7 @@ import {
   ADMIN_GET_ACTIVITIES,
   GET_HISTORIAL_CHAT_EVENTS,
   GET_HISTORIAL_CHAT_PERSONAL,
+  CLEAN_CHAT_PERSONAL,
   CLEAN_CHAT_HISTORY,
   ADMIN_RETRIEVE_USERS,
   CLEAN_COMPONENT,
@@ -370,15 +371,12 @@ export const setSingOut = (userVacio) => {
   };
 };
 
-export const postEvent = (activityData, userName, email) => {
+export const postEvent = (activityData,userName,email) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${URL}/events`, activityData);
-      // await axios.post(`${URL}/send-mail/newEventCreated`, {
-      //   userName,
-      //   email,
-      //   activityData,
-      // });
+      console.log(response);
+      await axios.post(`${URL}/send-mail/newEventCreated`, {userName,email,activityData});
 
       return dispatch({
         type: POST_EVENT,
@@ -406,40 +404,32 @@ export const getHistorialMessages = (id) => {
   };
 };
 
-//! falta usar...dani
-// export const getPersonalMessages = () => {
-//   return async (dispatch) => {
-//     try {
-//       const {data} = await axios.get(`${URL}/chat/personal/`, data)
+export const getPersonalMessages = (roomName) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get(`${URL}/chat/personal/${roomName}`)
 
-//       return dispatch({
-//         type: GET_HISTORIAL_CHAT_PERSONAL,
-//         payload: data,
-//       })
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   }
-// }
-// export const getPersonalMessages = ({senderId, receiverId}) => {
-//   return async (dispatch) => {
-//     try {
-//       const {data} = await axios.get(`${URL}/chat/personal?senderId=${senderId}&receiverId=${receiverId}`);
-
-//       return dispatch({
-//         type: GET_HISTORIAL_CHAT_PERSONAL,
-//         payload: data,
-//       });
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
-// };
+      return dispatch({
+        type: GET_HISTORIAL_CHAT_PERSONAL,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 
 export const clearChatHistory = () => {
   return {
     type: CLEAN_CHAT_HISTORY,
     payload: "",
+  };
+};
+
+export const clearChatPersonal = () => {
+  return {
+    type: CLEAN_CHAT_PERSONAL,
+    payload: [],
   };
 };
 // //dani

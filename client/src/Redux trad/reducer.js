@@ -32,6 +32,7 @@ import {
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
   GET_HISTORIAL_CHAT_PERSONAL,
+  CLEAN_CHAT_PERSONAL,
   CLEAN_COMPONENT,
   NEXT_PAGE,
   PREVIOUS_PAGE,
@@ -216,8 +217,13 @@ const rootReducer = (state = initialState, action) => {
     case CLEAN_CHAT_HISTORY:
       return {
         ...state,
-        historialChat: action.payload,
-      };
+        historialChat: action.payload
+        }
+      case CLEAN_CHAT_PERSONAL:
+      return {
+        ...state,
+        historialChatPersonal: action.payload
+        }
     case GET_USERS:
       return {
         ...state,
