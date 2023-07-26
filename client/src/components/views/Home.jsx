@@ -39,7 +39,7 @@ const Home = () => {
 
       <section className="flex flex-row justify-between pt-2 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey">
         <span className="text-xs md:text-sm xl:text-xl bg-grey font-quick">
-          🚩 {userPlace}
+        📍 {userPlace}
         </span>
         <span className="text-xs md:text-sm xl:text-xl bg-grey font-quick">
           📆 {formattedDate}
@@ -56,9 +56,9 @@ const Home = () => {
       </div>
 
       <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-3xl bg-grey">
-        Tus Actividades:
+        Hoy vamos a:
       </h1>
-      <div className="flex flex-col text-white content-around py-5 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey font-spartan text-lg md:flex-row md:justify-around">
+      <div className="flex flex-col text-white content-around items-center py-5 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey font-spartan text-lg md:flex-row md:justify-around">
         <button className="p-2 rounded-lg bg-black shadow-lg ring-1 ring-black ring-opacity-5 md:w-56 lg:w-80 lg:h-20 lg:text-2xl">
           <Link to="/activity-form">Crea tu actividad</Link>
         </button>
@@ -68,7 +68,7 @@ const Home = () => {
       </section>
       <section className="flex flex-col items-center pt-5 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
         <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-2xl bg-grey">
-          Lo que se viene:
+          Proximamente:
         </h1>
         <SuggestionCarousel />
         <button className="p-2 rounded-lg bg-black text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 font-spartan lg:w-80 lg:h-20 lg:text-2xl">

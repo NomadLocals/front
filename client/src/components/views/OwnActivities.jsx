@@ -44,7 +44,7 @@ const OwnActivities = () => {
       ) : (
         <div>
           <h2 className="text-center font-quick">
-            Aun no has agendado ninguna actividad! Comienza a buscar..
+            ¡Aún no has agendado ninguna actividad! Comienza a buscar...
           </h2>
         </div>
       )}

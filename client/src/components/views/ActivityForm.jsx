@@ -162,8 +162,8 @@ export default function ActivityForm() {
               <input
                 name="name"
                 type="text"
-                className="p-3 mt-2 mb-4 w-full bg-black text-grey font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
-                placeholder="Nombre de la actividad"
+                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                placeholder="¿Cómo llamaras a tu actividad?"
                 value={activityData.name}
                 onChange={handleChange}
               />
@@ -173,8 +173,8 @@ export default function ActivityForm() {
               <textarea
                 name="description"
                 type="text"
-                className="p-3 mt-2 mb-4 w-full bg-black text-grey font-quick rounded  border border-slate-200 focus:border-slate-600 focus:outline-none"
-                placeholder="Descripción de la actividad"
+                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded  border border-slate-200 focus:border-slate-600 focus:outline-none"
+                placeholder="Describe tu actividad: "
                 value={activityData.description}
                 onChange={handleChange}
               ></textarea>
@@ -188,7 +188,7 @@ export default function ActivityForm() {
                 name="eventDate"
                 min={currentDate}
                 onChange={handleChange}
-                className="p-3 mt-2 mb-4 w-full bg-black text-grey font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               />
               <label className="uppercase text-sm font-bold opacity-70">
                 Tipo de Actividad
@@ -197,7 +197,7 @@ export default function ActivityForm() {
                 value={activityData.activityType}
                 name="activityType"
                 onChange={handleChange}
-                className="w-full p-3 mt-2 mb-4 w-full bg-black text-grey font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="w-full p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               >
                 <option value="" defaultValue disabled>
                   Elige el tipo de actividad
@@ -214,28 +214,17 @@ export default function ActivityForm() {
                 <option value="videojuegos en linea">Videojuegos en linea</option>
                 <option value="otros">Otros</option>
               </select>
-              {/* <label className="uppercase text-sm font-bold opacity-70">
-                Imagen
-              </label>
-              <input
-                placeholder="URL de imagen"
-                type="text"
-                name="image"
-                className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
-                value={activityData.image}
-                onChange={handleChange}
-              /> */}
 
               <label className="uppercase text-sm font-spartan opacity-70">
                 Duración
               </label>
               <input
-                placeholder="Ejemplo: 2:00"
+                placeholder="ej: 2:00"
                 name="duration"
                 value={activityData.duration}
                 onChange={handleChange}
                 type="string"
-                className="bg-black text-grey font-spartan p-3 mt-2 mb-4 w-full rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="bg-grey text-black font-spartan p-3 mt-2 mb-4 w-full rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               />
               <label className="uppercase text-sm font-spartan opacity-70">
                 Cantidad de personas
@@ -248,7 +237,7 @@ export default function ActivityForm() {
                 type="number"
                 min="0"
                 max="99"
-                className="bg-black text-grey font-quick p-3 mt-2 mb-4 w-full bg-slate-200 rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="bg-grey text-black font-quick p-3 mt-2 mb-4 w-full bg-slate-200 rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               />
               <label className="uppercase text-sm font-spartan opacity-70">
                 Presupuesto minimo
@@ -262,8 +251,20 @@ export default function ActivityForm() {
                 type="number"
                 min="0"
                 max="99999"
-                className="bg-black text-grey font-quick p-3 mt-2 mb-4 w-full rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="bg-grey text-black font-quick p-3 mt-2 mb-4 w-full rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               />
+
+              {/* <label className="uppercase text-sm font-bold opacity-70">
+                Imagen
+              </label>
+              <input
+                placeholder="URL de imagen"
+                type="text"
+                name="image"
+                className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
+                value={activityData.image}
+                onChange={handleChange}
+              /> */}
 
               <label className="uppercase text-sm font-spartan opacity-70">
                 Imagen
