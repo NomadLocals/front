@@ -80,12 +80,6 @@ const Chat = () => {
         >
           Enviar
         </button>
-        <button
-          className="bg-blue hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline ml-2"
-          // onClick={handleClearChat}
-        >
-          Limpiar Chat
-        </button>
       </div>
     </div>
   );

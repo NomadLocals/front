@@ -110,7 +110,6 @@ export default function ActivityForm() {
     if (isValid) {
       try {
         dispatch(postEvent(activityData, user.userName, user.email));
-        console.log(activityData);
         dispatch(getUserActivities(userId));
         setActivityData({
           userId: userId,
@@ -150,11 +149,9 @@ export default function ActivityForm() {
         <div className="w-full max-w-lg px-10 py-3 mx-auto rounded-lg shadow-xl">
           <div className="max-w-md mx-auto space-y-6">
             <form onSubmit={handleSubmit}>
-              <h2 className="text-2xl font-bold font-spartan">
-                Crea tu actividad
-              </h2>
+              <h2 className="text-2xl font-spartan">¡Crea tu actividad!</h2>
               <p className="my-4 opacity-70 font-quick">
-                Publica tu actividad para que la gente pueda sumarse.
+                Publica tu actividad para reunirte con la comunidad.
               </p>
               <hr className="my-6" />
               <label className="uppercase text-sm font-bold opacity-70">
@@ -163,23 +160,23 @@ export default function ActivityForm() {
               <input
                 name="name"
                 type="text"
-                className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
-                placeholder="Nombre de la actividad"
+                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+                placeholder="¿Cómo llamaras a tu actividad?"
                 value={activityData.name}
                 onChange={handleChange}
               />
-              <label className="uppercase text-sm font-bold opacity-70">
+              <label className="uppercase text-sm font-spartan opacity-70">
                 Descripción
               </label>
               <textarea
                 name="description"
                 type="text"
-                className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded  border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
-                placeholder="Leve descripción de la actividad"
+                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded  border border-slate-200 focus:border-slate-600 focus:outline-none"
+                placeholder="Describe tu actividad: "
                 value={activityData.description}
                 onChange={handleChange}
               ></textarea>
-              <label className="uppercase text-sm font-bold opacity-70">
+              <label className="uppercase text-sm font-spartan opacity-70">
                 Fecha
               </label>
               <input
@@ -189,7 +186,7 @@ export default function ActivityForm() {
                 name="eventDate"
                 min={currentDate}
                 onChange={handleChange}
-                className="p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               />
               <label className="uppercase text-sm font-bold opacity-70">
                 Tipo de Actividad
@@ -198,19 +195,67 @@ export default function ActivityForm() {
                 value={activityData.activityType}
                 name="activityType"
                 onChange={handleChange}
-                className="w-full p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none"
+                className="w-full p-3 mt-2 mb-4 w-full bg-grey text-black font-quick rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
               >
                 <option value="" defaultValue disabled>
                   Elige el tipo de actividad
                 </option>
-                <option value="teatro, cine, shows">teatro, cine, shows</option>
-                <option value="conciertos">conciertos</option>
-                <option value="actividades outdoor">actividades outdoor</option>
-                <option value="deportes de equipo">deportes de equipo</option>
-                <option value="deportes">deportes</option>
-                <option value="restaurates y cafes">restaurates y cafes</option>
-                <option value="otros">otros</option>
+                <option value="Actividades dentro de casa">
+                  Actividades dentro de casa
+                </option>
+                <option value="conciertos">Conciertos</option>
+                <option value="cine">Cine</option>
+                <option value="teatrp">Teatro</option>
+                <option value="bares">Bares</option>
+                <option value="museos">Museos</option>
+                <option value="estudio">Estudio</option>
+                <option value="deportes">Deportes</option>
+                <option value="restaurates y cafés">Restaurates y cafés</option>
+                <option value="videojuegos en linea">
+                  Videojuegos en linea
+                </option>
+                <option value="otros">Otros</option>
               </select>
+
+              {/* <label className="uppercase text-sm font-spartan opacity-70">
+                Duración
+              </label>
+              <input
+                placeholder="ej: 2:00"
+                name="duration"
+                value={activityData.duration}
+                onChange={handleChange}
+                type="string"
+                className="bg-grey text-black font-spartan p-3 mt-2 mb-4 w-full rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+              />
+              <label className="uppercase text-sm font-spartan opacity-70">
+                Cantidad de personas
+              </label>
+              <input
+                placeholder="0"
+                name="minSizePeople"
+                value={activityData.minSizePeople}
+                onChange={handleChange}
+                type="number"
+                min="0"
+                max="99"
+                className="bg-grey text-black font-quick p-3 mt-2 mb-4 w-full bg-slate-200 rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+              />
+              <label className="uppercase text-sm font-spartan opacity-70">
+                Presupuesto minimo
+              </label>
+
+              <input
+                placeholder="0"
+                name="minCost"
+                value={activityData.minCost}
+                onChange={handleChange}
+                type="number"
+                min="0"
+                max="99999"
+                className="bg-grey text-black font-quick p-3 mt-2 mb-4 w-full rounded border border-slate-200 focus:border-slate-600 focus:outline-none"
+              /> */}
+
               {/* <label className="uppercase text-sm font-bold opacity-70">
                 Imagen
               </label>
@@ -271,7 +316,7 @@ export default function ActivityForm() {
                 }
               />
 
-              <label className="uppercase text-sm font-bold opacity-70">
+              <label className="uppercase text-sm font-spartan opacity-70">
                 Lugar
               </label>
               <div>
@@ -281,7 +326,9 @@ export default function ActivityForm() {
                 <span className="text-blue bg-yellow"> {errors} </span>
               )}
               <div className="text-center mt-2">
-                <button className="paimon my-4">Crear</button>
+                <button className="py-3 px-6 my-2 text-white font-medium rounded bg-black cursor-pointer ease-in-out duration-300">
+                  Crear
+                </button>
               </div>
             </form>
           </div>

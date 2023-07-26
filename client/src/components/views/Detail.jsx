@@ -11,6 +11,7 @@ import {
   getHistorialMessages,
   clearChatHistory,
   deleteEvent,
+  cleanDetail,
 } from "../../Redux trad/actions.js";
 import swal from "sweetalert";
 
@@ -42,23 +43,10 @@ const Detail = () => {
     place,
   } = activityDetail;
 
-  //----------Formateo de fecha------------
-
-  let formattedDate = "";
-  let formattedTime = "";
-  if (activityDetail.eventDate) {
-    const parts = eventDate.split("T")[0].split("-");
-    const date = new Date(activityDetail.eventDate);
-    formattedTime = date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
-  }
-
   useEffect(() => {
     dispatch(getActivityDetail(id));
     setJoinedUsers(Users);
+    dispatch(cleanDetail());
   }, [id, joinedUsers, showChat]);
 
   //handlers para sumarse o salir de la actividad
@@ -79,9 +67,7 @@ const Detail = () => {
     setShowUsers(false);
     // Crear una copia del estado actual de joinedUsers
     try {
-      dispatch(
-        unsuscribeEvent(id, userId, formattedDate, place, user.email, name)
-      );
+      dispatch(unsuscribeEvent(id, userId));
       setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
       dispatch(clearChatHistory());
     } catch (error) {
@@ -126,6 +112,19 @@ const Detail = () => {
     });
   };
 
+  //formateo de fecha:
+  let formattedDate = "";
+  let formattedTime = "";
+  if (activityDetail.eventDate) {
+    const parts = eventDate.split("T")[0].split("-");
+    const date = new Date(activityDetail.eventDate);
+    formattedTime = date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+  }
+
   return (
     <>
       <Navbar />
@@ -140,19 +139,19 @@ const Detail = () => {
             {isAdmin ? (
               <div className="flex justify-center px-2 md:py-5 xl:py-5 mt-4">
                 <Link to="/admin/allEvents">
-                  <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                    Panel Eventos
-                  </button>
+                <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                  Panel Eventos
+                </button>
                 </Link>
                 <Link to="/admin/eventsReports">
-                  <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                    Panel Reportes
-                  </button>
+                <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                  Panel Reportes
+                </button>
                 </Link>
                 <Link to="/admin/eventsReviews">
-                  <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                    Panel Reviews
-                  </button>
+                <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                  Panel Reviews
+                </button>
                 </Link>
               </div>
             ) : (
@@ -242,7 +241,7 @@ const Detail = () => {
                 </button>
               ) : (
                 <button
-                  className="mt-2 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                  className="mt-5 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   onClick={handleLeaveGroup}
                 >
                   Salir de la actividad

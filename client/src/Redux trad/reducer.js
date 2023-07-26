@@ -32,6 +32,7 @@ import {
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
   GET_HISTORIAL_CHAT_PERSONAL,
+  CLEAN_DETAIL,
   NEXT_PAGE,
   PREVIOUS_PAGE,
   RESET_PAGE,
@@ -252,6 +253,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allActivities: action.payload,
       };
+    case CLEAN_DETAIL:
+      return{
+        ...state,
+        eventById: action.payload,
+        others: action.payload,
+      }  
     case NEXT_PAGE:
       let aux = state.firstPage;
       if (state.firstPage + 10 >= state.allActivities.length)
