@@ -80,11 +80,11 @@ const OthersDetail = () => {
               </Link>{" "}
             </div>
           </div>
-          {/* <Link to="/chat/personal">
+          <Link to="/chat/personal">
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-5">
               Iniciar Chat Personal
             </button>
-          </Link> */}
+          </Link>
         </div>
       </div>
     </>

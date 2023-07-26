@@ -395,10 +395,10 @@ export const getHistorialMessages = (id) => {
 //     }
 //   }
 // }
-export const getPersonalMessages = ({senderId, receiverId}) => {
+export const getPersonalMessages = (roomName) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(`${URL}/chat/personal?senderId=${senderId}&receiverId=${receiverId}`);
+      const {data} = await axios.get(`${URL}/chat/personal/${roomName}`)
 
       return dispatch({
         type: GET_HISTORIAL_CHAT_PERSONAL,

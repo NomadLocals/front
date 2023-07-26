@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import  io  from "socket.io-client";
-import { getPersonalMessages } from "../../Redux trad/actions";
+import { getPersonalMessages, clearChatHistory } from "../../Redux trad/actions";
 
 const socket = io('http://localhost:3001');
 
@@ -13,17 +13,15 @@ const ChatPersonal = () => {
   const others = useSelector((state) => state.others);
   const user = useSelector((state) => state.user);
   const historialChatPersonal = useSelector((state) => state.historialChatPersonal);
+  // const cleanState = useSelector((state) => state.)
   console.log(user)
   const dispatch = useDispatch()
   //* Estados locales para funcionalidad de Chat...
   const [newMessage, setNewMessage] = useState("") //? Para cada mensaje que se envie..
   
   const [isConnected, setIsConnected] = useState(false); //? para conexion
-  const [chatMessages, setChatMessages] = useState(historialChatPersonal) //? para historial..
-
-  
-
-
+  // const [chatMessages, setChatMessages] = useState(historialChatPersonal) //? para historial..
+  // const [historialChatPersonal, setHistorialChatPersonal] = useState([])
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
   const handleSendMessage = () => {
@@ -36,36 +34,31 @@ const ChatPersonal = () => {
     });
     setNewMessage("");
   };
-
-
-
-  const data = {
-    senderId : user.id,
-    receiverId: others.id,
-  }
-
+  const roomName = [user.id, others.id].sort().join('-');
+  
   useEffect(() => {
-    dispatch(getPersonalMessages(data))
+    dispatch(clearChatHistory());
+    dispatch(getPersonalMessages(roomName))
+    socket.emit('startPersonalChat', roomName);
     
-    socket.emit('startPersonalChat', {
-      senderId: user.id,
-      receiverId: others.id,
-    })
-    socket.on("joinPersonalChat", others.id);
+    socket.on("chatPersonalMessage", (data) => {
+      setHistorialChatPersonal((prevMessages) => [...prevMessages, data]);
+    });
+
+    socket.on('getPersonalMessage', (data) => {
+      setHistorialChatPersonal(data);
+    });
+
+
+    socket.on("joinPersonalChat", roomName);
 
     socket.on("startPersonalChat",()=>{
       setIsConnected (true)
     });
 
     
-    socket.on("chatPersonalMessage", (data) => {
-      setChatMessages((prevMessages) => [...prevMessages, data]);
-    });
 
       
-    socket.on('getPersonalMessage', (data) => {
-    setChatMessages((prevMessages) => [...prevMessages, data])
-    })
     
     return () => {
     socket.off("startPersonalChat");
@@ -84,9 +77,9 @@ const ChatPersonal = () => {
             Chat personal con {others.userName}
           </h4>
           <div className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll">
-            {chatMessages?.map((message, index) => (
+            {historialChatPersonal?.map((message, index) => (
               <div key={index} className="mb-2">
-                <span className="font-semibold">{message.sender.userName}: </span>
+                <span className="font-semibold">{message.senderUserName}: </span>
                 <span>{message.message}</span>
               </div>
             ))}
