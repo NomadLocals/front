@@ -67,7 +67,7 @@ export default function NavBar() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-black font-quick relative">
+    <Disclosure as="nav" className="bg-black font-quick relative border-b-2 border-blue">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 lg:text-xl">
@@ -98,8 +98,8 @@ export default function NavBar() {
                         onMouseLeave={() => setShowName("")}
                       >
                         <div className="flex flex-col items-center ml-8">
-                          <item.icon className="w-6 h-6 lg:w-8 lg:h-8" aria-hidden="true" />
-                          <div className={`absolute rounded-xl font-quick bg-black text-grey -bottom-3 text-center font-extrabold text-xl text-black opacity-0 transition-opacity duration-300 ${showName === item.name ? "opacity-100" : ""}`}>
+                          <item.icon className="w-6 h-6 lg:w-10 lg:h-10" aria-hidden="true" />
+                          <div className={`absolute rounded-xl font-quick bg-black text-grey -bottom-3 text-center font-extrabold text-xl text-black opacity-0 hover:scale-120 ease-out transition-opacity duration-300 ${showName === item.name ? "opacity-100" : ""}`}>
                             <span className="text-xs">{item.name}</span>
                           </div>
                         </div>
@@ -175,7 +175,7 @@ export default function NavBar() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-black py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute border border-blue right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-black py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
                           <Link

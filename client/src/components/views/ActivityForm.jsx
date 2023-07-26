@@ -146,7 +146,7 @@ export default function ActivityForm() {
     <>
       <NavBar />
       <div className="flex items-center justify-center min-h-screen from-teal-100 bg-grey font-quick">
-        <div className="w-full max-w-lg px-10 py-3 mx-auto rounded-lg shadow-xl">
+        <div className="w-full max-w-lg px-10 py-8 my-10 mx-auto rounded-lg shadow-xl">
           <div className="max-w-md mx-auto space-y-6">
             <form onSubmit={handleSubmit}>
               <h2 className="text-2xl font-spartan">¡Crea tu actividad!</h2>
@@ -325,8 +325,8 @@ export default function ActivityForm() {
               {errors && (
                 <span className="text-blue bg-yellow"> {errors} </span>
               )}
-              <div className="text-center mt-2">
-                <button className="py-3 px-6 my-2 text-white font-medium rounded bg-black cursor-pointer ease-in-out duration-300">
+              <div className="text-center mt-5 flex justify-center">
+                <button style={{width: "80px", margin:"0"}} className="paimon">
                   Crear
                 </button>
               </div>
