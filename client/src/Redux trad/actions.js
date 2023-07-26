@@ -361,11 +361,11 @@ export const postEvent = (activityData, userName, email) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${URL}/events`, activityData);
-      await axios.post(`${URL}/send-mail/newEventCreated`, {
-        userName,
-        email,
-        activityData,
-      });
+      // await axios.post(`${URL}/send-mail/newEventCreated`, {
+      //   userName,
+      //   email,
+      //   activityData,
+      // });
 
       return dispatch({
         type: POST_EVENT,
@@ -408,22 +408,20 @@ export const getHistorialMessages = (id) => {
 //     }
 //   }
 // }
-export const getPersonalMessages = ({ senderId, receiverId }) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.get(
-        `${URL}/chat/personal?senderId=${senderId}&receiverId=${receiverId}`
-      );
+// export const getPersonalMessages = ({senderId, receiverId}) => {
+//   return async (dispatch) => {
+//     try {
+//       const {data} = await axios.get(`${URL}/chat/personal?senderId=${senderId}&receiverId=${receiverId}`);
 
-      return dispatch({
-        type: GET_HISTORIAL_CHAT_PERSONAL,
-        payload: data,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-};
+//       return dispatch({
+//         type: GET_HISTORIAL_CHAT_PERSONAL,
+//         payload: data,
+//       });
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   };
+// };
 
 export const clearChatHistory = () => {
   return {
