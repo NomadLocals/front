@@ -139,17 +139,17 @@ const Detail = () => {
             {isAdmin ? (
               <div className="flex justify-center px-2 md:py-5 xl:py-5 mt-4">
                 <Link to="/admin/allEvents">
-                <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                <button className="border-2 border-black text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
                   Panel Eventos
                 </button>
                 </Link>
                 <Link to="/admin/eventsReports">
-                <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                <button className="border-2 border-black text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
                   Panel Reportes
                 </button>
                 </Link>
                 <Link to="/admin/eventsReviews">
-                <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                <button className="border-2 border-black text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
                   Panel Reviews
                 </button>
                 </Link>
@@ -177,12 +177,12 @@ const Detail = () => {
                   Duración: <span className="font-semibold">{duration}hs.</span>
                 </p>
               </div>
-              <div className="w-1/2 text-center flex flex-col justify-center">
+              <div className="w-1/2 text-center">
                 <span>
                   {minCost === 0 ? (
-                    <p>Coste: Free</p>
+                    <p>Coste: <span className="font-semibold">Free</span></p>
                   ) : (
-                    <p>Coste: ${minCost}</p>
+                    <p>Coste: <span className="font-semibold">${minCost}</span></p>
                   )}
                 </span>
                 <p>
@@ -234,14 +234,14 @@ const Detail = () => {
             <div className="flex justify-center">
               {!showChat ? (
                 <button
-                  className="mt-2 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                  className="mt-2 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm  placeholder:text-gray-400 border-black"
                   onClick={handleJoinGroup}
                 >
                   Entrar a la actividad
                 </button>
               ) : (
                 <button
-                  className="mt-5 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                  className="mt-5 bg-blue border-2 border-black text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm placeholder:text-gray-400"
                   onClick={handleLeaveGroup}
                 >
                   Salir de la actividad
@@ -257,11 +257,11 @@ const Detail = () => {
                 >
                   Eliminar actividad
                 </button>
-              ) : (
+              ) : (showUsers &&
                 <>
                   <div>
                     <Link to={"/reviewevent/" + id}>
-                      <button className="rounded-lg bg-yellow p-1 font-quick m-2 border border-black-500">
+                      <button className="rounded-lg bg-black p-1 text-yellow m-2 border-2 border-yellow">
                         Review
                       </button>
                     </Link>
@@ -270,10 +270,10 @@ const Detail = () => {
                     <Link to={"/report/" + id}>
                       <button
                         style={{
-                          backgroundColor: "#a12d3a",
-                          border: "1px solid black",
+                          color: "red",
+                          border: "1px solid red",
                         }}
-                        className="rounded-lg text-white p-1 font-quick m-2 border border-black-500"
+                        className="rounded-lg bg-black p-1 m-2"
                       >
                         Report
                       </button>
