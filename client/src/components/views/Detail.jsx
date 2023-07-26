@@ -11,6 +11,7 @@ import {
   getHistorialMessages,
   clearChatHistory,
   deleteEvent,
+  cleanDetail,
 } from "../../Redux trad/actions.js";
 import swal from "sweetalert";
 
@@ -45,6 +46,7 @@ const Detail = () => {
   useEffect(() => {
     dispatch(getActivityDetail(id));
     setJoinedUsers(Users);
+    dispatch(cleanDetail())
   }, [id, joinedUsers, showChat]);
 
   //handlers para sumarse o salir de la actividad

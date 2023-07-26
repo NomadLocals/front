@@ -31,7 +31,8 @@ import {
   ADMIN_GET_ACTIVITIES,
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
-  GET_HISTORIAL_CHAT_PERSONAL
+  GET_HISTORIAL_CHAT_PERSONAL,
+  CLEAN_DETAIL
 } from "./action-types.js";
 
 const initialState = {
@@ -243,6 +244,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allActivities: action.payload,
       };
+    case CLEAN_DETAIL:
+      return{
+        ...state,
+        eventById: action.payload,
+      }  
     default:
       return state;
   }

@@ -28,6 +28,7 @@ export const GET_HISTORIAL_CHAT_EVENTS = "GET_HISTORIAL_CHAT_EVENTS";
 export const CLEAN_CHAT_HISTORY = "CLEAN_CHAT_HISTORY";
 export const POST_IMAGES = "POST_IMAGES";
 export const DELETE_IMAGE = "DELETE_IMAGE";
+export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
 //Rutas de Administrador
 export const GET_USERS = "GET_USERS";
