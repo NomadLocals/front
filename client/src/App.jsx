@@ -18,7 +18,7 @@ import Detail from "./components/views/Detail.jsx";
 import FilterActivities from "./components/views/Filter.jsx";
 import Landing from "./components/views/Landing.jsx";
 import Chat from "./components/views/Chat.jsx";
-// import ChatPersonal from "./components/views/ChatPersonal.jsx";
+import ChatPersonal from "./components/views/ChatPersonal.jsx";
 import About from "./components/views/About.jsx";
 import Settings from "./components/views/Settings.jsx";
 import Loading from "./components/views/Loading.jsx";
@@ -27,6 +27,7 @@ import UserReview from "./components/views/ReviewUser.jsx";
 import OthersDetail from "./components/views/OthersDetail.jsx";
 import Report from "./components/views/Report.jsx";
 import ReportUser from "./components/views/ReportUser.jsx";
+import NotFound from "./components/views/NotFound";
 //Componentes administrador:
 import AllUsers from "./components/AdminComponents/AllUsers.jsx";
 import AdminHome from "./components/AdminComponents/AdminHome.jsx";
@@ -63,7 +64,7 @@ function App() {
         <Route path="/activity-form" element={<ActivityForm />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/others/:id" element={<OthersDetail />} />
-        {/* <Route path="/chat/Personal" element={<ChatPersonal />} /> */}
+        <Route path="/chat/Personal" element={<ChatPersonal />} />
         <Route path="/activities/detail/:id/chat" element={<Chat />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings />} />
@@ -84,6 +85,7 @@ function App() {
           path="/admin/events/allReviews/:id"
           element={<EventReviewsAdmin />}
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

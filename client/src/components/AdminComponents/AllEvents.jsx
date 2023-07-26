@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
-import {
-  deleteEvent,
-  editUser,
-  adminGetActivities,
-} from "../../Redux trad/actions.js";
+import React, { useEffect } from "react";
+import { deleteEvent, adminGetActivities } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
 
 import Remove from "../../iconos/Remove.jsx";
-import Edit from "../../iconos/Edit.jsx";
 import View from "../../iconos/View.jsx";
 
 import swal from "sweetalert";
@@ -34,14 +29,29 @@ function AllEvents() {
 
   const handleDelete = async (id, deletedAt) => {
     if (deletedAt === null) {
-      if (
-        window.confirm(
-          "¿Estás seguro que quieres eliminar este evento? Si lo eliminas, no podrás deshacer esta acción."
-        ) === true
-      ) {
-        dispatch(deleteEvent(id));
-        swal("Evento eliminado correctamente.");
-      }
+      {
+        swal({
+          title: "Eliminar",
+          text: `¿Estas seguro que deseas eliminar al evento?`,
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          dangerMode: true,
+          buttons: true,          
+          closeOnConfirm: false,
+          closeOnCancel: false,
+        })
+        .then(async(willDelete) => {
+          if (willDelete) {
+            await dispatch(deleteEvent(id))
+            .then(swal({
+              title: "Eliminando...",
+              timer: 2000,
+              buttons: false,
+            }))
+            location.reload(true);
+          }
+        })}
     } else {
       swal("El evento ya se encuentra eliminado");
     }
@@ -66,7 +76,7 @@ function AllEvents() {
       <NavBar />
 
       {adminState ? (
-        <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
+        <div className="p-4 rounded-lg bg-gray-100 shadow-md bg-grey">
           <Link to="/admin">
             <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               Atrás

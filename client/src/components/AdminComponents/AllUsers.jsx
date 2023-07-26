@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getAllUsers, deleteUser, editUser } from "../../Redux trad/actions.js";
+import React, { useEffect } from "react";
+import {
+  getAllUsers,
+  deleteUser,
+  editUser,
+  adminRetrieveUsers,
+} from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
@@ -15,20 +20,19 @@ function AllUsers() {
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
   const navigate = useNavigate();
-  console.log(allUsers);
+  console.log(userActu);
 
   useEffect(() => {
     dispatch(getAllUsers(userActu.id));
   }, []);
+
   useEffect(() => {
     if (!adminState) {
       navigate("/home");
     }
   }, [adminState]);
 
-  const handleEdit = (e, userId, userEmail, userAdmin) => {
-    // e.preventDefault();
-
+  const handleEdit = (userId, userEmail, userAdmin) => {
     if (userActu.id === userId) {
       swal("No puedes editarte a ti mismo!");
     } else {
@@ -36,50 +40,105 @@ function AllUsers() {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
         if (!userAdmin) {
-          if (
-            window.confirm(
-              "¿Estás seguro que quieres hacer ADMINISTRADOR a este usuario?"
-            ) === true
-          ) {
-            dispatch(editUser(userId, { admin: true }));
-            swal(
-              `Ahora el usuario ${userEmail} tiene permisos de administrador!`
-            );
-          }
+          swal({
+            title: "Crear administrador",
+            text: `¿Estas seguro que deseas que el usuario ${userEmail} sea administrador?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#008000",
+            buttons: true,          
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          })
+          .then(willDelete => {
+            if (willDelete) {
+              dispatch(editUser(userId, { admin: true }))
+              .then(swal({
+                title: "Creando administrador...",
+                timer: 2000,
+              }))
+              location.reload(true)
+            }
+          })
         } else {
-          if (
-            window.confirm(
-              "¿Estás seguro que quieres sacar los permisos de ADMINISTRADOR a este usuario?"
-            ) === true
-          ) {
-            dispatch(editUser(userId, { admin: false }));
-
-            swal(
-              `Ahora el usuario ${userEmail} ya no tiene permisos de administrador!`
-            );
-          }
+          swal({
+            title: "Quitar administrador",
+            text: `¿Estas seguro que deseas que el usuario ${userEmail} ya no sea administrador?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            dangerMode: true,
+            buttons: true,          
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          })
+          .then(async(willDelete) => {
+            if (willDelete) {
+              await dispatch(editUser(userId, { admin: false }))
+              .then(swal({
+                title: "Quitando administrador...",
+                timer: 2000,
+              }))
+              location.reload(true)
+            }
+          })
         }
       }
     }
   };
 
-  const handleDelete = async (e, id, userEmail) => {
-    e.preventDefault();
-
+  const handleDelete = async (id, userEmail, deleted, adminId) => {
     if (userActu.id === id) {
       swal("No puedes eliminarte a ti mismo");
     } else {
       if (userEmail === "nomad.locals01@gmail.com") {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
-        if (
-          window.confirm(
-            "¿Estás seguro que quieres eliminar este usuario? Si lo eliminas, no podrás deshacer esta acción."
-          ) === true
-        ) {
-          dispatch(deleteUser(id));
-          swal("Usuario eliminado correctamente.");
-        }
+        if (!deleted){
+        swal({
+          title: "Eliminar",
+          text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          dangerMode: true,
+          buttons: true,          
+          closeOnConfirm: false,
+          closeOnCancel: false,
+        })
+        .then(async(willDelete) => {
+          if (willDelete) {
+            await dispatch(deleteUser(id))
+            .then(swal({
+              title: "Eliminando...",
+              timer: 2000,
+            }))
+            location.reload(true);
+          }
+        })}
+          else {
+            swal({
+              title: "Reestablecer",
+              text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              buttons: true,          
+              closeOnConfirm: false,
+              closeOnCancel: false,
+            })
+            .then(async(willDelete) => {
+              if (willDelete) {
+                await dispatch(adminRetrieveUsers(id, adminId))
+                .then(swal({
+                  title: "Reestableciendo...",
+                  timer: 2000,
+                }))
+                window.location.reload()
+              }
+            })
+            
+          }
       }
     }
   };
@@ -90,12 +149,13 @@ function AllUsers() {
     navigate(`/admin/users/reviews/${id}`, { state: { reviews, user } });
   };
 
+
   return (
     <div>
       <NavBar />
 
       {adminState ? (
-        <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
+        <div className="p-4 rounded-lg bg-gray-100 shadow-md bg-grey min-h-screen">
           <Link to="/admin">
             <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
               Atrás
@@ -169,7 +229,14 @@ function AllUsers() {
                         </td>
                         <td>
                           <button
-                            onClick={(e) => handleDelete(e, u.id, u.email)}
+                            onClick={() =>
+                              handleDelete(
+                                u.id,
+                                u.email,
+                                u.deletedAt,
+                                userActu.id
+                              )
+                            }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
                             title="Eliminar usuario"
                           >
@@ -179,9 +246,7 @@ function AllUsers() {
                         <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
                         <td>
                           <button
-                            onClick={(e) =>
-                              handleEdit(e, u.id, u.email, u.admin)
-                            }
+                            onClick={() => handleEdit(u.id, u.email, u.admin)}
                             className="text-blue-500 hover:text-blue-700 focus:outline-none"
                             title="Editar permisos de administrador"
                           >

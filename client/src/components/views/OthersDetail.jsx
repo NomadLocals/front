@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
-import ChatPersonal from "./ChatPersonal.jsx";
+// import ChatPersonal from "./ChatPersonal.jsx";
 import { getOthersById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";

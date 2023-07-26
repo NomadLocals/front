@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from "react";
-import {
-  getEventsReportsAdmin,
-  deleteEvent,
-} from "../../Redux trad/actions.js";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
-import swal from "sweetalert";
+
 import { useLocation } from "react-router-dom";
 
 function EventReviewsAdmin() {
   const location = useLocation();
   const reviewsUser = location.state ? location.state.reviews : null;
   const user = location.state ? location.state.user : null;
-  console.log(reviewsUser);
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
 
@@ -27,7 +23,6 @@ function EventReviewsAdmin() {
     const suma = scores.reduce((total, num) => total + num, 0);
     return suma / scores.length;
   };
-  console.log(average(reviewsUser));
 
   useEffect(() => {
     if (!adminState) {
@@ -40,7 +35,7 @@ function EventReviewsAdmin() {
       <NavBar />
 
       {adminState ? (
-        <div className="mt-3 p-2 rounded-lg bg-gray-100 shadow-md">
+        <div className="p-4 rounded-lg bg-grey min-h-screen shadow-md">
           <div className="flex justify-between items-center">
             <Link to="/admin/allEvents">
               <button className=" mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md text-white font-bold">
