@@ -18,16 +18,16 @@ const Loading = () => {
   }, [user]);
 
   useEffect(() => {
-    console.log(id)
+    console.log(id);
     const checkUser = async () => {
       if (id) {
-        dispatch(checkUserById(id))
-        dispatch(getUserById(id))
+        dispatch(checkUserById(id));
+        dispatch(getUserById(id));
       }
     };
     checkUser();
   }, [id, dispatch]);
-  
+
   useEffect(() => {
     if (initSesion !== "") {
       if (initSesion === true) {

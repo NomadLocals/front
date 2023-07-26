@@ -66,13 +66,6 @@ const Detail = () => {
     setShowChat(true);
     setShowUsers(true);
     try {
-      console.log(id);
-      console.log(userId);
-      console.log(formattedDate);
-      console.log(place);
-      console.log(user.email);
-      console.log(name);
-
       dispatch(
         suscribeEvent(id, userId, formattedDate, place, user.email, name)
       );

@@ -41,6 +41,9 @@ import {
   CLEAN_CHAT_HISTORY,
   ADMIN_RETRIEVE_USERS,
   ADMIN_EMAIL_DELETE_EVENT,
+  NEXT_PAGE,
+  PREVIOUS_PAGE,
+  RESET_PAGE,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001"; //* servidor
@@ -657,5 +660,21 @@ export const adminRetrieveUsers = (id, adminId, email) => {
     } catch (error) {
       console.log(error.message);
     }
+  };
+};
+export const nextPage = () => {
+  return {
+    type: NEXT_PAGE,
+  };
+};
+export const previousPage = () => {
+  return {
+    type: PREVIOUS_PAGE,
+  };
+};
+
+export const resetPage = () => {
+  return {
+    type: RESET_PAGE,
   };
 };

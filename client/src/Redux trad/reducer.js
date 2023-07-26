@@ -31,7 +31,10 @@ import {
   ADMIN_GET_ACTIVITIES,
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
-  GET_HISTORIAL_CHAT_PERSONAL
+  GET_HISTORIAL_CHAT_PERSONAL,
+  NEXT_PAGE,
+  PREVIOUS_PAGE,
+  RESET_PAGE,
 } from "./action-types.js";
 
 const initialState = {
@@ -56,7 +59,8 @@ const initialState = {
   allActivities: [],
   historialChat: [],
   startChat: {},
-  historialChatPersonal : [],
+  historialChatPersonal: [],
+  firstPage: 0,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -172,6 +176,7 @@ const rootReducer = (state = initialState, action) => {
         eventById: action.payload,
         initSesion: action.payload,
         filter: action.payload,
+        firstPage: action.payload,
       };
     case GET_EVENT_BY_ID:
       return {
@@ -203,11 +208,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         historialChatPersonal: action.payload,
       };
-      case CLEAN_CHAT_HISTORY:
+    case CLEAN_CHAT_HISTORY:
       return {
         ...state,
-        historialChat: action.payload
-        }
+        historialChat: action.payload,
+      };
     case GET_USERS:
       return {
         ...state,
@@ -243,6 +248,26 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allActivities: action.payload,
       };
+    case NEXT_PAGE:
+      let aux = state.firstPage;
+      if (state.firstPage + 10 >= state.allActivities.length)
+        aux = state.firstPage;
+      else aux += 10;
+      return {
+        ...state,
+        firstPage: aux,
+      };
+    case PREVIOUS_PAGE:
+      let first = state.firstPage;
+      if (first < 10) first = state.firstPage;
+      else first -= 10;
+      return {
+        ...state,
+        firstPage: first,
+      };
+    case RESET_PAGE:
+      return { ...state, firstPage: 0 };
+
     default:
       return state;
   }

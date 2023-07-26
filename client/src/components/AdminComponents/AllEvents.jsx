@@ -3,6 +3,9 @@ import {
   deleteEvent,
   adminGetActivities,
   deleteEventEmail,
+  resetPage,
+  nextPage,
+  previousPage,
 } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -82,18 +85,37 @@ function AllEvents() {
       swal("El evento ya se encuentra eliminado");
     }
   };
+  const leave = () => {
+    dispatch(resetPage());
+    navigate("/admin");
+  };
+  //Manejo paginado
+  const firstToShow = useSelector((state) => state.firstPage);
+  console.log(firstToShow);
+  const paginaActual =
+    allActivities.length === 0 ? 0 : Math.ceil((firstToShow + 1) / 10);
 
+  const pages = Math.ceil(allActivities.length / 10);
+  const handlePrevious = () => {
+    dispatch(previousPage());
+  };
+
+  const handleNext = () => {
+    dispatch(nextPage());
+  };
   return (
     <div>
       <NavBar />
 
       {adminState ? (
         <div className="p-4 rounded-lg bg-gray-100 shadow-md bg-grey">
-          <Link to="/admin">
-            <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-              Atrás
-            </button>
-          </Link>
+          <button
+            onClick={() => leave()}
+            className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md"
+          >
+            Atrás
+          </button>
+
           <div>
             <table className="mt-3 w-full table-auto border-collapse">
               <thead className="bg-blue text-white">
@@ -119,6 +141,7 @@ function AllEvents() {
               <tbody>
                 {allActivities
                   ?.sort((a, b) => a.eventDate - b.eventDate)
+                  .slice(firstToShow, firstToShow + 10)
                   .map((u) => {
                     return (
                       <tr key={u.id} className="bg-white border-b text-center">
@@ -189,6 +212,25 @@ function AllEvents() {
             </table>
           </div>
           {/* <Pagination /> */}
+          <div className="flex flex-col items-center">
+            <div className="flex">
+              <button
+                className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md"
+                onClick={handlePrevious}
+              >
+                Previous
+              </button>
+              <button
+                className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md"
+                onClick={handleNext}
+              >
+                Next
+              </button>
+              <p className="mt-4">
+                Page {paginaActual} of {pages}
+              </p>
+            </div>
+          </div>
         </div>
       ) : null}
     </div>
