@@ -27,7 +27,7 @@ export default function ActivityForm() {
     name: "",
     description: "",
     eventDate: "",
-    duration: "",
+    duration: "00:00",
     minCost: "0",
     location: location,
     place: place,

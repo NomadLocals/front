@@ -7,6 +7,7 @@ import {
   resetPage,
   nextPage,
   previousPage,
+  cleanComponent,
 } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -158,10 +159,10 @@ function AllUsers() {
   const leave = () => {
     dispatch(resetPage());
     navigate("/admin");
+    dispatch(cleanComponent("allusers"));
   };
   //Manejo paginado
   const firstToShow = useSelector((state) => state.firstPage);
-  console.log(firstToShow);
   const paginaActual =
     allUsers.length === 0 ? 0 : Math.ceil((firstToShow + 1) / 10);
 
@@ -210,81 +211,85 @@ function AllUsers() {
                 </tr>
               </thead>
               <tbody>
-                {allUsers
-                  ?.sort((a, b) => a.userName.localeCompare(b.userName))
-                  .slice(firstToShow, firstToShow + 10)
-                  .map((u) => {
-                    return (
-                      <tr key={u.id} className="bg-white border-b text-center">
-                        <td className="p-2">
-                          {u.email.length > 15
-                            ? u.email.substring(0, 15) + "..."
-                            : u.email}
-                        </td>
-                        <td className="p-2">
-                          <img
-                            className="w-12 h-12 object-cover rounded-full"
-                            src={u.image}
-                            alt="No disponible"
-                          />
-                        </td>
-
-                        <td className="p-2">{u.reportUser.length}</td>
-                        <td
-                          className={`p-2 ${
-                            u.reportUser.length ? "cursor-pointer" : ""
-                          }`}
-                          title="Ver reportes del usuario"
-                          onClick={() =>
-                            handleViewReports(u.id, u.reportUser, u.email)
-                          }
+                {allUsers.length > 0 &&
+                  allUsers
+                    ?.sort((a, b) => a.userName.localeCompare(b.userName))
+                    .slice(firstToShow, firstToShow + 10)
+                    .map((u) => {
+                      return (
+                        <tr
+                          key={u.id}
+                          className="bg-white border-b text-center"
                         >
-                          {u.reportUser.length ? <View /> : ""}
-                        </td>
+                          <td className="p-2">
+                            {u.email.length > 15
+                              ? u.email.substring(0, 15) + "..."
+                              : u.email}
+                          </td>
+                          <td className="p-2">
+                            <img
+                              className="w-12 h-12 object-cover rounded-full"
+                              src={u.image}
+                              alt="No disponible"
+                            />
+                          </td>
 
-                        <td className="p-2 ">{u.reviewUser.length}</td>
-                        <td
-                          className="p-2 cursor-pointer"
-                          title="Ver reviews del usuario"
-                          onClick={() =>
-                            handleViewReviews(u.id, u.reviewUser, u.email)
-                          }
-                        >
-                          {u.reviewUser.length ? <View /> : ""}
-                        </td>
-
-                        <td className="p-2">
-                          {u.deletedAt === null ? "NO" : "SI"}
-                        </td>
-                        <td>
-                          <button
+                          <td className="p-2">{u.reportUser.length}</td>
+                          <td
+                            className={`p-2 ${
+                              u.reportUser.length ? "cursor-pointer" : ""
+                            }`}
+                            title="Ver reportes del usuario"
                             onClick={() =>
-                              handleDelete(
-                                u.id,
-                                u.email,
-                                u.deletedAt,
-                                userActu.id
-                              )
+                              handleViewReports(u.id, u.reportUser, u.email)
                             }
-                            className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
-                            title="Eliminar/Recuperar usuario"
                           >
-                            <Remove />
-                          </button>
-                        </td>
-                        <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
-                        <td>
-                          <button
-                            onClick={() => handleEdit(u.id, u.email, u.admin)}
-                            className="text-blue-500 hover:text-blue-700 focus:outline-none"
-                            title="Editar permisos de administrador"
+                            {u.reportUser.length ? <View /> : ""}
+                          </td>
+
+                          <td className="p-2 ">{u.reviewUser.length}</td>
+                          <td
+                            className="p-2 cursor-pointer"
+                            title="Ver reviews del usuario"
+                            onClick={() =>
+                              handleViewReviews(u.id, u.reviewUser, u.email)
+                            }
                           >
-                            <Edit />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                            {u.reviewUser.length ? <View /> : ""}
+                          </td>
+
+                          <td className="p-2">
+                            {u.deletedAt === null ? "NO" : "SI"}
+                          </td>
+                          <td>
+                            <button
+                              onClick={() =>
+                                handleDelete(
+                                  u.id,
+                                  u.email,
+                                  u.deletedAt,
+                                  userActu.id
+                                )
+                              }
+                              className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
+                              title="Eliminar/Recuperar usuario"
+                            >
+                              <Remove />
+                            </button>
+                          </td>
+                          <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
+                          <td>
+                            <button
+                              onClick={() => handleEdit(u.id, u.email, u.admin)}
+                              className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                              title="Editar permisos de administrador"
+                            >
+                              <Edit />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
           </div>

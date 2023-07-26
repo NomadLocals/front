@@ -32,7 +32,7 @@ import {
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
   GET_HISTORIAL_CHAT_PERSONAL,
-  CLEAN_DETAIL,
+  CLEAN_COMPONENT,
   NEXT_PAGE,
   PREVIOUS_PAGE,
   RESET_PAGE,
@@ -253,12 +253,30 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allActivities: action.payload,
       };
-    case CLEAN_DETAIL:
-      return{
+    case CLEAN_COMPONENT:
+      let inicialState = "";
+      let inicialValue = "";
+      if (action.payload === "detail") {
+        inicialState = "eventById";
+        inicialValue = {};
+      }
+      if (action.payload === "others") {
+        inicialState = "others";
+        inicialValue = {};
+      }
+      if (action.payload === "allusers") {
+        inicialState = "allUsers";
+        inicialValue = [];
+      }
+      if (action.payload === "allevents") {
+        inicialState = "allActivities";
+        inicialValue = [];
+      }
+
+      return {
         ...state,
-        eventById: action.payload,
-        others: action.payload,
-      }  
+        [inicialState]: inicialValue,
+      };
     case NEXT_PAGE:
       let aux = state.firstPage;
       if (state.firstPage + 10 >= state.allActivities.length)

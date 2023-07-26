@@ -79,11 +79,6 @@ const Activities = () => {
           <h2 className="font-quick text-center mb-4">
             No hay actividades cerca de tu zona
           </h2>
-          <img
-            src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690294493/Nomadlocals/Logos/404_-_1_vxyny3.png"
-            alt=" 404NotActivities"
-            className="w-88 md:w-60"
-          />
         </div>
       )}
       {renderedCards <= activities.length ? (

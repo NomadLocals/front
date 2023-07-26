@@ -11,7 +11,7 @@ import {
   getHistorialMessages,
   clearChatHistory,
   deleteEvent,
-  cleanDetail,
+  cleanComponent,
 } from "../../Redux trad/actions.js";
 import swal from "sweetalert";
 
@@ -46,15 +46,40 @@ const Detail = () => {
   useEffect(() => {
     dispatch(getActivityDetail(id));
     setJoinedUsers(Users);
-    dispatch(cleanDetail());
-  }, [id, joinedUsers, showChat]);
+    dispatch(cleanComponent("detail"));
+  }, [id, joinedUsers]);
 
   //handlers para sumarse o salir de la actividad
-  const handleJoinGroup = () => {
-    setShowChat(true);
-    setShowUsers(true);
+
+  // const handleJoinGroup = async () => {
+  //   try {
+  //     setShowChat(true);
+  //     setShowUsers(true);
+  //     dispatch(
+  //       suscribeEvent(id, userId, formattedDate, place, user.email, name)
+  //     );
+  //     setJoinedUsers([...joinedUsers, { userName, userImage }]);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const handleLeaveGroup = async () => {
+  //   // Crear una copia del estado actual de joinedUsers
+  //   try {
+  //     setShowChat(false);
+  //     setShowUsers(false);
+  //     dispatch(unsuscribeEvent(id, userId));
+  //     setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
+  //     // dispatch(clearChatHistory());
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const handleJoinGroup = async () => {
     try {
-      dispatch(
+      setShowChat(true);
+      setShowUsers(true);
+      await dispatch(
         suscribeEvent(id, userId, formattedDate, place, user.email, name)
       );
       setJoinedUsers([...joinedUsers, { userName, userImage }]);
@@ -62,14 +87,14 @@ const Detail = () => {
       console.log(error);
     }
   };
-  const handleLeaveGroup = () => {
-    setShowChat(false);
-    setShowUsers(false);
-    // Crear una copia del estado actual de joinedUsers
+  const handleLeaveGroup = async () => {
     try {
-      dispatch(unsuscribeEvent(id, userId));
+      setShowChat(false);
+      setShowUsers(false);
+      await dispatch(
+        unsuscribeEvent(id, userId, formattedDate, place, user.email, name)
+      );
       setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
-      dispatch(clearChatHistory());
     } catch (error) {
       console.log(error);
     }
@@ -139,19 +164,19 @@ const Detail = () => {
             {isAdmin ? (
               <div className="flex justify-center px-2 md:py-5 xl:py-5 mt-4">
                 <Link to="/admin/allEvents">
-                <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  Panel Eventos
-                </button>
+                  <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                    Panel Eventos
+                  </button>
                 </Link>
                 <Link to="/admin/eventsReports">
-                <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  Panel Reportes
-                </button>
+                  <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                    Panel Reportes
+                  </button>
                 </Link>
                 <Link to="/admin/eventsReviews">
-                <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  Panel Reviews
-                </button>
+                  <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                    Panel Reviews
+                  </button>
                 </Link>
               </div>
             ) : (

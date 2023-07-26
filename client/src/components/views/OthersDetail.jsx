@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
 // import ChatPersonal from "./ChatPersonal.jsx";
-import { cleanDetail, getOthersById } from "../../Redux trad/actions.js";
+import { cleanComponent, getOthersById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import CreatedActivities from "./CreatedActivities.jsx";
@@ -9,7 +9,7 @@ import CreatedActivities from "./CreatedActivities.jsx";
 const OthersDetail = () => {
   const others = useSelector((state) => state.others);
   const { userName, image, bio } = others;
-  const {id} = useParams();
+  const { id } = useParams();
   // const user = useSelector((state) => state.user);
   // const [data, setData] = useState({senderId: "", receiverId : ""});
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const OthersDetail = () => {
   // console.log (receiverId)
   useEffect(() => {
     dispatch(getOthersById(id));
-    dispatch(cleanDetail());
+    dispatch(cleanComponent("others"));
   }, []);
 
   return (

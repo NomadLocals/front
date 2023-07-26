@@ -40,7 +40,7 @@ import {
   GET_HISTORIAL_CHAT_PERSONAL,
   CLEAN_CHAT_HISTORY,
   ADMIN_RETRIEVE_USERS,
-  CLEAN_DETAIL,
+  CLEAN_COMPONENT,
   ADMIN_EMAIL_DELETE_EVENT,
   NEXT_PAGE,
   PREVIOUS_PAGE,
@@ -81,13 +81,12 @@ export const getActivities = () => {
 };
 
 export const getFilteredActivities = (filtros) => {
- 
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${FILTER}`, {
         params: filtros,
       });
-      
+
       return dispatch({
         type: GET_FILTERED_AVTIVITIES,
         payload: data,
@@ -571,8 +570,10 @@ export const deleteEventEmail = (email, event) => {
   return async (dispatch) => {
     try {
       await axios.post(`${URL}/send-mail/delete-event`, { email, event });
+
       return dispatch({
         type: ADMIN_EMAIL_DELETE_EVENT,
+        payload: id,
       });
     } catch (error) {
       // alert(error);
@@ -672,11 +673,12 @@ export const adminRetrieveUsers = (id, adminId, email) => {
   };
 };
 
-export const cleanDetail = () => {
+export const cleanComponent = (component) => {
   return {
-    type: CLEAN_DETAIL,
-    payload: {},
-  }}
+    type: CLEAN_COMPONENT,
+    payload: component,
+  };
+};
 
 export const nextPage = () => {
   return {
