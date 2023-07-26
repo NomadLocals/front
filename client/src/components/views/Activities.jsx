@@ -79,7 +79,7 @@ const Activities = () => {
   //-------------------Fin usuario banneado-----------------------------------
 
   return (
-    <div className="grid items-center py-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 ml-1 mr-1 min-h-[250px] md:min-h-[500px]">
+    <div className="grid items-center py-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-1 mr-1 min-h-[250px] md:min-h-[500px]">
       {activities.length > 0 ? (
         activities
           .sort(function (a, b) {

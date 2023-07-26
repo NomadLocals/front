@@ -21,6 +21,8 @@ export default function ActivityForm() {
   const image = useSelector((state) => state.activityImage);
   const userId = user.id;
   const dispatch = useDispatch();
+  
+
 
   const [activityData, setActivityData] = useState({
     userId: userId,

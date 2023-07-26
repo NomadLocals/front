@@ -1,10 +1,18 @@
 import Activity from "./Activity.jsx";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getUserActivities } from "../../Redux trad/actions.js";
 
 const OwnActivities = () => {
   const events = useSelector((state) => state.user.Events);
+  const user = useSelector((state)=>state.user);
+  const userId = user.id
   const [renderedCards, setTotalCards] = useState(3);
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getUserActivities(userId))
+  }, [events])
 
   const handlePages = () => {
     setTotalCards(renderedCards + 3);

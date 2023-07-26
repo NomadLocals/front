@@ -12,7 +12,7 @@ const Activity = ({
 }) => {
   return (
     <Link to={`/home/detail/${id}`}>
-      <div className="flex h-[150px] items-center bg-white shadow-lg rounded-lg max-h-28 mt-3 mb-1 font-quick md:min-h-[200px]">
+      <div className="flex h-[150px] lg:w-[500px] items-center bg-white shadow-lg rounded-lg max-h-28 mt-3 mb-1 font-quick md:min-h-[200px]">
         <div className="w-1/2 h-full">
           <img
             style={{height: "110px"}}

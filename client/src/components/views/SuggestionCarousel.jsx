@@ -10,6 +10,7 @@ const SuggestionCarousel = () => {
   const user = useSelector((state) => state.user);
   const userLocation = user.geolocation;
 
+
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radio de la Tierra en kilómetros
     let dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -55,6 +56,7 @@ activities.forEach(function (act) {
       >
         {activities.length > 0 ? (
           activities
+            
             .sort(function (a, b) {
               return a.distancia - b.distancia;
             })

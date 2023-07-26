@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer.jsx";
 import SuggestionCarousel from "./SuggestionCarousel.jsx";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserActivities, getUserById } from "../../Redux trad/actions.js";
+import { getActivities, getUserActivities, getUserById } from "../../Redux trad/actions.js";
 import { useEffect, useState } from "react";
 
 const Home = () => {

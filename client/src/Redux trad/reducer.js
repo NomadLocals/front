@@ -248,6 +248,7 @@ const rootReducer = (state = initialState, action) => {
       return{
         ...state,
         eventById: action.payload,
+        others: action.payload,
       }  
     default:
       return state;
