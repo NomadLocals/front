@@ -38,6 +38,7 @@ import {
   ADMIN_GET_ACTIVITIES,
   GET_HISTORIAL_CHAT_EVENTS,
   GET_HISTORIAL_CHAT_PERSONAL,
+  CLEAN_CHAT_PERSONAL,
   CLEAN_CHAT_HISTORY,
   ADMIN_RETRIEVE_USERS,
 } from "./action-types.js";
@@ -414,6 +415,13 @@ export const clearChatHistory = () => {
   return {
     type: CLEAN_CHAT_HISTORY,
     payload: "",
+  };
+};
+
+export const clearChatPersonal = () => {
+  return {
+    type: CLEAN_CHAT_PERSONAL,
+    payload: [],
   };
 };
 // //dani
