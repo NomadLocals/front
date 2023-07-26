@@ -4,7 +4,7 @@ import MapSelect from "./Map.jsx";
 import { postUser } from "../../Redux trad/actions.js";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { AiOutlineRollback } from "react-icons/ai";
+import { RiArrowGoBackFill } from "react-icons/ri";
 
 export default function CreateAccountPlace() {
 
@@ -36,7 +36,7 @@ export default function CreateAccountPlace() {
   };
 
   return (
-    <div className="bg-blue min-h-screen">
+    <div className="bg-grey min-h-screen">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/1_z79ppu.png" alt="Your Company" />
@@ -48,24 +48,24 @@ export default function CreateAccountPlace() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             onSubmit={handleSubmit}
-            className="space-y-6 bg-white p-6 rounded-lg shadow-lg"
+            className="space-y-6 bg-grey p-6 rounded-lg shadow-lg"
             method="POST"
           >
             <div className="max-w-md max-h-md mx-auto">
-              <MapSelect />
-            </div>
-            <div className="mt-6 flex items-center justify-end gap-x-6">
-              <Link to="/create-account1">
+            <Link to="/create-account1">
               <button
                 type="button"
-                className=" bg-blue text-xl font-spartan leading-6 text-grey rounded-md py-2 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="text-xl font-spartan leading-6 text-black rounded-md py-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
               >
-                <AiOutlineRollback />
+                <RiArrowGoBackFill />
               </button>
               </Link>
+              <MapSelect />
+            </div>
+            <div className="mt-6 items-center justify-center gap-x-6">
               <button
                 type="submit"
-                className="location-button"
+                className="location-button font-quick"
               >
                 ¡Estoy aquí!
               </button>

@@ -4,6 +4,9 @@ import {
   deleteUser,
   editUser,
   adminRetrieveUsers,
+  resetPage,
+  nextPage,
+  previousPage,
 } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,7 +14,6 @@ import NavBar from "../views/NavBar.jsx";
 import Remove from "../../iconos/Remove.jsx";
 import Edit from "../../iconos/Edit.jsx";
 import View from "../../iconos/View.jsx";
-
 import swal from "sweetalert";
 
 function AllUsers() {
@@ -20,7 +22,6 @@ function AllUsers() {
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
   const navigate = useNavigate();
-  console.log(userActu);
 
   useEffect(() => {
     dispatch(getAllUsers(userActu.id));
@@ -43,45 +44,47 @@ function AllUsers() {
           swal({
             title: "Crear administrador",
             text: `¿Estas seguro que deseas que el usuario ${userEmail} sea administrador?`,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#008000",
-            buttons: true,          
-            closeOnConfirm: false,
-            closeOnCancel: false,
-          })
-          .then(willDelete => {
+            icon: "warning",
+            buttons: true,
+            closeModel: false,
+          }).then((willDelete) => {
             if (willDelete) {
               dispatch(editUser(userId, { admin: true }))
-              .then(swal({
-                title: "Creando administrador...",
-                timer: 2000,
-              }))
-              location.reload(true)
+                .then(
+                  swal({
+                    title: "Creando administrador...",
+                    timer: 2000,
+                    buttons: false,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
             }
-          })
+          });
         } else {
           swal({
             title: "Quitar administrador",
             text: `¿Estas seguro que deseas que el usuario ${userEmail} ya no sea administrador?`,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
+            icon: "warning",
             dangerMode: true,
-            buttons: true,          
-            closeOnConfirm: false,
-            closeOnCancel: false,
-          })
-          .then(async(willDelete) => {
+            buttons: true,
+            closeModel: false,
+          }).then(async (willDelete) => {
             if (willDelete) {
               await dispatch(editUser(userId, { admin: false }))
-              .then(swal({
-                title: "Quitando administrador...",
-                timer: 2000,
-              }))
-              location.reload(true)
+                .then(
+                  swal({
+                    title: "Quitando administrador...",
+                    timer: 2000,
+                    buttons: false,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
             }
-          })
+          });
         }
       }
     }
@@ -94,51 +97,54 @@ function AllUsers() {
       if (userEmail === "nomad.locals01@gmail.com") {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
-        if (!deleted){
-        swal({
-          title: "Eliminar",
-          text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
-          dangerMode: true,
-          buttons: true,          
-          closeOnConfirm: false,
-          closeOnCancel: false,
-        })
-        .then(async(willDelete) => {
-          if (willDelete) {
-            await dispatch(deleteUser(id))
-            .then(swal({
-              title: "Eliminando...",
-              timer: 2000,
-            }))
-            location.reload(true);
-          }
-        })}
-          else {
-            swal({
-              title: "Reestablecer",
-              text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
-              type: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#DD6B55",
-              buttons: true,          
-              closeOnConfirm: false,
-              closeOnCancel: false,
-            })
-            .then(async(willDelete) => {
-              if (willDelete) {
-                await dispatch(adminRetrieveUsers(id, adminId))
-                .then(swal({
-                  title: "Reestableciendo...",
-                  timer: 2000,
-                }))
-                window.location.reload()
-              }
-            })
-            
-          }
+        if (!deleted) {
+          swal({
+            title: "Eliminar",
+            text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
+            icon: "warning",
+            dangerMode: true,
+            buttons: true,
+            closeModel: false,
+          }).then(async (willDelete) => {
+            if (willDelete) {
+              await dispatch(deleteUser(id))
+                .then(
+                  swal({
+                    title: "Eliminando...",
+                    timer: 2000,
+                    buttons: false,
+                  })
+                )
+                .then(() => {
+                  console.log("elimina");
+                  location.reload(true);
+                });
+            }
+          });
+        } else {
+          swal({
+            title: "Reestablecer",
+            text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
+            icon: "warning",
+            buttons: true,
+            closeModel: false,
+          }).then(async (willDelete) => {
+            if (willDelete) {
+              await dispatch(adminRetrieveUsers(id, adminId))
+                .then(
+                  swal({
+                    title: "Reestableciendo...",
+                    buttons: false,
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  console.log("recupera");
+                  location.reload(true);
+                });
+            }
+          });
+        }
       }
     }
   };
@@ -149,6 +155,24 @@ function AllUsers() {
     navigate(`/admin/users/reviews/${id}`, { state: { reviews, user } });
   };
 
+  const leave = () => {
+    dispatch(resetPage());
+    navigate("/admin");
+  };
+  //Manejo paginado
+  const firstToShow = useSelector((state) => state.firstPage);
+  console.log(firstToShow);
+  const paginaActual =
+    allUsers.length === 0 ? 0 : Math.ceil((firstToShow + 1) / 10);
+
+  const pages = Math.ceil(allUsers.length / 10);
+  const handlePrevious = () => {
+    dispatch(previousPage());
+  };
+
+  const handleNext = () => {
+    dispatch(nextPage());
+  };
 
   return (
     <div>
@@ -156,11 +180,15 @@ function AllUsers() {
 
       {adminState ? (
         <div className="p-4 rounded-lg bg-gray-100 shadow-md bg-grey min-h-screen">
-          <Link to="/admin">
-            <button className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-              Atrás
-            </button>
-          </Link>
+          {/* <Link to="/admin"> */}
+          <button
+            onClick={() => leave()}
+            className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md"
+          >
+            Atrás
+          </button>
+          {/* </Link> */}
+
           <div>
             <table className="mt-3 w-full table-auto border-collapse">
               <thead className="bg-blue text-white">
@@ -184,6 +212,7 @@ function AllUsers() {
               <tbody>
                 {allUsers
                   ?.sort((a, b) => a.userName.localeCompare(b.userName))
+                  .slice(firstToShow, firstToShow + 10)
                   .map((u) => {
                     return (
                       <tr key={u.id} className="bg-white border-b text-center">
@@ -238,7 +267,7 @@ function AllUsers() {
                               )
                             }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
-                            title="Eliminar usuario"
+                            title="Eliminar/Recuperar usuario"
                           >
                             <Remove />
                           </button>
@@ -260,6 +289,25 @@ function AllUsers() {
             </table>
           </div>
           {/* <Pagination /> */}
+          <div className="flex flex-col items-center">
+            <div className="flex">
+              <button
+                className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md"
+                onClick={handlePrevious}
+              >
+                Previous
+              </button>
+              <button
+                className="text-white font-bold mt-3 mr-3 p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md"
+                onClick={handleNext}
+              >
+                Next
+              </button>
+              <p className="mt-4">
+                Page {paginaActual} of {pages}
+              </p>
+            </div>
+          </div>
         </div>
       ) : null}
     </div>

@@ -28,6 +28,7 @@ import OthersDetail from "./components/views/OthersDetail.jsx";
 import Report from "./components/views/Report.jsx";
 import ReportUser from "./components/views/ReportUser.jsx";
 import NotFound from "./components/views/NotFound";
+import Developer from "./components/views/Developer.jsx";
 //Componentes administrador:
 import AllUsers from "./components/AdminComponents/AllUsers.jsx";
 import AdminHome from "./components/AdminComponents/AdminHome.jsx";
@@ -68,6 +69,7 @@ function App() {
         <Route path="/activities/detail/:id/chat" element={<Chat />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/developer" element={<Developer />} />
 
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/allEvents" element={<AllEvents />} />

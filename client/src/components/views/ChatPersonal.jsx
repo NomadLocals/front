@@ -3,19 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import  io  from "socket.io-client";
 import { getPersonalMessages, clearChatPersonal } from "../../Redux trad/actions";
 
-const socket = io('http://localhost:3001');
+// // const socket = io('http://localhost:3001');
+// const socket = io("https://serverpredeploy.onrender.com");
 
 
 const ChatPersonal = () => {
 
-  //* importacion de estados... 
+//   //* importacion de estados... 
 
   const others = useSelector((state) => state.others);
   const user = useSelector((state) => state.user);
   const historialChatPersonal = useSelector((state) => state.historialChatPersonal);
-  console.log(user)
+//   console.log(user)
   const dispatch = useDispatch()
-  //* Estados locales para funcionalidad de Chat...
+//   //* Estados locales para funcionalidad de Chat...
   const [newMessage, setNewMessage] = useState("") //? Para cada mensaje que se envie..
   
   const [isConnected, setIsConnected] = useState(false); //? para conexion
@@ -37,9 +38,7 @@ const ChatPersonal = () => {
   const roomName = [user.id, others.id].sort().join('-');
   
   useEffect(() => {
-    // dispatch(clearChatPersonal());
-    dispatch(getPersonalMessages(roomName))
-    socket.emit('startPersonalChat', roomName);
+    dispatch(getPersonalMessages(data))
     
     socket.on("chatPersonalMessage", (data) => {
       setChatMessages((prevMessages) => [...prevMessages, data]);
@@ -57,6 +56,24 @@ const ChatPersonal = () => {
     socket.on("startPersonalChat",()=>{
       setIsConnected (true)
     });
+
+    
+    socket.on("chatPersonalMessage", (data) => {
+      setChatMessages((prevMessages) => [...prevMessages, data]);
+      // dispatch(getPersonalMessages(roomName))
+    });
+
+    socket.on('getPersonalMessage', (data) => {
+      dispatch(getPersonalMessages(roomName))
+      setChatMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+
+    socket.on("joinPersonalChat", roomName);
+
+//     socket.on("startPersonalChat",()=>{
+//       setIsConnected (true)
+//     });
 
     
     

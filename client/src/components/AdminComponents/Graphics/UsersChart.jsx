@@ -1,15 +1,26 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
-import { useSessionList, useSession } from "@clerk/clerk-react";
+import { useSelector } from "react-redux";
 
 const UsersChart = () => {
-  const { isLoaded, sessions } = useSessionList();
-  console.log(sessions);
+  const dailyLogins = useSelector((state) => state.dailyLogins);
+
+  const dates = Object.keys(dailyLogins);
+  console.log(dates);
+  const loginsData = Object.values(dailyLogins);
+  console.log(loginsData);
+
+  // Crear un array de objetos con la estructura { x: fecha, y: cantidad de logins }
+  const dataPoints = Object.entries(dailyLogins).map(([date, logins]) => ({
+    x: date,
+    y: logins,
+  }));
+
   const chartData = {
     series: [
       {
         name: "Logins",
-        data: [28, 29, 33, 36, 32, 32, 33],
+        data: dataPoints,
       },
     ],
     options: {
@@ -42,7 +53,7 @@ const UsersChart = () => {
       grid: {
         borderColor: "#e7e7e7",
         row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+          colors: ["#f3f3f3", "transparent"],
           opacity: 0.5,
         },
       },
@@ -50,17 +61,17 @@ const UsersChart = () => {
         size: 1,
       },
       xaxis: {
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        categories: dates,
         title: {
-          text: "Month",
+          text: "Date",
         },
       },
       yaxis: {
         title: {
-          text: "Temperature",
+          text: "Logins",
         },
-        min: 5,
-        max: 40,
+        min: 0,
+        max: Math.max(...loginsData) + 1, // Ajusta el mÃ¡ximo del eje y para mostrar todos los puntos correctamente
       },
       legend: {
         position: "top",

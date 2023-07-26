@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 // http://localhost:3001
 const socket = io("http://localhost:3001");
+// const socket = io("https://serverpredeploy.onrender.com");
 
 // const socket = io("https://serverpredeploy.onrender.com");
 
@@ -80,16 +81,10 @@ const Chat = () => {
           placeholder="Escribe un mensaje..."
         />
         <button
-          className="bg-blue hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
+          className="bg-blue border-2 border-black hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
           onClick={handleSendMessage}
         >
           Enviar
-        </button>
-        <button
-          className="bg-blue hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline ml-2"
-          // onClick={handleClearChat}
-        >
-          Limpiar Chat
         </button>
       </div>
     </div>

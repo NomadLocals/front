@@ -1,39 +1,54 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { adminGetActivities } from "../../../Redux trad/actions";
 import ReactApexChart from "react-apexcharts";
-import React, { useEffect } from "react";
+import { format } from "date-fns";
 
-//traer los datos de todos los eventos y editar esos array!
 const EventsChart = () => {
-  const [chartData, setChartData] = React.useState({
-    series: [
-      {
-        name: "Teatro, cine y show",
-        data: [44, 55, 41, 67, 22, 43],
-      },
-      {
-        name: "Conciertos",
-        data: [13, 23, 20, 8, 13, 27],
-      },
-      {
-        name: "Al aire libre",
-        data: [11, 17, 15, 15, 21, 14],
-      },
-      {
-        name: "Deportes de equipo",
-        data: [21, 7, 25, 13, 22, 8],
-      },
-      {
-        name: "Deportes",
-        data: [21, 7, 25, 13, 22, 8],
-      },
-      {
-        name: "Restaurantes y cafes",
-        data: [21, 7, 25, 13, 22, 8],
-      },
-      {
-        name: "Otros",
-        data: [21, 7, 25, 13, 22, 8],
-      },
-    ],
+  const dispatch = useDispatch();
+  const activities = useSelector((state) => state.activities);
+
+  useEffect(() => {
+    dispatch(adminGetActivities());
+  }, [dispatch]);
+
+  const processDataForChart = (activities) => {
+    const activityTypes = {};
+    const categories = [];
+
+    activities.forEach((activity) => {
+      const date = format(new Date(activity.eventDate), "MM/dd/yyyy");
+
+      if (!activityTypes[activity.activityType]) {
+        activityTypes[activity.activityType] = {};
+      }
+
+      if (!activityTypes[activity.activityType][date]) {
+        activityTypes[activity.activityType][date] = 1;
+      } else {
+        activityTypes[activity.activityType][date]++;
+      }
+
+      if (!categories.includes(date)) {
+        categories.push(date);
+      }
+    });
+
+    const series = Object.keys(activityTypes).map((activityType) => {
+      const data = categories.map(
+        (date) => activityTypes[activityType][date] || 0
+      );
+      return {
+        name: activityType,
+        data: data,
+      };
+    });
+
+    return { series, categories };
+  };
+
+  const [chartData, setChartData] = useState({
+    series: [],
     options: {
       chart: {
         type: "bar",
@@ -75,14 +90,7 @@ const EventsChart = () => {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "01/01/2011 GMT",
-          "01/02/2011 GMT",
-          "01/03/2011 GMT",
-          "01/04/2011 GMT",
-          "01/05/2011 GMT",
-          "01/06/2011 GMT",
-        ],
+        categories: [], // This will be updated based on the processed data
       },
       legend: {
         position: "right",
@@ -93,6 +101,23 @@ const EventsChart = () => {
       },
     },
   });
+
+  useEffect(() => {
+    if (activities && activities.length > 0) {
+      const { series, categories } = processDataForChart(activities);
+      setChartData((prevChartData) => ({
+        ...prevChartData,
+        series,
+        options: {
+          ...prevChartData.options,
+          xaxis: {
+            ...prevChartData.options.xaxis,
+            categories,
+          },
+        },
+      }));
+    }
+  }, [activities]);
 
   return (
     <div id="chart">
