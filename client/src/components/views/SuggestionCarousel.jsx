@@ -12,7 +12,11 @@ const SuggestionCarousel = () => {
   const user = useSelector((state) => state.user);
   const userLocation = user.geolocation;
   const userEv = user.Events;
+  const dispatch = useDispatch()
   
+  useEffect(()=>{
+    dispatch(getActivities())
+  },[])
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     let R = 6371; // Radio de la Tierra en kilómetros
@@ -42,8 +46,22 @@ activities.forEach(function (act) {
         act.distancia = distancia;
        })
   //crear estado global alternativo para renderizar actividades totales.
+  if (!activities || activities.length === 0) {
+    return (
+      <div>
+        <h2 className="font-quick">No hay actividades cerca de tu zona</h2>
+      </div>
+    );
+  }
+  const userEventsIds = new Set(
+    Array.isArray(userEv) ? userEv.map((event) => event.id) : []
+  );
+  // Filtrar y mapear las actividades que no están en userEventsIds
+  const filteredActivities = activities
+    .filter((act) => !userEventsIds.has(act.id))
+    .sort((a, b) => a.distancia - b.distancia);
 
-  const userEventsIds = new Set(userEv.map((event) => event.id));
+  
   return (
     <div className="bg-grey grid grid-cols-1 sm:grid-cols-2 md:flex md:justify-center gap-4 ml-1 mr-1 mt-3 ">
       <Carousel
@@ -59,13 +77,7 @@ activities.forEach(function (act) {
         showIndicators={false}
         className="md:m-auto md:max-w-[500px]"
       >
-        {activities.length > 0 ? (
-          activities
-            .filter((act) => !userEventsIds.has(act.id))
-            .sort(function (a, b) {
-              return a.distancia - b.distancia;
-            })
-            .map(
+            {filteredActivities.map(
               ({
                 id,
                 name,
@@ -88,12 +100,7 @@ activities.forEach(function (act) {
                   />
                 );
               }
-            )
-        ) : (
-          <div>
-            <h2 className="font-quick">No hay actividades cerca de tu zona</h2>
-          </div>
-        )}
+            )}
       </Carousel>
     </div>
   );

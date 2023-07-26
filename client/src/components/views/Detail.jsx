@@ -241,7 +241,7 @@ const Detail = () => {
                 </button>
               ) : (
                 <button
-                  className="mt-2 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                  className="mt-5 bg-blue text-sm font-semibold leading-6 text-white bg-black rounded-md py-1.5 px-4 shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   onClick={handleLeaveGroup}
                 >
                   Salir de la actividad

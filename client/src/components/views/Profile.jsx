@@ -14,7 +14,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getUserById(user.id));
-  }, []);
+  }, [userName, bio, image]);
   return (
     <>
       <NavBar />

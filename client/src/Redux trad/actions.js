@@ -80,13 +80,13 @@ export const getActivities = () => {
 };
 
 export const getFilteredActivities = (filtros) => {
-  console.log(filtros)
+ 
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${FILTER}`, {
         params: filtros,
       });
-      console.log(data)
+      
       return dispatch({
         type: GET_FILTERED_AVTIVITIES,
         payload: data,
@@ -668,7 +668,7 @@ export const cleanDetail = () => {
     type: CLEAN_DETAIL,
     payload: {},
   }}
-  
+
 export const nextPage = () => {
   return {
     type: NEXT_PAGE,
