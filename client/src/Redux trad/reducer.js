@@ -22,6 +22,16 @@ import {
   GET_OTHERS,
   POST_IMAGES,
   DELETE_IMAGE,
+  GET_USERS,
+  DELETE_EVENTS,
+  ADMIN_GET_REPORTS,
+  ADMIN_GET_REPORTS_USERS,
+  ADMIN_GET_REVIEWS_EVENTS,
+  ADMIN_GET_REVIEWS_USERS,
+  ADMIN_GET_ACTIVITIES,
+  GET_HISTORIAL_CHAT_EVENTS,
+  CLEAN_CHAT_HISTORY,
+  GET_HISTORIAL_CHAT_PERSONAL
 } from "./action-types.js";
 
 const initialState = {
@@ -38,6 +48,15 @@ const initialState = {
   initSesion: "",
   others: {},
   activityImage: "",
+  allUsers: [],
+  allEventsReports: [],
+  allUsersReports: [],
+  allEventsReviews: [],
+  allUsersReviews: [],
+  allActivities: [],
+  historialChat: [],
+  startChat: {},
+  historialChatPersonal : [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -174,7 +193,56 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         activityImage: "",
       };
-
+    case GET_HISTORIAL_CHAT_EVENTS:
+      return {
+        ...state,
+        historialChat: action.payload,
+      };
+    case GET_HISTORIAL_CHAT_PERSONAL:
+      return {
+        ...state,
+        historialChatPersonal: action.payload,
+      };
+      case CLEAN_CHAT_HISTORY:
+      return {
+        ...state,
+        historialChat: action.payload
+        }
+    case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
+    case DELETE_EVENTS:
+      return {
+        ...state,
+        events: state.activities.filter((event) => event.id !== action.payload),
+      };
+    case ADMIN_GET_REPORTS:
+      return {
+        ...state,
+        allEventsReports: action.payload,
+      };
+    case ADMIN_GET_REPORTS_USERS:
+      return {
+        ...state,
+        allUsersReports: action.payload,
+      };
+    case ADMIN_GET_REVIEWS_EVENTS:
+      return {
+        ...state,
+        allEventsReviews: action.payload,
+      };
+    case ADMIN_GET_REVIEWS_USERS:
+      return {
+        ...state,
+        allUsersReviews: action.payload,
+      };
+    case ADMIN_GET_ACTIVITIES:
+      return {
+        ...state,
+        allActivities: action.payload,
+      };
     default:
       return state;
   }

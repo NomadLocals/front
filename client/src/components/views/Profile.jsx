@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
 import { getUserById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
+import { FcSettings } from "react-icons/fc";
+import CreatedActivities from "./CreatedActivities.jsx";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -24,13 +26,13 @@ const Profile = () => {
             alt="Profile picture"
           />
           <h2
-            className="text-center text-2xl font-semibold mt-3"
+            className="text-center text-3xl font-semibold mt-3 font-spartan"
             style={{ color: "#000000" }}
           >
             {userName}
           </h2>
 
-          <div className="flex justify-center mt-5">
+          {/* <div className="flex justify-center mt-5">
             <a
               href="https://www.instagram.com"
               target="_blank"
@@ -58,7 +60,7 @@ const Profile = () => {
             >
               Reddit
             </a>
-          </div>
+          </div> */}
           <div className="mt-5">
             <h3
               className="text-xl font-semibold text-center"
@@ -66,14 +68,24 @@ const Profile = () => {
             >
               Bio:
             </h3>
-            <p className="text-gray-600 mt-2" style={{ color: "#000000" }}>
-              {bio}
+            <p className="text-gray-600 mt-2 text-center" style={{ color: "#000000" }}>
+            {bio}
             </p>
           </div>
+          <hr className="mt-5 border-t border-gray-400" />
           <div className="mt-5 text-center">
+            <h3
+              className="text-xl font-semibold text-center"
+              style={{ color: "#000000" }}
+            >
+              Tus Actividades:
+            </h3>
+            <CreatedActivities />
+            <hr className="mt-5 mb-5 border-t border-gray-400" />
             <Link to="/settings">
-            <button className="text-blue-500 hover:text-blue-700 bg-blue p-2 rounded-lg">
-              🔧
+              Editar perfil
+            <button className="p-2">
+              <FcSettings />
             </button>
             </Link>
           </div>
