@@ -43,6 +43,20 @@ const Detail = () => {
     place,
   } = activityDetail;
 
+  //----------Formateo de fecha------------
+
+  let formattedDate = "";
+  let formattedTime = "";
+  if (activityDetail.eventDate) {
+    const parts = eventDate.split("T")[0].split("-");
+    const date = new Date(activityDetail.eventDate);
+    formattedTime = date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+  }
+
   useEffect(() => {
     dispatch(getActivityDetail(id));
     setJoinedUsers(Users);
@@ -54,7 +68,16 @@ const Detail = () => {
     setShowChat(true);
     setShowUsers(true);
     try {
-      dispatch(suscribeEvent(id, userId));
+      console.log(id);
+      console.log(userId);
+      console.log(formattedDate);
+      console.log(place);
+      console.log(user.email);
+      console.log(name);
+
+      dispatch(
+        suscribeEvent(id, userId, formattedDate, place, user.email, name)
+      );
       setJoinedUsers([...joinedUsers, { userName, userImage }]);
     } catch (error) {
       console.log(error);
@@ -65,7 +88,9 @@ const Detail = () => {
     setShowUsers(false);
     // Crear una copia del estado actual de joinedUsers
     try {
-      dispatch(unsuscribeEvent(id, userId));
+      dispatch(
+        unsuscribeEvent(id, userId, formattedDate, place, user.email, name)
+      );
       setJoinedUsers(joinedUsers.filter((user) => user.userName !== userName));
       dispatch(clearChatHistory());
     } catch (error) {
@@ -110,19 +135,6 @@ const Detail = () => {
     });
   };
 
-  //formateo de fecha:
-  let formattedDate = "";
-  let formattedTime = "";
-  if (activityDetail.eventDate) {
-    const parts = eventDate.split("T")[0].split("-");
-    const date = new Date(activityDetail.eventDate);
-    formattedTime = date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
-  }
-
   return (
     <>
       <Navbar />
@@ -137,19 +149,19 @@ const Detail = () => {
             {isAdmin ? (
               <div className="flex justify-center px-2 md:py-5 xl:py-5 mt-4">
                 <Link to="/admin/allEvents">
-                <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  Panel Eventos
-                </button>
+                  <button className="text-white p-2 text-sm md:text-xl rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                    Panel Eventos
+                  </button>
                 </Link>
                 <Link to="/admin/eventsReports">
-                <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  Panel Reportes
-                </button>
+                  <button className="text-white p-2 text-sm md:text-xl mx-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                    Panel Reportes
+                  </button>
                 </Link>
                 <Link to="/admin/eventsReviews">
-                <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
-                  Panel Reviews
-                </button>
+                  <button className="text-white p-2 text-sm md:text-xl  rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md">
+                    Panel Reviews
+                  </button>
                 </Link>
               </div>
             ) : (

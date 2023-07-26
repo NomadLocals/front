@@ -40,7 +40,8 @@ import {
   GET_HISTORIAL_CHAT_PERSONAL,
   CLEAN_CHAT_HISTORY,
   ADMIN_RETRIEVE_USERS,
-  CLEAN_DETAIL
+  CLEAN_DETAIL,
+  ADMIN_EMAIL_DELETE_EVENT,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001"; //* servidor
@@ -307,11 +308,17 @@ export const checkUserById = (id) => {
   };
 };
 
-export const suscribeEvent = (id, userId) => {
+export const suscribeEvent = (id, userId, eventDate, place, email, name) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`${URL}/events/${id}/users`, {
         userId,
+      });
+      await axios.post(`${URL}/send-mail/suscribe-event`, {
+        eventDate,
+        email,
+        place,
+        name,
       });
 
       return dispatch({
@@ -322,13 +329,19 @@ export const suscribeEvent = (id, userId) => {
     }
   };
 };
-export const unsuscribeEvent = (id, userId) => {
+export const unsuscribeEvent = (id, userId, eventDate, place, email, name) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(
         `${URL}/events/${id}/users?userId=${userId}`
       );
-      console.log(data);
+      await axios.post(`${URL}/send-mail/unsuscribe-event`, {
+        eventDate,
+        email,
+        place,
+        name,
+      });
+
       return dispatch({
         type: UNSUSCRIBE_EVENT,
       });
@@ -386,7 +399,7 @@ export const getHistorialMessages = (id) => {
 //   return async (dispatch) => {
 //     try {
 //       const {data} = await axios.get(`${URL}/chat/personal/`, data)
-  
+
 //       return dispatch({
 //         type: GET_HISTORIAL_CHAT_PERSONAL,
 //         payload: data,
@@ -443,7 +456,7 @@ export const editUser = (userId, userData) => {
     try {
       const endPoint = `${URL}/${USER}/${userId}`;
       const { data } = await axios.put(endPoint, userData);
-      console.log(data);
+      console.log(userId);
       return dispatch({
         type: EDIT_USER,
         payload: data,
@@ -513,16 +526,16 @@ export const getAllUsers = (id) => {
   };
 };
 
-export const deleteUser = (id) => {
+export const deleteUser = (id, email) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(`${URL}/${USER}/${id}`);
-
+      await axios.post(`${URL}/send-mail/delete`, { email });
       return dispatch({
         type: DELETE_USERS,
       });
     } catch (error) {
-      // alert(error);
+      console.log(error);
     }
   };
 };
@@ -535,6 +548,18 @@ export const deleteEvent = (id) => {
       return dispatch({
         type: DELETE_EVENTS,
         payload: id,
+      });
+    } catch (error) {
+      // alert(error);
+    }
+  };
+};
+export const deleteEventEmail = (email, event) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(`${URL}/send-mail/delete-event`, { email, event });
+      return dispatch({
+        type: ADMIN_EMAIL_DELETE_EVENT,
       });
     } catch (error) {
       // alert(error);
@@ -615,13 +640,14 @@ export const adminGetActivities = (id) => {
     }
   };
 };
-export const adminRetrieveUsers = (id, adminId) => {
+export const adminRetrieveUsers = (id, adminId, email) => {
   return async (dispatch) => {
     try {
       console.log(`${URL}/admin/${adminId}/userreset?idUser=${id}`);
       const { data } = await axios.get(
         `${URL}/admin/${adminId}/userreset?idUser=${id}`
       );
+      await axios.post(`${URL}/send-mail/retrieve`, { email });
       console.log(data);
       return dispatch({
         type: ADMIN_RETRIEVE_USERS,

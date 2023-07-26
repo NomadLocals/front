@@ -11,7 +11,6 @@ import NavBar from "../views/NavBar.jsx";
 import Remove from "../../iconos/Remove.jsx";
 import Edit from "../../iconos/Edit.jsx";
 import View from "../../iconos/View.jsx";
-
 import swal from "sweetalert";
 
 function AllUsers() {
@@ -44,38 +43,44 @@ function AllUsers() {
             title: "Crear administrador",
             text: `¿Estas seguro que deseas que el usuario ${userEmail} sea administrador?`,
             icon: "warning",
-            buttons: true,          
+            buttons: true,
             closeModel: false,
-          })
-          .then(willDelete => {
+          }).then((willDelete) => {
             if (willDelete) {
               dispatch(editUser(userId, { admin: true }))
-              .then(swal({
-                title: "Creando administrador...",
-                timer: 2000,
-              }))
-              location.reload(true)
+                .then(
+                  swal({
+                    title: "Creando administrador...",
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
             }
-          })
+          });
         } else {
           swal({
             title: "Quitar administrador",
             text: `¿Estas seguro que deseas que el usuario ${userEmail} ya no sea administrador?`,
             icon: "warning",
             dangerMode: true,
-            buttons: true,          
+            buttons: true,
             closeModel: false,
-          })
-          .then(async(willDelete) => {
+          }).then(async (willDelete) => {
             if (willDelete) {
               await dispatch(editUser(userId, { admin: false }))
-              .then(swal({
-                title: "Quitando administrador...",
-                timer: 2000,
-              }))
-              location.reload(true)
+                .then(
+                  swal({
+                    title: "Quitando administrador...",
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
             }
-          })
+          });
         }
       }
     }
@@ -88,45 +93,50 @@ function AllUsers() {
       if (userEmail === "nomad.locals01@gmail.com") {
         swal("No podes quitarle el permiso de administrador a este usuario");
       } else {
-        if (!deleted){
-        swal({
-          title: "Eliminar",
-          text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
-          icon: "warning",
-          dangerMode: true,
-          buttons: true,          
-          closeModel: false,
-        })
-        .then(async(willDelete) => {
-          if (willDelete) {
-            await dispatch(deleteUser(id))
-            .then(swal({
-              title: "Eliminando...",
-              timer: 2000,
-            }))
-            location.reload(true);
-          }
-        })}
-          else {
-            swal({
-              title: "Reestablecer",
-              text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
-              icon: "warning",
-              buttons: true,          
-              closeModel: false,
-            })
-            .then(async(willDelete) => {
-              if (willDelete) {
-                await dispatch(adminRetrieveUsers(id, adminId))
-                .then(swal({
-                  title: "Reestableciendo...",
-                  timer: 2000,
-                }))
-                window.location.reload()
-              }
-            })
-            
-          }
+        if (!deleted) {
+          swal({
+            title: "Eliminar",
+            text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
+            icon: "warning",
+            dangerMode: true,
+            buttons: true,
+            closeModel: false,
+          }).then(async (willDelete) => {
+            if (willDelete) {
+              await dispatch(deleteUser(id))
+                .then(
+                  swal({
+                    title: "Eliminando...",
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
+            }
+          });
+        } else {
+          swal({
+            title: "Reestablecer",
+            text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
+            icon: "warning",
+            buttons: true,
+            closeModel: false,
+          }).then(async (willDelete) => {
+            if (willDelete) {
+              await dispatch(adminRetrieveUsers(id, adminId))
+                .then(
+                  swal({
+                    title: "Reestableciendo...",
+                    timer: 2000,
+                  })
+                )
+                .then(() => {
+                  location.reload(true);
+                });
+            }
+          });
+        }
       }
     }
   };
@@ -136,7 +146,6 @@ function AllUsers() {
   const handleViewReviews = (id, reviews, user) => {
     navigate(`/admin/users/reviews/${id}`, { state: { reviews, user } });
   };
-
 
   return (
     <div>
@@ -226,7 +235,7 @@ function AllUsers() {
                               )
                             }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
-                            title="Eliminar usuario"
+                            title="Eliminar/Recuperar usuario"
                           >
                             <Remove />
                           </button>

@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { deleteEvent, adminGetActivities } from "../../Redux trad/actions.js";
+import {
+  deleteEvent,
+  adminGetActivities,
+  deleteEventEmail,
+} from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../views/NavBar.jsx";
@@ -17,7 +21,7 @@ function AllEvents() {
   const allActivities = useSelector((state) => state.allActivities);
   const userActu = useSelector((state) => state.user);
   const adminState = userActu.admin;
-  console.log(allActivities);
+
   useEffect(() => {
     dispatch(adminGetActivities(userActu.id));
   }, []);
@@ -27,7 +31,7 @@ function AllEvents() {
     }
   }, [adminState]);
 
-  const handleDelete = async (id, deletedAt) => {
+  const handleDelete = async (id, deletedAt, eventName, users) => {
     if (deletedAt === null) {
       {
         swal({
@@ -35,24 +39,35 @@ function AllEvents() {
           text: `¿Estas seguro que deseas eliminar al evento?`,
           icon: "warning",
           dangerMode: true,
-          buttons: true,          
+          buttons: true,
           closeModel: false,
-        })
-        .then(async(willDelete) => {
+        }).then(async (willDelete) => {
           if (willDelete) {
-            await dispatch(deleteEvent(id))
-            .then(swal({
-              title: "Eliminando...",
-              timer: 2000,
-              buttons: false,
-            }))
+            await dispatch(deleteEvent(id)).then(
+              swal({
+                title: "Eliminando...",
+                timer: 2000,
+                buttons: false,
+              })
+            );
+            sendEmail(eventName, users);
             location.reload(true);
           }
-        })}
+        });
+      }
     } else {
       swal("El evento ya se encuentra eliminado");
     }
   };
+  const sendEmail = (eventName, users) => {
+    console.log(eventName);
+    const emails = users.map((user) => user.email);
+    console.log(emails);
+    emails.forEach((email) => {
+      dispatch(deleteEventEmail(email, eventName));
+    });
+  };
+
   const handleViewReports = (id, reports, user) => {
     navigate(`/admin/events/allReports/${id}`, { state: { reports, user } });
   };
@@ -150,7 +165,9 @@ function AllEvents() {
                         <td>
                           <button
                             title="eliminar evento"
-                            onClick={(e) => handleDelete(u.id, u.deletedAt)}
+                            onClick={(e) =>
+                              handleDelete(u.id, u.deletedAt, u.name, u.Users)
+                            }
                             className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
                           >
                             <Remove />
