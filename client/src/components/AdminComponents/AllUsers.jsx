@@ -92,62 +92,63 @@ function AllUsers() {
   };
 
   const handleDelete = async (id, userEmail, deleted, adminId) => {
-    if (userActu.id === id) {
-      swal("No puedes eliminarte a ti mismo");
-    } else {
-      if (userEmail === "nomad.locals01@gmail.com") {
-        swal("No podes quitarle el permiso de administrador a este usuario");
+    try {
+      if (userActu.id === id) {
+        swal("No puedes eliminarte a ti mismo");
       } else {
-        if (!deleted) {
-          swal({
-            title: "Eliminar",
-            text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
-            icon: "warning",
-            dangerMode: true,
-            buttons: true,
-            closeModel: false,
-          }).then(async (willDelete) => {
-            if (willDelete) {
-              await dispatch(deleteUser(id))
-                .then(
-                  swal({
-                    title: "Eliminando...",
-                    timer: 2000,
-                    buttons: false,
-                  })
-                )
-                .then(() => {
-                  console.log("elimina");
-                  location.reload(true);
-                });
-            }
-          });
+        if (userEmail === "nomad.locals01@gmail.com") {
+          swal("No podes quitarle el permiso de administrador a este usuario");
         } else {
-          swal({
-            title: "Reestablecer",
-            text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
-            icon: "warning",
-            buttons: true,
-            closeModel: false,
-          }).then(async (willDelete) => {
-            if (willDelete) {
-              await dispatch(adminRetrieveUsers(id, adminId))
-                .then(
-                  swal({
-                    title: "Reestableciendo...",
-                    buttons: false,
-                    timer: 2000,
-                  })
-                )
-                .then(() => {
-                  console.log("recupera");
-                  location.reload(true);
-                });
-            }
-          });
+          if (!deleted) {
+            swal({
+              title: "Eliminar",
+              text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
+              icon: "warning",
+              dangerMode: true,
+              buttons: true,
+              closeModel: false,
+            }).then(async (willDelete) => {
+              if (willDelete) {
+                await dispatch(deleteUser(id))
+                  .then(
+                    swal({
+                      title: "Eliminando...",
+                      timer: 1000,
+                      buttons: false,
+                    })
+                  )
+                  .then(() => {
+                    location.reload(true);
+                  });
+              }
+            });
+          } else {
+            swal({
+              title: "Reestablecer",
+              text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
+              icon: "warning",
+              buttons: true,
+              closeModel: false,
+            }).then(async (willDelete) => {
+              if (willDelete) {
+                await dispatch(adminRetrieveUsers(id, adminId))
+                  .then(
+                    swal({
+                      title: "Reestableciendo...",
+                      buttons: false,
+                      timer: 2000,
+                    })
+                  )
+                  .then(() => {
+                    console.log("recupera");
+                    location.reload(true);
+                  });
+              }
+            });
+          }
         }
       }
-    }
+    } catch (error) {}
   };
   const handleViewReports = (id, reports, user) => {
     navigate(`/admin/users/reports/${id}`, { state: { reports, user } });
