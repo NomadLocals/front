@@ -41,13 +41,9 @@ export default function NavBar() {
     dispatch(resetFilters());
 
     dispatch(setFilters({ name }));
-<<<<<<< HEAD
-    dispatch(getFilteredActivities({name}));
-=======
 
     dispatch(getFilteredActivities({ name }));
 
->>>>>>> 08effe5e6ebd26d267aa1e423a947bbd0f27888b
     setName("");
     navigate("/activities");
   };

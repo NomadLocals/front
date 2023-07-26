@@ -54,13 +54,9 @@ const Detail = () => {
     setShowChat(true);
     setShowUsers(true);
     try {
-<<<<<<< HEAD
-      dispatch(suscribeEvent(id, userId));
-=======
       dispatch(
         suscribeEvent(id, userId, formattedDate, place, user.email, name)
       );
->>>>>>> 08effe5e6ebd26d267aa1e423a947bbd0f27888b
       setJoinedUsers([...joinedUsers, { userName, userImage }]);
     } catch (error) {
       console.log(error);
