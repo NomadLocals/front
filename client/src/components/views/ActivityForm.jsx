@@ -109,7 +109,7 @@ export default function ActivityForm() {
 
     if (isValid) {
       try {
-        dispatch(postEvent(activityData));
+        dispatch(postEvent(activityData, user.userName, user.email));
         dispatch(getUserActivities(userId));
         setActivityData({
           userId: userId,

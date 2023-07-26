@@ -119,6 +119,7 @@ export const postUser = (userData) => {
     try {
       const endPoint = `${URL}/${USER}`;
       const { data } = await axios.post(endPoint, userData);
+      await axios.post(`${URL}/send-mail/register`, userData);
       dispatch({
         type: POST_USER,
         payload: data,
@@ -341,11 +342,13 @@ export const setSingOut = (userVacio) => {
   };
 };
 
-export const postEvent = (activityData) => {
+export const postEvent = (activityData,userName,email) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${URL}/events`, activityData);
       console.log(response);
+      await axios.post(`${URL}/send-mail/newEventCreated`, {userName,email,activityData});
+
       return dispatch({
         type: POST_EVENT,
       });
