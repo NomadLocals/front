@@ -35,6 +35,7 @@ import {
   NEXT_PAGE,
   PREVIOUS_PAGE,
   RESET_PAGE,
+  INIT_SESION,
 } from "./action-types.js";
 
 const initialState = {
@@ -61,6 +62,7 @@ const initialState = {
   startChat: {},
   historialChatPersonal: [],
   firstPage: 0,
+  banned: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -178,6 +180,7 @@ const rootReducer = (state = initialState, action) => {
         initSesion: action.payload,
         filter: action.payload,
         firstPage: action.payload,
+        banned: action.payload,
       };
     case GET_EVENT_BY_ID:
       return {
@@ -258,6 +261,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         firstPage: aux,
       };
+
     case PREVIOUS_PAGE:
       let first = state.firstPage;
       if (first < 10) first = state.firstPage;
@@ -268,6 +272,11 @@ const rootReducer = (state = initialState, action) => {
       };
     case RESET_PAGE:
       return { ...state, firstPage: 0 };
+    case INIT_SESION:
+      return {
+        ...state,
+        banned: false,
+      };
 
     default:
       return state;

@@ -44,6 +44,7 @@ import {
   NEXT_PAGE,
   PREVIOUS_PAGE,
   RESET_PAGE,
+  INIT_SESION,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001"; //* servidor
@@ -131,11 +132,18 @@ export const postUser = (userData) => {
         payload: data,
       });
     } catch (error) {
+      dispatch(initFalse());
+
       console.log("Usuario no creado");
     }
   };
 };
 
+export const initFalse = () => {
+  return {
+    type: INIT_SESION,
+  };
+};
 export const resetFilters = () => {
   return {
     type: RESET_FILTER,
@@ -250,7 +258,7 @@ export const getUserActivities = (id) => {
         payload: events,
       });
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
 };
@@ -281,7 +289,7 @@ export const getUserById = (id) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -290,6 +298,7 @@ export const checkUserById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
+      console.log(data);
       let saved = "";
       if (data) {
         saved = true;
@@ -300,7 +309,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,

@@ -4,13 +4,19 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer.jsx";
 import SuggestionCarousel from "./SuggestionCarousel.jsx";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserActivities, resetFilters } from "../../Redux trad/actions.js";
+import {
+  getUserActivities,
+  resetFilters,
+  checkUserById,
+} from "../../Redux trad/actions.js";
 import { useEffect, useState } from "react";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const userPlace = user.place;
+  const usuarioRegistrado = useSelector((state) => state.banned);
+  // const usuarioRegistrado = useSelector((state) => state.initSesion);
 
   useEffect(() => {
     dispatch(getUserActivities(user.id));
@@ -19,20 +25,13 @@ const Home = () => {
 
   //Evitar ingreso de usuarios banneados:
   const [isUserSuspended, setIsUserSuspended] = useState(false);
+
   useEffect(() => {
     // Verificar si el usuario está suspendido al cargar el componente
-    const delay = 3000;
-    const timerId = setTimeout(() => {
-      // Verificar si el usuario está suspendido después del retraso
-      console.log(user);
-      if (!(user && "deletedAt" in user)) {
-        setIsUserSuspended(true);
-      }
-    }, delay);
-
-    // Limpiar el timer al desmontar el componente para evitar errores
-    return () => clearTimeout(timerId);
-  }, [user]);
+    if (usuarioRegistrado === false) {
+      setIsUserSuspended(true);
+    }
+  }, [usuarioRegistrado]);
 
   if (isUserSuspended) {
     return (
