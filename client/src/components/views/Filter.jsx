@@ -8,6 +8,7 @@ import {
   getActivities,
   getFilteredActivities,
   setFilters,
+  resetFilters,
 } from "../../Redux trad/actions.js";
 
 const FilterActivities = () => {
@@ -28,10 +29,12 @@ const FilterActivities = () => {
 
   //Fecha actual:
   const currentDate = new Date().toISOString().split("T")[0];
-
+  const reset = () => {
+    dispatch(resetFilters());
+  };
   return (
     <>
-      <div className="bg-grey">
+      <div className="bg-grey ">
         <NavBar />
         <div className="flex flex-col justify-center items-center mt-6 gap-2 md:flex-row font-quick">
           {/* Filtro 1 */}
@@ -86,24 +89,14 @@ const FilterActivities = () => {
               min={currentDate}
             />
           </div>
-          {/* Filtro 4 */}
-          {/* <div className="relative ">
-            <select
-              id="location"
-              className="border border-gray-300 rounded px-2 py-1  text-xs w-[12em]"
-              defaultValue=""
-              onChange={(e) => handleFilterChange("location", e.target.value)}
-            >
-              
-              <option value="" disabled hidden>
-                Ubicacion
-              </option>
-              <option value="all">todas las actividades</option>
-              <option value="opcion1">opción 1</option>
-              <option value="opcion2">opción 2</option>
-              <option value="opcion3">opción 3</option>
-            </select>
-          </div> */}
+          {/* Botón "Reset Filters"*/}
+
+          <button
+            onClick={reset}
+            className="text-white font-bold p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md"
+          >
+            Reset Filters
+          </button>
         </div>
 
         <Activities />

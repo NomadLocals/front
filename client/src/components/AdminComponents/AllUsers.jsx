@@ -7,6 +7,7 @@ import {
   resetPage,
   nextPage,
   previousPage,
+  cleanComponent,
 } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -91,62 +92,63 @@ function AllUsers() {
   };
 
   const handleDelete = async (id, userEmail, deleted, adminId) => {
-    if (userActu.id === id) {
-      swal("No puedes eliminarte a ti mismo");
-    } else {
-      if (userEmail === "nomad.locals01@gmail.com") {
-        swal("No podes quitarle el permiso de administrador a este usuario");
+    try {
+      if (userActu.id === id) {
+        swal("No puedes eliminarte a ti mismo");
       } else {
-        if (!deleted) {
-          swal({
-            title: "Eliminar",
-            text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
-            icon: "warning",
-            dangerMode: true,
-            buttons: true,
-            closeModel: false,
-          }).then(async (willDelete) => {
-            if (willDelete) {
-              await dispatch(deleteUser(id))
-                .then(
-                  swal({
-                    title: "Eliminando...",
-                    timer: 2000,
-                    buttons: false,
-                  })
-                )
-                .then(() => {
-                  console.log("elimina");
-                  location.reload(true);
-                });
-            }
-          });
+        if (userEmail === "nomad.locals01@gmail.com") {
+          swal("No podes quitarle el permiso de administrador a este usuario");
         } else {
-          swal({
-            title: "Reestablecer",
-            text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
-            icon: "warning",
-            buttons: true,
-            closeModel: false,
-          }).then(async (willDelete) => {
-            if (willDelete) {
-              await dispatch(adminRetrieveUsers(id, adminId))
-                .then(
-                  swal({
-                    title: "Reestableciendo...",
-                    buttons: false,
-                    timer: 2000,
-                  })
-                )
-                .then(() => {
-                  console.log("recupera");
-                  location.reload(true);
-                });
-            }
-          });
+          if (!deleted) {
+            swal({
+              title: "Eliminar",
+              text: `¿Estas seguro que deseas eliminar al usuario ${userEmail}?`,
+              icon: "warning",
+              dangerMode: true,
+              buttons: true,
+              closeModel: false,
+            }).then(async (willDelete) => {
+              if (willDelete) {
+                await dispatch(deleteUser(id))
+                  .then(
+                    swal({
+                      title: "Eliminando...",
+                      timer: 1000,
+                      buttons: false,
+                    })
+                  )
+                  .then(() => {
+                    location.reload(true);
+                  });
+              }
+            });
+          } else {
+            swal({
+              title: "Reestablecer",
+              text: `¿Estas seguro que deseas reestablecer al usuario ${userEmail}?`,
+              icon: "warning",
+              buttons: true,
+              closeModel: false,
+            }).then(async (willDelete) => {
+              if (willDelete) {
+                await dispatch(adminRetrieveUsers(id, adminId))
+                  .then(
+                    swal({
+                      title: "Reestableciendo...",
+                      buttons: false,
+                      timer: 2000,
+                    })
+                  )
+                  .then(() => {
+                    console.log("recupera");
+                    location.reload(true);
+                  });
+              }
+            });
+          }
         }
       }
-    }
+    } catch (error) {}
   };
   const handleViewReports = (id, reports, user) => {
     navigate(`/admin/users/reports/${id}`, { state: { reports, user } });
@@ -158,10 +160,10 @@ function AllUsers() {
   const leave = () => {
     dispatch(resetPage());
     navigate("/admin");
+    dispatch(cleanComponent("allusers"));
   };
   //Manejo paginado
   const firstToShow = useSelector((state) => state.firstPage);
-  console.log(firstToShow);
   const paginaActual =
     allUsers.length === 0 ? 0 : Math.ceil((firstToShow + 1) / 10);
 
@@ -210,81 +212,85 @@ function AllUsers() {
                 </tr>
               </thead>
               <tbody>
-                {allUsers
-                  ?.sort((a, b) => a.userName.localeCompare(b.userName))
-                  .slice(firstToShow, firstToShow + 10)
-                  .map((u) => {
-                    return (
-                      <tr key={u.id} className="bg-white border-b text-center">
-                        <td className="p-2">
-                          {u.email.length > 15
-                            ? u.email.substring(0, 15) + "..."
-                            : u.email}
-                        </td>
-                        <td className="p-2">
-                          <img
-                            className="w-12 h-12 object-cover rounded-full"
-                            src={u.image}
-                            alt="No disponible"
-                          />
-                        </td>
-
-                        <td className="p-2">{u.reportUser.length}</td>
-                        <td
-                          className={`p-2 ${
-                            u.reportUser.length ? "cursor-pointer" : ""
-                          }`}
-                          title="Ver reportes del usuario"
-                          onClick={() =>
-                            handleViewReports(u.id, u.reportUser, u.email)
-                          }
+                {allUsers.length > 0 &&
+                  allUsers
+                    ?.sort((a, b) => a.userName.localeCompare(b.userName))
+                    .slice(firstToShow, firstToShow + 10)
+                    .map((u) => {
+                      return (
+                        <tr
+                          key={u.id}
+                          className="bg-white border-b text-center"
                         >
-                          {u.reportUser.length ? <View /> : ""}
-                        </td>
+                          <td className="p-2">
+                            {u.email.length > 15
+                              ? u.email.substring(0, 15) + "..."
+                              : u.email}
+                          </td>
+                          <td className="p-2">
+                            <img
+                              className="w-12 h-12 object-cover rounded-full"
+                              src={u.image}
+                              alt="No disponible"
+                            />
+                          </td>
 
-                        <td className="p-2 ">{u.reviewUser.length}</td>
-                        <td
-                          className="p-2 cursor-pointer"
-                          title="Ver reviews del usuario"
-                          onClick={() =>
-                            handleViewReviews(u.id, u.reviewUser, u.email)
-                          }
-                        >
-                          {u.reviewUser.length ? <View /> : ""}
-                        </td>
-
-                        <td className="p-2">
-                          {u.deletedAt === null ? "NO" : "SI"}
-                        </td>
-                        <td>
-                          <button
+                          <td className="p-2">{u.reportUser.length}</td>
+                          <td
+                            className={`p-2 ${
+                              u.reportUser.length ? "cursor-pointer" : ""
+                            }`}
+                            title="Ver reportes del usuario"
                             onClick={() =>
-                              handleDelete(
-                                u.id,
-                                u.email,
-                                u.deletedAt,
-                                userActu.id
-                              )
+                              handleViewReports(u.id, u.reportUser, u.email)
                             }
-                            className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
-                            title="Eliminar/Recuperar usuario"
                           >
-                            <Remove />
-                          </button>
-                        </td>
-                        <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
-                        <td>
-                          <button
-                            onClick={() => handleEdit(u.id, u.email, u.admin)}
-                            className="text-blue-500 hover:text-blue-700 focus:outline-none"
-                            title="Editar permisos de administrador"
+                            {u.reportUser.length ? <View /> : ""}
+                          </td>
+
+                          <td className="p-2 ">{u.reviewUser.length}</td>
+                          <td
+                            className="p-2 cursor-pointer"
+                            title="Ver reviews del usuario"
+                            onClick={() =>
+                              handleViewReviews(u.id, u.reviewUser, u.email)
+                            }
                           >
-                            <Edit />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                            {u.reviewUser.length ? <View /> : ""}
+                          </td>
+
+                          <td className="p-2">
+                            {u.deletedAt === null ? "NO" : "SI"}
+                          </td>
+                          <td>
+                            <button
+                              onClick={() =>
+                                handleDelete(
+                                  u.id,
+                                  u.email,
+                                  u.deletedAt,
+                                  userActu.id
+                                )
+                              }
+                              className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
+                              title="Eliminar/Recuperar usuario"
+                            >
+                              <Remove />
+                            </button>
+                          </td>
+                          <td className="p-2">{u.admin ? "SÍ" : "NO"}</td>
+                          <td>
+                            <button
+                              onClick={() => handleEdit(u.id, u.email, u.admin)}
+                              className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                              title="Editar permisos de administrador"
+                            >
+                              <Edit />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
           </div>

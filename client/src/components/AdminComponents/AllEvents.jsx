@@ -6,6 +6,7 @@ import {
   resetPage,
   nextPage,
   previousPage,
+  cleanComponent,
 } from "../../Redux trad/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -87,6 +88,7 @@ function AllEvents() {
   };
   const leave = () => {
     dispatch(resetPage());
+    dispatch(cleanComponent("allevents"));
     navigate("/admin");
   };
   //Manejo paginado
@@ -139,75 +141,81 @@ function AllEvents() {
                 </tr>
               </thead>
               <tbody>
-                {allActivities
-                  ?.sort((a, b) => a.eventDate - b.eventDate)
-                  .slice(firstToShow, firstToShow + 10)
-                  .map((u) => {
-                    return (
-                      <tr key={u.id} className="bg-white border-b text-center">
-                        <td className="p-2">{u.eventDate.split("T")[0]}</td>
-                        <td className="p-2">
-                          <img
-                            className="w-12 h-12 object-cover rounded-full"
-                            src={u.image}
-                            alt="No disponible"
-                          />
-                        </td>
-                        <td className="p-2">{u.name}</td>
-                        {/* falta hacer el blocked en el modelo */}
-                        <td className="p-2">
-                          {u.place.length > 15
-                            ? `${u.place.substring(0, 15)}...`
-                            : u.place}
-                        </td>
-
-                        <td className="p-2">{u.reportEvent.length}</td>
-                        <td
-                          className={`p-2 ${
-                            u.reportEvent.length ? "cursor-pointer" : ""
-                          }`}
-                          title="Ver reportes del evento"
-                          onClick={() =>
-                            handleViewReports(u.id, u.reportEvent, u.name)
-                          }
+                {allActivities.length > 0 &&
+                  allActivities
+                    ?.sort((a, b) => a.eventDate - b.eventDate)
+                    .slice(firstToShow, firstToShow + 10)
+                    .map((u) => {
+                      return (
+                        <tr
+                          key={u.id}
+                          className="bg-white border-b text-center"
                         >
-                          {u.reportEvent.length ? <View /> : ""}
-                        </td>
+                          <td className="p-2">{u.eventDate.split("T")[0]}</td>
+                          <td className="p-2">
+                            <img
+                              className="w-12 h-12 object-cover rounded-full"
+                              src={u.image}
+                              alt="No disponible"
+                            />
+                          </td>
+                          <td className="p-2">{u.name}</td>
+                          {/* falta hacer el blocked en el modelo */}
+                          <td className="p-2">
+                            {u.place.length > 15
+                              ? `${u.place.substring(0, 15)}...`
+                              : u.place}
+                          </td>
 
-                        <td className="p-2">{u.reviewEvent.length}</td>
-                        <td
-                          className="p-2 cursor-pointer"
-                          title="Ver reviews del evento"
-                          onClick={() =>
-                            handleViewReviews(u.id, u.reviewEvent, u.name)
-                          }
-                        >
-                          {u.reviewEvent.length ? <View /> : ""}
-                        </td>
-                        <td className="p-2">{u.deletedAt ? "NO" : "SI"}</td>
-                        <td>
-                          <button
-                            title="eliminar evento"
-                            onClick={(e) =>
-                              handleDelete(u.id, u.deletedAt, u.name, u.Users)
+                          <td className="p-2">{u.reportEvent.length}</td>
+                          <td
+                            className={`p-2 ${
+                              u.reportEvent.length ? "cursor-pointer" : ""
+                            }`}
+                            title="Ver reportes del evento"
+                            onClick={() =>
+                              handleViewReports(u.id, u.reportEvent, u.name)
                             }
-                            className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
                           >
-                            <Remove />
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            title="Ver detalle del evento"
-                            className="text-blue-500 hover:text-blue-700 focus:outline-none"
-                            onClick={() => handleViewDetail(u.id, u.deletedAt)}
+                            {u.reportEvent.length ? <View /> : ""}
+                          </td>
+
+                          <td className="p-2">{u.reviewEvent.length}</td>
+                          <td
+                            className="p-2 cursor-pointer"
+                            title="Ver reviews del evento"
+                            onClick={() =>
+                              handleViewReviews(u.id, u.reviewEvent, u.name)
+                            }
                           >
-                            <View />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                            {u.reviewEvent.length ? <View /> : ""}
+                          </td>
+                          <td className="p-2">{u.deletedAt ? "NO" : "SI"}</td>
+                          <td>
+                            <button
+                              title="eliminar evento"
+                              onClick={(e) =>
+                                handleDelete(u.id, u.deletedAt, u.name, u.Users)
+                              }
+                              className="text-red-500 hover:text-red-700 focus:outline-none ml-2"
+                            >
+                              <Remove />
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              title="Ver detalle del evento"
+                              className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                              onClick={() =>
+                                handleViewDetail(u.id, u.deletedAt)
+                              }
+                            >
+                              <View />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
               </tbody>
             </table>
           </div>

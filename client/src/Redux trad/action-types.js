@@ -29,7 +29,8 @@ export const CLEAN_CHAT_HISTORY = "CLEAN_CHAT_HISTORY";
 export const CLEAN_CHAT_PERSONAL = "CLEAN_CHAT_PERSONAL";
 export const POST_IMAGES = "POST_IMAGES";
 export const DELETE_IMAGE = "DELETE_IMAGE";
-export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const INIT_SESION = "INIT_SESION";
+export const CLEAN_COMPONENT = "CLEAN_COMPONENT";
 
 //Rutas de Administrador
 export const GET_USERS = "GET_USERS";

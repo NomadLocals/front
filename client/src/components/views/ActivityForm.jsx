@@ -21,15 +21,13 @@ export default function ActivityForm() {
   const image = useSelector((state) => state.activityImage);
   const userId = user.id;
   const dispatch = useDispatch();
-  
-
 
   const [activityData, setActivityData] = useState({
     userId: userId,
     name: "",
     description: "",
     eventDate: "",
-    duration: "",
+    duration: "00:00",
     minCost: "0",
     location: location,
     place: place,
@@ -78,7 +76,7 @@ export default function ActivityForm() {
       [property]: value,
     }));
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -130,7 +128,6 @@ export default function ActivityForm() {
         setErrors("");
         dispatch(getActivities());
         navigate("/home");
-        
       } catch (error) {
         console.log(error);
         setErrors("Error al crear la actividad");
@@ -145,36 +142,6 @@ export default function ActivityForm() {
     })
     .slice(0, 16);
 
-  // //---------------------Evitar ingreso de usuarios banneados:---------------------------------
-  // const [isUserSuspended, setIsUserSuspended] = useState(false);
-  // useEffect(() => {
-  //   // Verificar si el usuario está suspendido al cargar el componente
-  //   const delay = 1000;
-  //   const timerId = setTimeout(() => {
-  //     // Verificar si el usuario está suspendido después del retraso
-  //     if (!(user && "deletedAt" in user)) {
-  //       setIsUserSuspended(true);
-  //     }
-  //   }, delay);
-
-  //   // Limpiar el timer al desmontar el componente para evitar errores
-  //   return () => clearTimeout(timerId);
-  // }, [user]);
-
-  // if (isUserSuspended) {
-  //   return (
-  //     <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-grey">
-  //       <div className="text-white text-center p-8 rounded-lg bg-blue w-2/3">
-  //         <h2 className="text-4xl">
-  //           Tu cuenta está suspendida. Por favor, contacta al administrador via
-  //           mail a nomad.locals01@gmail.com
-  //         </h2>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-  // //-------------------Fin usuario banneado-----------------------------------
-
   return (
     <>
       <NavBar />
@@ -182,9 +149,7 @@ export default function ActivityForm() {
         <div className="w-full max-w-lg px-10 py-8 my-10 mx-auto rounded-lg shadow-xl">
           <div className="max-w-md mx-auto space-y-6">
             <form onSubmit={handleSubmit}>
-              <h2 className="text-2xl font-spartan">
-                ¡Crea tu actividad!
-              </h2>
+              <h2 className="text-2xl font-spartan">¡Crea tu actividad!</h2>
               <p className="my-4 opacity-70 font-quick">
                 Publica tu actividad para reunirte con la comunidad.
               </p>
@@ -235,7 +200,9 @@ export default function ActivityForm() {
                 <option value="" defaultValue disabled>
                   Elige el tipo de actividad
                 </option>
-                <option value="Actividades dentro de casa">Actividades dentro de casa</option>
+                <option value="Actividades dentro de casa">
+                  Actividades dentro de casa
+                </option>
                 <option value="conciertos">Conciertos</option>
                 <option value="cine">Cine</option>
                 <option value="teatrp">Teatro</option>
@@ -244,7 +211,9 @@ export default function ActivityForm() {
                 <option value="estudio">Estudio</option>
                 <option value="deportes">Deportes</option>
                 <option value="restaurates y cafés">Restaurates y cafés</option>
-                <option value="videojuegos en linea">Videojuegos en linea</option>
+                <option value="videojuegos en linea">
+                  Videojuegos en linea
+                </option>
                 <option value="otros">Otros</option>
               </select>
 

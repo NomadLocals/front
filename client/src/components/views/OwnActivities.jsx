@@ -5,14 +5,14 @@ import { getUserActivities } from "../../Redux trad/actions.js";
 
 const OwnActivities = () => {
   const events = useSelector((state) => state.user.Events);
-  const user = useSelector((state)=>state.user);
-  const userId = user.id
+  const user = useSelector((state) => state.user);
+  const userId = user.id;
   const [renderedCards, setTotalCards] = useState(3);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    dispatch(getUserActivities(userId))
-  }, [events])
+  useEffect(() => {
+    dispatch(getUserActivities(userId));
+  }, [events]);
   const [displayText, setDisplayText] = useState("buscar...");
   const texts = ["planear...", "crear...", "buscar..."];
   const [textIndex, setTextIndex] = useState(0);
@@ -87,8 +87,6 @@ const OwnActivities = () => {
           <h2 className="text-center font-quick -mb-8">
             ¡Aún no has agendado ninguna actividad! Comienza a {displayText}
           </h2>
-
-          <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690294493/Nomadlocals/Logos/404_-_1_vxyny3.png" alt="No Activities" className="mx-auto -mb-16" />
         </div>
       )}
 

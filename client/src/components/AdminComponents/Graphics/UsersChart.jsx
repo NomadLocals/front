@@ -1,25 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllUsers } from "../../../Redux trad/actions";
+import { useUser } from "@clerk/clerk-react";
 
 const UsersChart = () => {
-  const dailyLogins = useSelector((state) => state.dailyLogins);
+  const { user } = useUser();
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.allUsers);
 
-  const dates = Object.keys(dailyLogins);
-  console.log(dates);
-  const loginsData = Object.values(dailyLogins);
-  console.log(loginsData);
+  useEffect(() => {
+    if (user) {
+      dispatch(getAllUsers(user.id));
+    }
+  }, [dispatch]);
 
-  // Crear un array de objetos con la estructura { x: fecha, y: cantidad de logins }
-  const dataPoints = Object.entries(dailyLogins).map(([date, logins]) => ({
-    x: date,
-    y: logins,
-  }));
+  const dailyUserCount = {};
+  if (users) {
+    users.forEach((user) => {
+      const date = new Date(user.createdAt).toISOString().split("T")[0];
+      dailyUserCount[date] = (dailyUserCount[date] || 0) + 1;
+    });
+  }
+
+  const dataPoints = Object.entries(dailyUserCount).map(
+    ([date, userCount]) => ({
+      x: date,
+      y: userCount,
+    })
+  );
 
   const chartData = {
     series: [
       {
-        name: "Logins",
+        name: "User Count",
         data: dataPoints,
       },
     ],
@@ -47,7 +61,7 @@ const UsersChart = () => {
         curve: "smooth",
       },
       title: {
-        text: "Average High & Low Temperature",
+        text: "User Registrations per Day",
         align: "left",
       },
       grid: {
@@ -61,17 +75,18 @@ const UsersChart = () => {
         size: 1,
       },
       xaxis: {
-        categories: dates,
+        type: "datetime", // Use this if you want to display dates as labels
+        categories: dataPoints.map((dataPoint) => dataPoint.x), // Use this if you want to display dates as labels
         title: {
           text: "Date",
         },
       },
       yaxis: {
         title: {
-          text: "Logins",
+          text: "User Count",
         },
         min: 0,
-        max: Math.max(...loginsData) + 1, // Ajusta el mÃ¡ximo del eje y para mostrar todos los puntos correctamente
+        max: Math.max(...dataPoints.map((dataPoint) => dataPoint.y)) + 1, // Adjust the maximum of the y-axis to show all points correctly
       },
       legend: {
         position: "top",

@@ -41,11 +41,12 @@ import {
   CLEAN_CHAT_PERSONAL,
   CLEAN_CHAT_HISTORY,
   ADMIN_RETRIEVE_USERS,
-  CLEAN_DETAIL,
+  CLEAN_COMPONENT,
   ADMIN_EMAIL_DELETE_EVENT,
   NEXT_PAGE,
   PREVIOUS_PAGE,
   RESET_PAGE,
+  INIT_SESION,
 } from "./action-types.js";
 
 const URL = "http://localhost:3001"; //* servidor
@@ -81,13 +82,12 @@ export const getActivities = () => {
 };
 
 export const getFilteredActivities = (filtros) => {
- 
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${FILTER}`, {
         params: filtros,
       });
-      
+
       return dispatch({
         type: GET_FILTERED_AVTIVITIES,
         payload: data,
@@ -134,11 +134,18 @@ export const postUser = (userData) => {
         payload: data,
       });
     } catch (error) {
+      dispatch(initFalse());
+
       console.log("Usuario no creado");
     }
   };
 };
 
+export const initFalse = () => {
+  return {
+    type: INIT_SESION,
+  };
+};
 export const resetFilters = () => {
   return {
     type: RESET_FILTER,
@@ -253,7 +260,7 @@ export const getUserActivities = (id) => {
         payload: events,
       });
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
 };
@@ -284,7 +291,7 @@ export const getUserById = (id) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };
@@ -293,6 +300,7 @@ export const checkUserById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL}/${USER}/${id}`);
+      console.log(data);
       let saved = "";
       if (data) {
         saved = true;
@@ -303,7 +311,7 @@ export const checkUserById = (id) => {
         payload: saved,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       let saved = false;
       return dispatch({
         type: CHECK_USER_BY_ID,
@@ -552,8 +560,10 @@ export const deleteEventEmail = (email, event) => {
   return async (dispatch) => {
     try {
       await axios.post(`${URL}/send-mail/delete-event`, { email, event });
+
       return dispatch({
         type: ADMIN_EMAIL_DELETE_EVENT,
+        payload: id,
       });
     } catch (error) {
       // alert(error);
@@ -653,11 +663,12 @@ export const adminRetrieveUsers = (id, adminId, email) => {
   };
 };
 
-export const cleanDetail = () => {
+export const cleanComponent = (component) => {
   return {
-    type: CLEAN_DETAIL,
-    payload: {},
-  }}
+    type: CLEAN_COMPONENT,
+    payload: component,
+  };
+};
 
 export const nextPage = () => {
   return {
