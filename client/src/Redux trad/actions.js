@@ -49,10 +49,11 @@ import {
   INIT_SESION,
 } from "./action-types.js";
 
-const URL = "http://localhost:3001"; //* servidor
+// const URL = "http://localhost:3001"; //* servidor
 // const URL = import.meta.env.SERVER_URL;
 // const URL = "https://serverpfnomadlocals.onrender.com";
 // const URL = "https://serverpredeploy.onrender.com";
+const URL = "https://lastservernomad.onrender.com";
 
 const USER = "users";
 const EVENT = "events";
@@ -371,12 +372,16 @@ export const setSingOut = (userVacio) => {
   };
 };
 
-export const postEvent = (activityData,userName,email) => {
+export const postEvent = (activityData, userName, email) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${URL}/events`, activityData);
       console.log(response);
-      await axios.post(`${URL}/send-mail/newEventCreated`, {userName,email,activityData});
+      await axios.post(`${URL}/send-mail/newEventCreated`, {
+        userName,
+        email,
+        activityData,
+      });
 
       return dispatch({
         type: POST_EVENT,
@@ -407,7 +412,7 @@ export const getHistorialMessages = (id) => {
 export const getPersonalMessages = (roomName) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(`${URL}/chat/personal/${roomName}`)
+      const { data } = await axios.get(`${URL}/chat/personal/${roomName}`);
 
       return dispatch({
         type: GET_HISTORIAL_CHAT_PERSONAL,
