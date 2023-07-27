@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
+import Footer from "./Footer.jsx";
 // import ChatPersonal from "./ChatPersonal.jsx";
 import { cleanComponent, getOthersById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
@@ -82,11 +83,10 @@ const OthersDetail = () => {
             </div>
           </div>
           <Link to="/chat/personal">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-5">
-              Iniciar Chat Personal
-            </button>
+            <button className="paimon mt-5">Iniciar Chat Personal</button>
           </Link>
         </div>
+        <Footer />
       </div>
     </>
   );
