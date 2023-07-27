@@ -1,21 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postReportEvent } from "../../Redux trad/actions.js";
+import { postReportUser } from "../../Redux trad/actions.js";
 import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavBar.jsx";
-import swal from "sweetalert";
 
-const ReportForm = () => {
+const ReportUser = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const userName = user.userName;
+  const userId = user.id;
   const [formData, setFormData] = useState({
     type: "",
     description: "",
-    userNameUserReporter: userName,
-    idEventReporte: id,
+    idUserReporter: userId,
+    idUserReporte: id,
   });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -39,14 +38,17 @@ const ReportForm = () => {
       formData.description.trim() === "" ||
       formData.description.length > 200
     ) {
-      setErrorMessage("Escribe una descripción de no mas de 200 caracteres");
+      setErrorMessage("Escribe una descripción de no más de 200 caracteres");
       isValid = false;
     }
     if (isValid) {
-      dispatch(postReportEvent(formData))
+      dispatch(postReportUser(formData))
         .then(() => {
           resetForm();
           setErrorMessage("");
+          console.log("creado correctamente");
+        })
+        .then(() => {
           swal({
             title: "Recibido",
             text: `¡Gracias por enviar tu reporte! Tu aporte es valioso para mejorar nuestros servicios y ofrecerte una mejor experiencia.`,
@@ -56,12 +58,9 @@ const ReportForm = () => {
           });
         })
         .catch((error) => {
-          console.error(
-            "An error occurred while submitting the report:",
-            error
-          );
+          console.error("Ocurrió un error al enviar el informe:", error);
         });
-      navigate(`/home/detail/${id}`);
+      navigate(`/others/${id}`);
     }
   };
 
@@ -69,8 +68,8 @@ const ReportForm = () => {
     setFormData({
       type: "",
       description: "",
-      userNameUserReporter: userName,
-      idEventReporte: id,
+      idUserReporter: userId,
+      idUserReporte: id,
     });
   };
 
@@ -80,9 +79,11 @@ const ReportForm = () => {
       <div className="bg-grey min-h-screen lg:min-w-52 flex justify-center font-quick">
         <div className="mt-10 lg:w-8/12 shadow-2xl rounded-lg overflow-hidden flex flex-col justify-center items-center p-5">
           <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">
-            Formulario de Reporte de Evento
+            Formulario de Reporte de Usuario
           </h2>
-          {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
+          {errorMessage && (
+            <p className="text-blue bg-yellow mb-3">{errorMessage}</p>
+          )}
           <form onSubmit={handleSubmit}>
             <div className="mb-4 w-[250px] lg:w-[450px] lg:h-[400px]">
               <label htmlFor="type" className="block font-bold mb-1">
@@ -93,7 +94,7 @@ const ReportForm = () => {
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
-                className="block px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500  w-[250px] lg:w-[400px]"
+                className="block px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500 w-[250px] lg:w-[400px]"
               >
                 <option value="">Selecciona un Motivo</option>
                 <option value="Scam">
@@ -110,7 +111,6 @@ const ReportForm = () => {
                 </option>
                 <option value="Other">Otros</option>
               </select>
-
               <label
                 htmlFor="description"
                 className="block font-bold mb-1 mt-3"
@@ -129,9 +129,9 @@ const ReportForm = () => {
 
               <button
                 type="submit"
-                className="px-6 mx-2 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
+                className="px-6 mx-2 my-5 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
               >
-                Submit
+                Enviar
               </button>
               <button
                 type="button"
@@ -150,4 +150,4 @@ const ReportForm = () => {
   );
 };
 
-export default ReportForm;
+export default ReportUser;

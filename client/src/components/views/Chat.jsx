@@ -1,105 +1,86 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import { io } from "socket.io-client";
-// const URL = "http://localhost:3001";
+import io from "socket.io-client";
+import { useParams } from "react-router-dom";
 // const URL = "https://serverpfnomadlocals.onrender.com";
-const URL = "https://serverpredeploy.onrender.com"
-const socket = io(URL); // Establecer conexión con el servidor de chat
+// const socket = io("http://localhost:3001");
+
+// const socket = io("https://serverpredeploy.onrender.com");
+const socket = io("https://lastservernomad.onrender.com");
 
 const Chat = () => {
   const user = useSelector((state) => state.user);
+  const historialChat = useSelector((state) => state.historialChat);
   const [isConnected, setIsConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
-  const [allMessages, setAllMessages] = useState(() => {
-    const storedMessages = localStorage.getItem("chatHistory");
-    return storedMessages ? JSON.parse(storedMessages) : [];
-  });
+  const [allMessages, setAllMessages] = useState(historialChat);
 
   const userName = user.userName;
-  const chatContainerRef = useRef(null); // Referencia al div del chat
+  const { id } = useParams();
 
-  useEffect(() => {
-    socket.on("connect", () => setIsConnected(true));
-
-    socket.on("chat message", (data) => {
-      setAllMessages((prevMessages) => [...prevMessages, data]);
-    });
-
-    // Guardar el historial de mensajes en LocalStorage cada vez que cambie
-    localStorage.setItem("chatHistory", JSON.stringify(allMessages));
-
-    // Desplazarse hacia abajo cuando se agrega un nuevo mensaje
-    scrollToBottom();
-
-    return () => {
-      socket.off("connect");
-      socket.off("chat message");
-    };
-  }, [allMessages]);
-
+  console.log(historialChat);
   const handleMessageChange = (event) => setNewMessage(event.target.value);
 
   const handleSendMessage = () => {
-    if (newMessage.trim() === "") {
-      return; // Evitar enviar mensajes vacíos
-    }
-    socket.emit("chat message", {
-      usuario: userName,
+    socket.emit("chatEventMessage", {
+      eventId: id,
+      senderId: user.id,
       message: newMessage,
+      userName: userName,
     });
     setNewMessage("");
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSendMessage();
-    }
-  };
+  useEffect(() => {
+    socket.on("connect", () => setIsConnected(true));
 
-  const handleClearChat = () => {
-    setAllMessages([]);
-    localStorage.removeItem("chatHistory");
-  };
+    socket.on("getMessagesEvent", (data) => {
+      // console.log(data)
+      setAllMessages((prevMessages) => [...prevMessages, data]);
+    });
 
-  const scrollToBottom = () => {
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  };
+    socket.on("chatEventMessage", (data) => {
+      console.log(data);
+      setAllMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("chatEventMessage");
+    };
+  }, [allMessages]);
+
+  console.log(allMessages);
 
   return (
     <div className="mt-4">
       <h4 className="text-lg font-semibold mb-2">Chat</h4>
       <div
-        ref={chatContainerRef}
+        // ref={chatContainerRef}
         className="border border-gray-300 rounded-lg p-2 h-40 overflow-y-scroll"
       >
-        {allMessages.map((message, index) => (
-          <div key={index} className="mb-2">
-            <span className="font-semibold">{message.usuario}: </span>
-            <span>{message.message}</span>
-          </div>
-        ))}
+        {allMessages &&
+          allMessages?.map((message, index) => (
+            <div key={index} className="mb-2">
+              <span className="font-semibold">{message.userName}: </span>
+              <span>{message.message}</span>
+            </div>
+          ))}
       </div>
       <div className="flex mt-2 text-black">
         <input
           type="text"
           value={newMessage}
           onChange={handleMessageChange}
-          onKeyDown={handleKeyDown} // Agregamos el evento onKeyDown
+          // onKeyDown={handleKeyDown} // Agregamos el evento onKeyDown
           className="border border-gray-300 rounded-md px-2 py-1 flex-grow mr-2"
           placeholder="Escribe un mensaje..."
         />
         <button
-          className="bg-blue hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
+          className="bg-blue border-2 border-black hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
           onClick={handleSendMessage}
         >
           Enviar
-        </button>
-        <button
-          className="bg-blue hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline ml-2"
-          onClick={handleClearChat}
-        >
-          Limpiar Chat
         </button>
       </div>
     </div>

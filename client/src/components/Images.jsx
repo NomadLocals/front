@@ -80,7 +80,7 @@ const Images = (props) => {
   return (
     <div>
       <Container>
-        <h1 className="text-center">Sube la portada de tu evento aquí</h1>
+        <h1 className="text-center text-sm text-blue font-spartan">Sube la portada de tu evento aquí</h1>
         <Dropzone className="dropzone" onDrop={handleDrop} maxFiles={1}>
           {({ getRootProps, getInputProps }) => (
             <section>
@@ -89,7 +89,7 @@ const Images = (props) => {
                 <span className="icon-container">
                   <FcAddImage />
                 </span>
-                <p className="text-center">
+                <p className="text-center text-sm text-black font-spartan">
                   Arrastra tu imagen aquí o haz clic para seleccionar
                 </p>
               </div>

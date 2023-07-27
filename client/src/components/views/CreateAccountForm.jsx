@@ -16,6 +16,13 @@ const CreateAccountForm = () => {
     interests: "",
   });
 
+  const [errors, setErrors] = useState({
+    userName: "",
+    age: "",
+    gender: "",
+    interests: "",
+  });
+
   useEffect(() => {
     if (user) {
       setInput((prevInput) => ({
@@ -30,23 +37,24 @@ const CreateAccountForm = () => {
       }));
     }
   }, [user]);
+
   const [id, setId] = useState("");
 
-  //logica para que no haya demora al renderizar mis actividades al ingresar.
+  // Logica para que no haya demora al renderizar mis actividades al ingresar.
   useEffect(() => {
     if (user) {
       setId(user.id);
     }
   }, [user]);
+
   useEffect(() => {
     dispatch(getUserActivities(id));
   }, [dispatch]);
-  //
 
   const handleAge = (event) => {
     setInput({
       ...input,
-      age: Number(event.target.value),
+      age: event.target.value,
     });
   };
 
@@ -66,7 +74,51 @@ const CreateAccountForm = () => {
 
   const handleSubmit = async (e, id) => {
     e.preventDefault();
-    console.log(user);
+
+    // Validación de campos requeridos
+    if (!input.userName) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        userName: "Queremos saber como llamarte.",
+      }));
+      return;
+    }
+
+    if (!input.age) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        age: "Debes agregar un valor númerico.",
+      }));
+      return;
+    }
+
+    // Validación de campo de edad (debe ser numérico)
+    if (isNaN(input.age)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        age: "Debes ingresar un valor númerico.",
+      }));
+      return;
+    }
+
+    // Validación de opciones seleccionadas
+    if (!input.gender) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        gender: "Debes seleccionar una opción.",
+      }));
+      return;
+    }
+
+    if (!input.interests) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        interests: "Debes seleccionar una opción.",
+      }));
+      return;
+    }
+
+    // Si todas las validaciones pasan, se envía el formulario
     dispatch(saveUserForm(input));
     navigate("/create-account2");
   };
@@ -83,7 +135,7 @@ const CreateAccountForm = () => {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            src="logonomad.png"
+            src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/1_z79ppu.png"
             className="mx-auto h-10 w-auto"
             alt="Your Company"
           />
@@ -92,9 +144,9 @@ const CreateAccountForm = () => {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="bg-grey mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
-            className="space-y-6 bg-white p-6 rounded-lg shadow-lg"
+            className="space-y-6 bg-grey p-6 rounded-lg shadow-lg"
             action="#"
             method="POST"
           >
@@ -113,8 +165,11 @@ const CreateAccountForm = () => {
                   autoComplete="userName"
                   value={input.userName}
                   onChange={handleUserName}
-                  className="bg-grey block w-full rounded-md border-black py-1.5 text-black shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="bg-white block w-full rounded-md border-black py-1.5 text-black font-spartan text-xl shadow-sm ring-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
+                {errors.userName && (
+                  <p className="text-red-500 text-sm">{errors.userName}</p>
+                )}
               </div>
             </div>
             <div>
@@ -133,8 +188,11 @@ const CreateAccountForm = () => {
                   name="age"
                   type="number"
                   value={input.age}
-                  className="bg-grey block w-full rounded-md border-black py-1.5 text-black shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="bg-white block w-full rounded-md py-1.5 text-black font-spartan text-xl shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
+                {errors.age && (
+                  <p className="text-red-500 text-sm">{errors.age}</p>
+                )}
               </div>
             </div>
             <div>
@@ -169,6 +227,9 @@ const CreateAccountForm = () => {
                     Otro
                   </option>
                 </select>
+                {errors.gender && (
+                  <p className="text-red-500 text-sm">{errors.gender}</p>
+                )}
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -200,12 +261,12 @@ const CreateAccountForm = () => {
                   Otro
                 </option>
               </select>
+              {errors.interests && (
+                <p className="text-red-500 text-sm">{errors.interests}</p>
+              )}
             </div>
-            <div className="block text-sm font-medium leading-6 text-black">
-              <button
-                onClick={handleSubmit}
-                className="bg-blue block w-full rounded-md border-black py-1.5 text-white bg-black shadow-sm ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              >
+            <div className="block text-sm font-spartan leading-6 text-black">
+              <button onClick={handleSubmit} className="paimon">
                 Ir a mi locación
               </button>
             </div>

@@ -1,8 +1,8 @@
 import { Fragment, useState, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BiSolidCalendarEvent } from "react-icons/bi"; 
-import { MdOutlineCreate } from "react-icons/md";
+import { MdOutlineCreate, MdTravelExplore } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
+import { AiOutlineLaptop } from "react-icons/ai";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -20,9 +20,10 @@ import {
 } from "../../Redux trad/actions.js";
 
 const navigation = [
-  { icon: BiSolidCalendarEvent, name: "Explorar Actividades", to: "/activities" }, // Cambio del icono y texto
-  { icon: MdOutlineCreate, name: "Crear Actividad", to: "/activity-form" }, // Cambio del icono y texto
-  { icon: FaUserFriends, name: "Sobre Nosotros", to: "/about" }, // Cambio del icono y texto
+  { icon: MdTravelExplore, name: "Explorar Actividades", to: "/activities" },
+  { icon: MdOutlineCreate, name: "Crear Actividad", to: "/activity-form" },
+  { icon: FaUserFriends, name: "Sobre Nosotros", to: "/about" },
+  // { icon: AiOutlineLaptop, name: "Developer Team", to: "/developer" },
 ];
 
 function classNames(...classes) {
@@ -32,6 +33,7 @@ function classNames(...classes) {
 export default function NavBar() {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [name, setName] = useState("");
+  const [showName, setShowName] = useState("");
   const filter = useSelector((state) => state.filter);
   const user = useSelector((state) => state.user);
   const userImage = user.image;
@@ -40,16 +42,15 @@ export default function NavBar() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
+    dispatch(resetFilters());
+
     dispatch(setFilters({ name }));
-    dispatch(getFilteredActivities(filter));
+
+    dispatch(getFilteredActivities({ name }));
 
     setName("");
-    dispatch(resetFilters());
     navigate("/activities");
   };
-  useEffect(() => {
-    dispatch(getFilteredActivities(filter));
-  }, [filter, dispatch]);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -64,15 +65,15 @@ export default function NavBar() {
     signOut();
     navigate("/");
   };
-  
+
   return (
-    <Disclosure as="nav" className="bg-blue font-quick relative">
+    <Disclosure as="nav" className="bg-black font-quick relative border-b-2 border-blue">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 lg:text-xl">
-            <div className="relative flex h-16 items-center justify-around">
-            <Link to="/home" className="absolute md:relative">
-                <img src="2.png" alt="icon" className="h-8 w-8 mr-2" />
+            <div className="relative flex h-16 items-center justify-around lg:justify-between">
+              <Link to="/home" className="absolute md:relative hover:scale-110 ease-out duration-300">
+                <img src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153676/Nomadlocals/Logos/2_kbqwgr.png" alt="icon" className="h-8 w-8 mr-2" />
               </Link>
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -85,27 +86,34 @@ export default function NavBar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex items-center justify-center">
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-20 flex-row justify-center items-center">
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
                         to={item.to}
-                        className="text-grey font-spartan"
+                        className="text-grey font-spartan relative"
+                        onMouseEnter={() => setShowName(item.name)}
+                        onMouseLeave={() => setShowName("")}
                       >
-                        {item.name}
+                        <div className="flex flex-col items-center ml-8">
+                          <item.icon className="w-6 h-6 lg:w-10 lg:h-10" aria-hidden="true" />
+                          <div className={`absolute rounded-xl font-quick bg-black text-grey -bottom-3 text-center font-extrabold text-xl text-black opacity-0 hover:scale-120 ease-out transition-opacity duration-300 ${showName === item.name ? "opacity-100" : ""}`}>
+                            <span className="text-xs">{item.name}</span>
+                          </div>
+                        </div>
                       </Link>
                     ))}
                   </div>
                 </div>
               </div>
-              
+
               <div className="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6 sm:pr-0 text-blue">
                 <button
                   onClick={() => setShowSearchBar(!showSearchBar)}
                   type="button"
-                  className="rounded-full bg-gray-800 p-1 text-grey focus:outline-none"
+                  className="rounded-full bg-gray-800 p-1 text-grey focus:outline-none hover:scale-125 ease-in-out duration-300"
                 >
                   <span className="sr-only">View notifications</span>
                   {!showSearchBar && !open && (
@@ -167,7 +175,7 @@ export default function NavBar() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-blue py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute border border-blue right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-black py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
                           <Link
@@ -181,7 +189,7 @@ export default function NavBar() {
                           </Link>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
+                      {/* <Menu.Item>
                         {({ active }) => (
                           <a
                             href="/settings"
@@ -193,7 +201,7 @@ export default function NavBar() {
                             Configuración
                           </a>
                         )}
-                      </Menu.Item>
+                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <button
@@ -231,11 +239,11 @@ export default function NavBar() {
                   <div className="flex items-center">
                     {item.icon && (
                       <item.icon
-                        className="w-5 h-5 mr-2 text-white"
+                        className="w-5 h-5 mr-2 text-grey"
                         aria-hidden="true"
                       />
                     )}
-                    <span>{item.name}</span>
+                    <span className="">{item.name}</span>
                   </div>
                 </Link>
               ))}

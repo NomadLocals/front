@@ -3,7 +3,6 @@ import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { checkUserById, getUserById } from "../../Redux trad/actions.js";
-import logoImage from "../../images/5.png";
 
 const Loading = () => {
   const initSesion = useSelector((state) => state.initSesion);
@@ -19,16 +18,16 @@ const Loading = () => {
   }, [user]);
 
   useEffect(() => {
-    console.log(id)
+    console.log(id);
     const checkUser = async () => {
       if (id) {
-        dispatch(checkUserById(id))
-        dispatch(getUserById(id))
+        dispatch(checkUserById(id));
+        dispatch(getUserById(id));
       }
     };
     checkUser();
   }, [id, dispatch]);
-  
+
   useEffect(() => {
     if (initSesion !== "") {
       if (initSesion === true) {
@@ -44,7 +43,7 @@ const Loading = () => {
   return (
     <div
       style={{
-        backgroundColor: "#F1EFE7",
+        backgroundColor: "#000000",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -52,7 +51,7 @@ const Loading = () => {
       }}
     >
       <img
-        src={logoImage}
+        src="https://res.cloudinary.com/dwit2djhy/image/upload/v1690153675/Nomadlocals/Logos/4_dpd03p.png"
         alt="Loading"
         style={{
           maxWidth: "100%",
