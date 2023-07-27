@@ -31,7 +31,13 @@ import {
   ADMIN_GET_ACTIVITIES,
   GET_HISTORIAL_CHAT_EVENTS,
   CLEAN_CHAT_HISTORY,
-  GET_HISTORIAL_CHAT_PERSONAL
+  GET_HISTORIAL_CHAT_PERSONAL,
+  CLEAN_CHAT_PERSONAL,
+  CLEAN_COMPONENT,
+  NEXT_PAGE,
+  PREVIOUS_PAGE,
+  RESET_PAGE,
+  INIT_SESION,
 } from "./action-types.js";
 
 const initialState = {
@@ -56,7 +62,9 @@ const initialState = {
   allActivities: [],
   historialChat: [],
   startChat: {},
-  historialChatPersonal : [],
+  historialChatPersonal: [],
+  firstPage: 0,
+  banned: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -94,6 +102,7 @@ const rootReducer = (state = initialState, action) => {
           minCost: "",
           eventDate: "",
           location: "",
+          name: "",
         },
       };
     case SAVE_USER_FORM:
@@ -172,6 +181,8 @@ const rootReducer = (state = initialState, action) => {
         eventById: action.payload,
         initSesion: action.payload,
         filter: action.payload,
+        firstPage: action.payload,
+        banned: action.payload,
       };
     case GET_EVENT_BY_ID:
       return {
@@ -203,10 +214,15 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         historialChatPersonal: action.payload,
       };
-      case CLEAN_CHAT_HISTORY:
+    case CLEAN_CHAT_HISTORY:
       return {
         ...state,
         historialChat: action.payload
+        }
+      case CLEAN_CHAT_PERSONAL:
+      return {
+        ...state,
+        historialChatPersonal: action.payload
         }
     case GET_USERS:
       return {
@@ -243,6 +259,56 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allActivities: action.payload,
       };
+    case CLEAN_COMPONENT:
+      let inicialState = "";
+      let inicialValue = "";
+      if (action.payload === "detail") {
+        inicialState = "eventById";
+        inicialValue = {};
+      }
+      if (action.payload === "others") {
+        inicialState = "others";
+        inicialValue = {};
+      }
+      if (action.payload === "allusers") {
+        inicialState = "allUsers";
+        inicialValue = [];
+      }
+      if (action.payload === "allevents") {
+        inicialState = "allActivities";
+        inicialValue = [];
+      }
+
+      return {
+        ...state,
+        [inicialState]: inicialValue,
+      };
+    case NEXT_PAGE:
+      let aux = state.firstPage;
+      if (state.firstPage + 10 >= state.allActivities.length)
+        aux = state.firstPage;
+      else aux += 10;
+      return {
+        ...state,
+        firstPage: aux,
+      };
+
+    case PREVIOUS_PAGE:
+      let first = state.firstPage;
+      if (first < 10) first = state.firstPage;
+      else first -= 10;
+      return {
+        ...state,
+        firstPage: first,
+      };
+    case RESET_PAGE:
+      return { ...state, firstPage: 0 };
+    case INIT_SESION:
+      return {
+        ...state,
+        banned: false,
+      };
+
     default:
       return state;
   }

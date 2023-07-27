@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar.jsx";
+import Footer from "./Footer.jsx";
 // import ChatPersonal from "./ChatPersonal.jsx";
-import { getOthersById } from "../../Redux trad/actions.js";
+import { cleanComponent, getOthersById } from "../../Redux trad/actions.js";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import CreatedActivities from "./CreatedActivities.jsx";
@@ -9,7 +10,7 @@ import CreatedActivities from "./CreatedActivities.jsx";
 const OthersDetail = () => {
   const others = useSelector((state) => state.others);
   const { userName, image, bio } = others;
-  const {id} = useParams();
+  const { id } = useParams();
   // const user = useSelector((state) => state.user);
   // const [data, setData] = useState({senderId: "", receiverId : ""});
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const OthersDetail = () => {
   // console.log (receiverId)
   useEffect(() => {
     dispatch(getOthersById(id));
+    dispatch(cleanComponent("others"));
   }, []);
 
   return (
@@ -80,12 +82,11 @@ const OthersDetail = () => {
               </Link>{" "}
             </div>
           </div>
-          {/* <Link to="/chat/personal">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-5">
-              Iniciar Chat Personal
-            </button>
-          </Link> */}
+          <Link to="/chat/personal">
+            <button className="paimon mt-5">Iniciar Chat Personal</button>
+          </Link>
         </div>
+        <Footer />
       </div>
     </>
   );

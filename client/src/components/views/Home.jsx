@@ -4,33 +4,31 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer.jsx";
 import SuggestionCarousel from "./SuggestionCarousel.jsx";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserActivities, getUserById } from "../../Redux trad/actions.js";
+import { getUserActivities, resetFilters } from "../../Redux trad/actions.js";
+
 import { useEffect, useState } from "react";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const userPlace = user.place;
+  const usuarioRegistrado = useSelector((state) => state.banned);
+  // const usuarioRegistrado = useSelector((state) => state.initSesion);
 
   useEffect(() => {
     dispatch(getUserActivities(user.id));
+    dispatch(resetFilters());
   }, []);
 
   //Evitar ingreso de usuarios banneados:
   const [isUserSuspended, setIsUserSuspended] = useState(false);
+
   useEffect(() => {
     // Verificar si el usuario está suspendido al cargar el componente
-    const delay = 3000;
-    const timerId = setTimeout(() => {
-      // Verificar si el usuario está suspendido después del retraso
-      if (!(user && "deletedAt" in user)) {
-        setIsUserSuspended(true);
-      }
-    }, delay);
-
-    // Limpiar el timer al desmontar el componente para evitar errores
-    return () => clearTimeout(timerId);
-  }, [user]);
+    if (usuarioRegistrado === false) {
+      setIsUserSuspended(true);
+    }
+  }, [usuarioRegistrado]);
 
   if (isUserSuspended) {
     return (
@@ -60,7 +58,7 @@ const Home = () => {
       <NavBar />
       <section className="flex flex-row justify-between pt-2 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey">
         <span className="text-xs md:text-sm xl:text-xl bg-grey font-quick">
-          🚩 {userPlace}
+          📍 {userPlace}
         </span>
         <span className="text-xs md:text-sm xl:text-xl bg-grey font-quick">
           📆 {formattedDate}
@@ -69,37 +67,37 @@ const Home = () => {
       <div className="flex justify-end pr-2 md:pr-5 xl:pr-10 mt-4">
         {isAdmin ? (
           <Link to="/admin">
-          <button className="text-white font-quick p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md hover:scale-110 ease-out duration-300">
-            Admin Panel
-          </button>
+            <button className="text-black border-2 font-spartan p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 max-w-md hover:scale-110 ease-out duration-300">
+              Admin Panel
+            </button>
           </Link>
         ) : (
           ""
         )}
       </div>
 
-      <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-3xl bg-grey">
-        Tus Actividades:
+      <h1 className="font-quick pt-1 text-lg font-bold text-center md:text-3xl bg-grey">
+        Hoy vamos a:
       </h1>
       <div className="flex flex-col items-center text-white content-around py-5 px-2 md:px-5 xl:px-10 xl:pt-10 bg-grey font-spartan text-lg md:flex-row md:justify-around">
-      <Link to="/activity-form">
-        <button className="p-2 rounded-lg bg-blue shadow-lg ring-1 ring-black ring-opacity-5 md:w-56 lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-out duration-300">
-          Crea tu actividad
-        </button>
+        <Link to="/activity-form">
+          <button className="p-2 rounded-lg bg-black shadow-lg border border-2 border-blue ring-1 ring-black ring-opacity-5 md:w-56 lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-out duration-300">
+            Crea tu actividad
+          </button>
         </Link>
       </div>
-      <section className="pt-5 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
+      <section className="pt-1 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
         <OwnActivities />
       </section>
       <section className="flex flex-col items-center pt-5 px-4 lg:pt-[80px] pb-10 lg:pb-20 bg-grey">
-        <h1 className="font-spartan pt-5 text-lg font-bold text-center md:text-2xl bg-grey">
-          Lo que se viene:
+        <h1 className="font-quick pt-1 text-lg font-bold text-center md:text-2xl bg-grey">
+          Proximamente:
         </h1>
         <SuggestionCarousel />
         <Link to="/activities">
-        <button className="p-2 rounded-lg bg-blue text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 font-spartan lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-out duration-300">
-          Encuentra una actividad
-        </button>
+          <button className="p-2 rounded-lg bg-black border border-2 border-blue text-white my-4 shadow-lg ring-1 ring-black ring-opacity-5 font-spartan lg:w-80 lg:h-20 lg:text-2xl hover:scale-110 ease-out duration-300">
+            Encuentra una actividad
+          </button>
         </Link>
       </section>
       <Footer />

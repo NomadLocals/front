@@ -1,15 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
-import { useSessionList, useSession } from "@clerk/clerk-react";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllUsers } from "../../../Redux trad/actions";
+import { useUser } from "@clerk/clerk-react";
 
 const UsersChart = () => {
-  const { isLoaded, sessions } = useSessionList();
-  console.log(sessions);
+  const { user } = useUser();
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.allUsers);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getAllUsers(user.id));
+    }
+  }, [dispatch]);
+
+  const dailyUserCount = {};
+  if (users) {
+    users.forEach((user) => {
+      const date = new Date(user.createdAt).toISOString().split("T")[0];
+      dailyUserCount[date] = (dailyUserCount[date] || 0) + 1;
+    });
+  }
+
+  const dataPoints = Object.entries(dailyUserCount).map(
+    ([date, userCount]) => ({
+      x: date,
+      y: userCount,
+    })
+  );
+
   const chartData = {
     series: [
       {
-        name: "Logins",
-        data: [28, 29, 33, 36, 32, 32, 33],
+        name: "User Count",
+        data: dataPoints,
       },
     ],
     options: {
@@ -36,13 +61,13 @@ const UsersChart = () => {
         curve: "smooth",
       },
       title: {
-        text: "Average High & Low Temperature",
+        text: "User Registrations per Day",
         align: "left",
       },
       grid: {
         borderColor: "#e7e7e7",
         row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+          colors: ["#f3f3f3", "transparent"],
           opacity: 0.5,
         },
       },
@@ -50,17 +75,18 @@ const UsersChart = () => {
         size: 1,
       },
       xaxis: {
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        type: "datetime", // Use this if you want to display dates as labels
+        categories: dataPoints.map((dataPoint) => dataPoint.x), // Use this if you want to display dates as labels
         title: {
-          text: "Month",
+          text: "Date",
         },
       },
       yaxis: {
         title: {
-          text: "Temperature",
+          text: "User Count",
         },
-        min: 5,
-        max: 40,
+        min: 0,
+        max: Math.max(...dataPoints.map((dataPoint) => dataPoint.y)) + 1, // Adjust the maximum of the y-axis to show all points correctly
       },
       legend: {
         position: "top",

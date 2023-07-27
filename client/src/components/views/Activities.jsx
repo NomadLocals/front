@@ -2,6 +2,7 @@ import Activity from "./Activity.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { getUserActivities } from "../../Redux trad/actions.js";
+import Footer from "./Footer.jsx";
 
 const Activities = () => {
   const dispatch = useDispatch();
@@ -48,38 +49,9 @@ const Activities = () => {
   const handlePages = () => {
     setTotalCards(renderedCards + 3);
   };
-  // //---------------------Evitar ingreso de usuarios banneados:---------------------------------
-  // const [isUserSuspended, setIsUserSuspended] = useState(false);
-  // useEffect(() => {
-  //   // Verificar si el usuario está suspendido al cargar el componente
-  //   const delay = 1000;
-  //   const timerId = setTimeout(() => {
-  //     // Verificar si el usuario está suspendido después del retraso
-  //     if (!(user && "deletedAt" in user)) {
-  //       setIsUserSuspended(true);
-  //     }
-  //   }, delay);
-
-  //   // Limpiar el timer al desmontar el componente para evitar errores
-  //   return () => clearTimeout(timerId);
-  // }, [user]);
-
-  // if (isUserSuspended) {
-  //   return (
-  //     <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-grey">
-  //       <div className="text-white text-center p-8 rounded-lg bg-blue w-2/3">
-  //         <h2 className="text-4xl">
-  //           Tu cuenta está suspendida. Por favor, contacta al administrador via
-  //           mail a nomad.locals01@gmail.com
-  //         </h2>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-  //-------------------Fin usuario banneado-----------------------------------
 
   return (
-    <div className="grid items-center py-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 ml-1 mr-1 min-h-[250px] md:min-h-[500px]">
+    <div className="grid items-center py-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-1 mr-1 min-h-[250px] md:min-h-[500px]">
       {activities.length > 0 ? (
         activities
           .sort(function (a, b) {
@@ -103,8 +75,10 @@ const Activities = () => {
             }
           )
       ) : (
-        <div>
-          <h2 className="font-quick">No hay actividades cerca de tu zona</h2>
+        <div className="flex flex-col items-center justify-center min-h-[250px]">
+          <h2 className="font-quick text-center mb-4">
+            No hay actividades cerca de tu zona
+          </h2>
         </div>
       )}
       {renderedCards <= activities.length ? (

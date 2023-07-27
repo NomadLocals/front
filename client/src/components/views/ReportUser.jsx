@@ -46,12 +46,21 @@ const ReportUser = () => {
         .then(() => {
           resetForm();
           setErrorMessage("");
-          navigate("/home");
           console.log("creado correctamente");
+        })
+        .then(() => {
+          swal({
+            title: "Recibido",
+            text: `¡Gracias por enviar tu reporte! Tu aporte es valioso para mejorar nuestros servicios y ofrecerte una mejor experiencia.`,
+            icon: "success",
+            buttons: true,
+            closeModel: false,
+          });
         })
         .catch((error) => {
           console.error("Ocurrió un error al enviar el informe:", error);
         });
+      navigate(`/others/${id}`);
     }
   };
 
@@ -69,8 +78,12 @@ const ReportUser = () => {
       <NavBar />
       <div className="bg-grey min-h-screen lg:min-w-52 flex justify-center font-quick">
         <div className="mt-10 lg:w-8/12 shadow-2xl rounded-lg overflow-hidden flex flex-col justify-center items-center p-5">
-          <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">Formulario de Reporte de Usuario</h2>
-          {errorMessage && <p className="text-blue bg-yellow mb-3">{errorMessage}</p>}
+          <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-center font-spartan">
+            Formulario de Reporte de Usuario
+          </h2>
+          {errorMessage && (
+            <p className="text-blue bg-yellow mb-3">{errorMessage}</p>
+          )}
           <form onSubmit={handleSubmit}>
             <div className="mb-4 w-[250px] lg:w-[450px] lg:h-[400px]">
               <label htmlFor="type" className="block font-bold mb-1">
@@ -98,7 +111,10 @@ const ReportUser = () => {
                 </option>
                 <option value="Other">Otros</option>
               </select>
-              <label htmlFor="description" className="block font-bold mb-1 mt-3">
+              <label
+                htmlFor="description"
+                className="block font-bold mb-1 mt-3"
+              >
                 Descripción:
               </label>
               <textarea
@@ -110,22 +126,22 @@ const ReportUser = () => {
                 rows="4"
                 cols="30"
               ></textarea>
-            
-            <button
-              type="submit"
-              className="px-6 mx-2 my-5 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
-            >
-              Enviar
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                navigate("/home");
-              }}
-              className="px-6 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
-            >
-              Cancelar
-            </button>
+
+              <button
+                type="submit"
+                className="px-6 mx-2 my-5 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
+              >
+                Enviar
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  navigate("/home");
+                }}
+                className="px-6 py-2 rounded-lg bg-blue text-white font-semibold hover:bg-gray-400"
+              >
+                Cancelar
+              </button>
             </div>
           </form>
         </div>
