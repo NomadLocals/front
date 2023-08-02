@@ -86,8 +86,10 @@ const ChatPersonal = () => {
   }, [socket, chatMessages]);
 
   return (
-    <div className=" max-w-screen-lg mx-auto bg-grey ">
-      <NavBar />
+<>
+    <NavBar />
+    <div className="bg-grey">
+    <div className="min-h-screen max-w-screen-lg mx-auto bg-grey pt-5">
       <div className="border-b border-gray-300 pb-2 mb-2">
         <h4 className="text-lg font-semibold text-center">
           Chat personal con {others.userName}
@@ -117,8 +119,10 @@ const ChatPersonal = () => {
           Enviar
         </button>
       </div>
-      <Footer />
     </div>
+    </div>
+    <Footer />
+    </>
   );
 };
 
