@@ -53,7 +53,7 @@ const Developer = () => {
     },
     {
       name: 'Daniel Gomez',
-      role: 'UI/UX Developer',
+      role: 'UI/UX/Back-end Developer',
       socialLinks: [
         {
           label: 'GitHub',
