@@ -74,7 +74,7 @@ const Developer = () => {
     },
     {
       name: 'Wilson Sánchez',
-      role: 'UI/UX Developer',
+      role: 'BACK-END Developer',
       socialLinks: [
         {
           label: 'GitHub',
@@ -154,48 +154,6 @@ const Developer = () => {
         url: 'mailto:polches@gmail.com',
         icon: <SiGmail />,
       },
-        ],
-      },
-      {
-     name: 'Sebastian Tovar',
-     role: 'UI Developer',
-     socialLinks: [
-      {
-      label: 'GitHub',
-      url: 'https://github.com/SebastiT',
-      icon: <AiFillGithub />,
-    },
-    {
-      label: 'Linkedin',
-      url: 'http://www.linkedin.com/in/sebastian-tovar-28b7b1254',
-      icon: <AiFillLinkedin />,
-    },
-    {
-      label: 'Gmail',
-      url: 'mailto:sebastiantovar1812@gmail.com',
-      icon: <SiGmail />,
-    },
-        ],
-      },
-      {
-     name: 'Yorvis Melendez',
-     role: 'UI Developer',
-     socialLinks: [
-      {
-      label: 'GitHub',
-      url: 'https://github.com/yorvismel',
-      icon: <AiFillGithub />,
-    },
-    {
-      label: 'Linkedin',
-      url: 'https://www.linkedin.com/in/yorvis-mel%C3%A9ndez-29421a259/',
-      icon: <AiFillLinkedin />,
-    },
-    {
-      label: 'Gmail',
-      url: 'mailto:notfound',
-      icon: <SiGmail />,
-    },
         ],
       },
   ];
