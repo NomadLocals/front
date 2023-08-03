@@ -11,7 +11,7 @@ import Footer from "./Footer.jsx";
 
 // const socket = io('http://localhost:3001');
 // const socket = io("https://serverpredeploy.onrender.com");
-const socket = io("https://lastservernomad.onrender.com");
+const socket = io("https://nomandlocals.onrender.com/");
 
 const ChatPersonal = () => {
   //   //* importacion de estados...
