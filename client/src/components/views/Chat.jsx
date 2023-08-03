@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 // const socket = io("http://localhost:3001");
 
 // const socket = io("https://serverpredeploy.onrender.com");
-const socket = io("https://nomandlocals.onrender.com/");
+const socket = io("https://nomandlocals.onrender.com");
 
 const Chat = () => {
   const user = useSelector((state) => state.user);
