@@ -129,28 +129,17 @@ export const postUser = (userData) => {
     try {
       const endPoint = `${URL}/${USER}`;
       const { data } = await axios.post(endPoint, userData);
+      await axios.post(`${URL}/send-mail/register`, userData);
       dispatch({
         type: POST_USER,
         payload: data,
       });
     } catch (error) {
-      dispatch(initFalse());
-
       console.log("Usuario no creado");
     }
   };
 };
-export const sendEmail = (userData) => {
-  return async (dispatch) => {
-    console.log(userData);
-    try {
-      await axios.post(`${URL}/send-mail/register`, userData);
-    } catch (error) {
-      dispatch(initFalse());
-      console.log("correo enviado");
-    }
-  };
-};
+
 
 
 export const initFalse = () => {
